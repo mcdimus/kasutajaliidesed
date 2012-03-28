@@ -1,0 +1,458 @@
+/**
+ ****************************************************************************************************
+ * 1. Resets
+ * 2. Link Styles
+ * 3. Headings
+ * 4. Containers
+ * 5. Header
+ * 6. Content
+ * 7. Footer
+ * 8. Menu
+ ****************************************************************************************************
+*/
+
+/* 1. Resets
+----------------------------------------------------------------------------------------------------*/
+html, body, div, ul, fieldset{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    font-family: inherit;
+    vertical-align: baseline;
+}
+:focus {
+    outline: 0;
+}
+
+body {
+    color: #444;
+    background: #2c2928 url("../img/bg-tile.png") repeat 0 0;
+    font: 12px/20px Helvetica, Arial, sans-serif;
+}
+p {
+    padding-bottom: 30px;
+}
+ol, ul {
+    list-style: none outside none;
+}
+
+::selection {
+    background: #fdd283;
+    color: #000;
+}
+::-moz-selection {
+    background: #fdd283;
+    color: #000;
+}
+
+/* 4. Containers
+----------------------------------------------------------------------------------------------------*/
+div#main-wrapper {
+    margin: 0px auto;
+    width: 100%;
+}
+
+div#header-wrapper {
+    background: url("../img/header-bg.png") repeat-x transparent;
+    height: 170px;
+    width: 100%;
+}
+
+div#logo {
+    float: left;
+    width: 400px;
+    margin-left: 150px;
+    margin-top: 0px;
+}
+
+#content-wrapper {
+    -webkit-box-shadow: 0px 11px 30px 2px black;
+    -moz-box-shadow:    0px 11px 30px 2px black;
+    box-shadow:         0px 11px 30px 2px black;
+    border: 1px solid #888888;
+    margin: auto;
+    background: whitesmoke;
+    min-height: 500px;
+    width: 998px;
+    z-index: 1000;
+}
+
+#footer-wrapper {
+    -webkit-box-shadow: 0px 0px 20px 2px black;
+    -moz-box-shadow: 0px 0px 20px 2px black;
+    box-shadow: 0px 11px 20px 2px black;
+    border: 1px solid black;
+    background:  #5b5b5b url("../img/bg-tile.png") repeat 0 0;
+    height: 90px;
+    margin: 0px auto 40px;
+    width: 998px;
+}
+
+#footer-container-right {
+    top: 20px;
+    color: white;
+    margin-left: 20px;
+}
+
+div#bottomPanel {
+    display: none;
+    -webkit-box-shadow: 0px 0px 20px 2px black;
+    -moz-box-shadow: 0px 0px 20px 2px black;
+    box-shadow: 0px 0px 20px 2px black;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    height: 40px;
+    width: 100%;
+    background-color: cadetblue;
+    text-align: center;
+    z-index: 999;
+}
+
+/* User Info */
+#user-info ul {
+  float: right;
+  margin: 45px 0 0 0;
+}
+  #user-info ul li {
+    display: block;
+    float: left;
+    position: relative;
+  }
+    #user-info ul li > a {
+      background: none;
+      color: #eeeddf;
+      display: block;
+      float: left;
+      font-family: MuseoSansRounded-500, Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      line-height: 12px;
+      margin-left: 10px;
+      padding: 7px 10px;
+      text-decoration: none;
+      text-shadow: 0 1px 1px #000;
+      text-transform: uppercase;
+      /* CSS3 */
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      border-radius: 3px;
+    }
+    #user-info ul li a.sign-out {
+      background: url(http://tutsplus.com/wp-content/themes/tuts-premium-theme/images/sprite-mini-icons.png) no-repeat 0px -160px;
+      padding-left: 25px
+    }
+    #user-info ul li a.sign-in {
+      background: url(http://tutsplus.com/wp-content/themes/tuts-premium-theme/images/sprite-mini-icons.png) no-repeat 0px -160px;
+      padding-left: 25px
+    }
+    #user-info ul li a.join-premium {
+      background: url(http://tutsplus.com/wp-content/themes/tuts-premium-theme/images/sprite-mini-icons.png) no-repeat 2px -190px;
+      padding-left: 25px
+    }
+    #user-info ul li a.my-account {
+      background: url(http://tutsplus.com/wp-content/themes/tuts-premium-theme/images/sprite-mini-icons.png) no-repeat 2px -220px;
+      padding-left: 25px
+    }
+    #user-info ul li > a:hover {
+      background-color: #000;
+    }
+    #user-info ul li > ul {
+      display: none;
+    }
+    #user-info ul.show-login {
+      background: #f1f1f1;
+      color: #525252;
+      display: block;
+      float: left;
+      left: -220px;
+      text-shadow: 0px 1px 0px #fff;
+      padding: 12px 12px 22px 12px;
+      position: absolute;
+      width: 320px;
+      z-index: 100;
+      /* CSS3 */
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+      -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      -moz-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    #user-info ul.show-login::before {
+      background: url(http://tutsplus.com/wp-content/themes/tuts-premium-theme/images/drop-arrow.png) no-repeat 0 0;
+      content: '\0020';
+      display: block;
+      height: 7px;
+      position: absolute;
+      top: -6px;
+      right: 68px;
+      width: 13px;
+    }
+      #user-info ul.show-login #loginform {
+        display: block;
+      }
+      #user-info ul.show-login #sendpassform {
+        display: none;
+      }
+        #user-info legend {
+          font-weight: bold;
+          padding: 0 0 0 10px;
+        }
+        #user-info p {
+          float: left;
+          padding-bottom: 10px;
+        }
+        #user-info p.p-last {
+          padding: 0 10px;
+          width: 300px;
+        }
+          #user-info label {
+            padding: 0 10px;
+          }
+          #user-info #loginform label {
+            display: none;
+          }
+          #user-info input[type="text"],
+          #user-info input[type="password"] {
+            background: #fff !important;
+            border: 1px solid #dfdfdf;
+            color: #444;
+            float: left;
+            font-size: 12px;
+            line-height: 12px;
+            margin: 5px 10px;
+            padding: 2px 5px 3px 5px;
+            width: 128px;
+            /* CSS3 */
+            -webkit-border-radius: 2px;
+            -moz-border-radius: 2px;
+            border-radius: 2px;
+          }
+          #user-info #sendpassform input[type="text"] {
+            width: 288px;
+          }
+          #user-info input[type="text"]::-webkit-input-placeholder,
+          #user-info input[type="password"]::-webkit-input-placeholder {
+            padding-top: 1px;
+            color: #999;
+          }
+          #user-info input[type="text"]:-moz-placeholder,
+          #user-info input[type="password"]:-moz-placeholder {
+            padding-top: 2px;
+            color: #999;
+          }
+          #user-info a.forgot-pass-link,
+          #user-info a.log-in-link {
+            color: #6d6d6d;
+            font-size: 10px;
+            margin-left: 120px;
+          }
+          #user-info a.log-in-link {
+            margin-left: 142px;
+          }
+          #user-info a:hover.forgot-pass-link,
+          #user-info a:hover.log-in-link {
+            text-decoration: none;
+          }
+          #user-info input.orange-button {
+            float: right !important;
+          }
+
+/* 8. Menu
+----------------------------------------------------------------------------------------------------*/
+div#menu-container {
+    margin: auto;
+    margin-top: -40px;
+    height: 50px;
+    width: 1024px;
+    background-color:#444444;
+    /*    background-image:url("http://css3menu.com/images/android-dark/mainbk.png");*/
+    background-position:0 0;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+    -webkit-box-shadow: 0px 0px 20px 2px black;
+    -moz-box-shadow: 0px 0px 20px 2px black;
+    box-shadow: 0px 0px 20px 2px black;
+    z-index: 2;
+}
+
+div#menu-title {
+    display: block;
+    float: left;
+    vertical-align: central;
+    height: 50px;
+    width: 200px;
+    color: white;
+    font:bold 14px Trebuchet MS,sans-serif;
+}
+
+ul#css3menu {
+    margin: auto!important;
+    display:block;
+    font-size:0;
+    position:relative;
+    z-index:3;
+    left:5px;
+    top:5px;
+}
+
+ul#css3menu, ul#css3menu ul {
+    /*    margin:0;*/
+    list-style:none;
+    padding:0;
+    background-color:#dedede;
+
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px;
+    border-radius:5px;
+}
+
+ul#css3menu ul {
+    display:none;
+    position:absolute;
+    left:-1px;
+    top:98%;
+    -moz-box-shadow:3.5px 4px 5px #000000;
+    -webkit-box-shadow:3.5px 4px 5px #000000;
+    box-shadow:3.5px 4px 5px #000000;
+    border-width:1px;
+    border-style:solid;
+    border-color:#5f5f5f;
+    padding:0;
+}
+ul#css3menu li:hover > * {
+    display:block;
+}
+ul#css3menu li:hover {
+    position:relative;
+}
+ul#css3menu ul ul {
+    position:absolute;
+    left:98%;
+    top:-2px;
+}
+
+
+ul#css3menu li {
+    display:block;
+    white-space:nowrap;
+    font-size:0;
+    float:left;
+}
+ul#css3menu>li,ul#css3menu li {
+    margin:0;
+}
+ul#css3menu a:active, ul#css3menu a:focus {
+    outline-style:none;
+}
+ul#css3menu a {
+    display:block;
+    vertical-align:middle;
+    background-color:#444444;
+    background-image:url("http://css3menu.com/images/android-dark/mainbk.png");
+    background-position:0 0;
+    border-width:0 0 0 1px;
+    border-style:solid;
+    border-color:#C0C0C0;
+    text-align:left;
+    text-decoration:none;
+    padding:10px;
+    font:bold 14px Trebuchet MS,sans-serif;
+    color:#000;
+    text-shadow:#FFF 0 0 1px;
+    cursor:pointer;
+}
+ul#css3menu ul li {
+    float:none;
+}
+ul#css3menu ul a {
+    text-align:left;
+}
+ul#css3menu li:hover>a {
+    background-color:#444444;
+    border-color:#C0C0C0;
+    border-style:solid;
+    font:bold 14px Trebuchet MS,sans-serif;
+    color:#FFF;
+    text-decoration:none;
+    text-shadow:#FFF 0 0 1px;
+    background-image:url("http://css3menu.com/images/android-dark/mainbk.png");
+    background-position:0 100%;
+}
+ul#css3menu img {
+    border:none;
+    vertical-align:middle;
+    margin-right:20px;
+    width:16px;
+    height:16px;
+}
+ul#css3menu ul img {
+    width:16px;
+    height:16px;
+}
+ul#css3menu img.over {
+    display:none;
+}
+ul#css3menu li:hover > a img.def {
+    display:none;
+}
+ul#css3menu li:hover > a img.over {
+    display:inline;
+}
+ul#css3menu span {
+    display:block;
+    overflow:visible;
+    background-position:right center;
+    background-repeat:no-repeat;
+    padding-right:0px;
+}
+ul#css3menu ul span{
+    background-image:url("http://css3menu.com/images/android-dark/arrowsub.png");
+    padding-right:24px;
+}
+ul#css3menu li.topfirst>a{
+    border-width:0;
+    border-radius:4px 0 0 4px;
+    -moz-border-radius:4px 0 0 4px;
+    -webkit-border-radius:4px 0 0 4px;
+}
+ul#css3menu li.toplast>a{
+    border-radius:0 4px 4px 0;
+    -moz-border-radius:0 4px 4px 0;
+    -webkit-border-radius:0 4px 4px 0;
+}
+ul#css3menu .submenu>li {
+    margin:10px 0 0;
+}
+ul#css3menu .submenu {
+    background-color:#424542;
+    border-width:2px;
+    border-radius:6px;
+    -moz-border-radius:6px;
+    -webkit-border-radius:6px;
+    border-color:#FFF;
+    padding:0 10px 10px;
+}
+ul#css3menu li.subitem>a {
+    background-color:#424542;
+    background-image:none;
+    border-width:0;
+    padding:4px;
+    font:14px Tahoma,serif;
+    color:#FFF;
+    text-decoration:none;
+    text-shadow:#FFF 0 0 0;
+}
+ul#css3menu li.subitem:hover>a {
+    background-color:#424542;
+    background-image:none;
+    font:'14px Tahoma,serif';
+    color:#F2B20E;
+    text-decoration:none;
+    text-shadow:#FFF 0 0 0;
+}
