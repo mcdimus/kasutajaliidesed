@@ -10,7 +10,11 @@
  * 8. Menu
  ****************************************************************************************************
 */
-
+.error_strings{
+    font-family:Verdana; font-size:12px;
+    color:#660000;
+    margin-top: -30px;
+}
 /* 1. Resets
 ----------------------------------------------------------------------------------------------------*/
 html, body, div, ul, fieldset{
@@ -177,11 +181,18 @@ div#logo {
 .signin-box label {
     display: block;
 }
+label {
+    display: block;
+    font-weight: 700;
+    margin: 0px 0px 0.5em;
+    font-size: 15px;
+}
 .signin-box .email-label, .signin-box .passwd-label {
     display: block;
     font-weight: 700;
     margin: 0px 0px 0.5em;
 }
+
 strong {
     color: #222222;
 }
@@ -192,6 +203,7 @@ strong {
     width: 100%;
 }
 input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="text"], input[type="url"] {
+    width: 100%;
     background: #FFFFFF;
     border-bottom: 1px solid #D9D9D9;
     border-left: 1px solid #D9D9D9;
@@ -199,11 +211,13 @@ input[type="email"], input[type="number"], input[type="password"], input[type="t
     border-right: 1px solid #D9D9D9;
     border-top: 1px solid #C0C0C0;
     box-sizing: border-box;
-    display: inline-block;
+    display: block;
+    clear: both;
     height: 29px;
     margin: 0px;
     padding: 0px 8px;
 }
+
 .signin-box input[type="submit"] {
     font-size: 13px;
     height: 32px;
@@ -222,7 +236,7 @@ button.g-button, input[type="submit"].g-button {
     border: 1px solid #DCDCDC;
     border-radius: 2px;
     color: #444444;
-    cursor: default;
+    cursor: pointer;
     display: inline-block;
     font-size: 11px;
     font-weight: 700;
@@ -251,7 +265,12 @@ button, input, select, textarea {
 }
 
 .product-info img {
-   margin-left: 100px;
+    margin-left: 100px;
+}
+
+form#regform {
+    width: 300px;
+    margin: auto;
 }
 
 #footer-wrapper {
