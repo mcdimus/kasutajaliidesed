@@ -217,6 +217,9 @@ ol, ul {
     background: #fdd283;
     color: #000;
 }
+img {
+	border: none;
+}
 
 /* 4. Containers
 ----------------------------------------------------------------------------------------------------*/
@@ -247,7 +250,7 @@ div#logo {
     background: whitesmoke;
     min-height: 500px;
     width: 998px;
-    z-index: 1000;
+	behavior: url(ie-css3.htc);
 }
 
 #footer-wrapper {
@@ -259,6 +262,7 @@ div#logo {
     height: 90px;
     margin: 0px auto 40px;
     width: 998px;
+	behavior: url(ie-css3.htc);
 }
 
 #footer-container-right {
@@ -280,6 +284,7 @@ div#bottomPanel {
     background-color: cadetblue;
     text-align: center;
     z-index: 999;
+	behavior: url(ie-css3.htc);
 }
 
 /* User Info */
@@ -448,6 +453,7 @@ div#menu-container {
     -moz-box-shadow: 0px 0px 20px 2px black;
     box-shadow: 0px 0px 20px 2px black;
     z-index: 2;
+	behavior: url(ie-css3.htc);
 }
 
 div#menu-title {
