@@ -52,6 +52,23 @@ img {
     border: none;
 }
 
+/* 3. Headings
+----------------------------------------------------------------------------------------------------*/
+
+h1 {
+    font:bold 40px Georgia, Arial, sans-serif;
+}
+h2 {
+    font: 30px Georgia, Arial, sans-serif;
+}
+h3 {
+    font: 20px Georgia, Arial, sans-serif;
+}
+h4 {
+    font: bold 13px Georgia, Arial, sans-serif;
+    margin: 0;
+}
+
 /* 4. Containers
 ----------------------------------------------------------------------------------------------------*/
 div#main-wrapper {
@@ -71,53 +88,6 @@ div#logo {
     margin-left: 150px;
     margin-top: 0px;
 }
-
-#content-wrapper {
-    -webkit-box-shadow: 0px 11px 30px 2px black;
-    -moz-box-shadow:    0px 11px 30px 2px black;
-    box-shadow:         0px 11px 30px 2px black;
-    border: 1px solid #888888;
-    margin: auto;
-    background: whitesmoke;
-    min-height: 500px;
-    width: 998px;
-    behavior: url(ie-css3.htc);
-}
-
-#footer-wrapper {
-    -webkit-box-shadow: 0px 0px 20px 2px black;
-    -moz-box-shadow: 0px 0px 20px 2px black;
-    box-shadow: 0px 11px 20px 2px black;
-    border: 1px solid black;
-    background:  #5b5b5b url("../img/bg-tile.png") repeat 0 0;
-    height: 90px;
-    margin: 0px auto 40px;
-    width: 998px;
-    behavior: url(ie-css3.htc);
-}
-
-#footer-container-right {
-    top: 20px;
-    color: white;
-    margin-left: 20px;
-}
-
-div#bottomPanel {
-    display: none;
-    -webkit-box-shadow: 0px 0px 20px 2px black;
-    -moz-box-shadow: 0px 0px 20px 2px black;
-    box-shadow: 0px 0px 20px 2px black;
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-    height: 40px;
-    width: 100%;
-    background-color: cadetblue;
-    text-align: center;
-    z-index: 999;
-    behavior: url(ie-css3.htc);
-}
-
 /* User Info */
 #user-info ul {
     float: right;
@@ -164,6 +134,158 @@ div#bottomPanel {
 }
 #user-info ul li > a:hover {
     background-color: #000;
+}
+
+#content-wrapper {
+    -webkit-box-shadow: 0px 11px 30px 2px black;
+    -moz-box-shadow:    0px 11px 30px 2px black;
+    box-shadow:         0px 11px 30px 2px black;
+    border: 1px solid #888888;
+    margin: auto;
+    background: whitesmoke;
+    min-height: 500px;
+    width: 998px;
+    behavior: url(ie-css3.htc);
+}
+.main {
+    max-width: 1000px;
+    min-width: 780px;
+    padding: 44px;
+    width: auto;
+}
+
+.sign-in {
+    float: right;
+    width: 335px;
+}
+.signin-box{
+    background: #F5F5F5;
+    border: 1px solid #E5E5E5;
+    margin: 12px 12px 0px;
+    padding: 20px 25px 15px;
+}
+.signin-box h2 {
+    font-size: 16px;
+    height: 16px;
+    line-height: 17px;
+    margin: 0px 0px 1.2em;
+    position: relative;
+}
+.signin-box div {
+    margin: 0px 0px 1.5em;
+}
+.signin-box label {
+    display: block;
+}
+.signin-box .email-label, .signin-box .passwd-label {
+    display: block;
+    font-weight: 700;
+    margin: 0px 0px 0.5em;
+}
+strong {
+    color: #222222;
+}
+.signin-box input[type="text"], .signin-box input[type="password"] {
+    direction: ltr;
+    font-size: 15px;
+    height: 32px;
+    width: 100%;
+}
+input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="text"], input[type="url"] {
+    background: #FFFFFF;
+    border-bottom: 1px solid #D9D9D9;
+    border-left: 1px solid #D9D9D9;
+    border-radius: 1px;
+    border-right: 1px solid #D9D9D9;
+    border-top: 1px solid #C0C0C0;
+    box-sizing: border-box;
+    display: inline-block;
+    height: 29px;
+    margin: 0px;
+    padding: 0px 8px;
+}
+.signin-box input[type="submit"] {
+    font-size: 13px;
+    height: 32px;
+    margin: 0px 1.5em 1.2em 0px;
+}
+button.g-button, input[type="submit"].g-button {
+    height: 29px;
+    line-height: 29px;
+    margin: 0px;
+    vertical-align: bottom;
+}
+.g-button {
+    -o-transition: all 0.22s cubic-bezier(0.25, 0.1, 0.25, 1) 0;
+    background-color: #F5F5F5;
+    background-image: -o-linear-gradient(top, #F5F5F5, #F1F1F1);
+    border: 1px solid #DCDCDC;
+    border-radius: 2px;
+    color: #444444;
+    cursor: default;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    height: 27px;
+    line-height: 27px;
+    min-width: 46px;
+    padding: 0px 8px;
+    text-align: center;
+}
+.g-button-submit {
+    background-color: #4D90FE;
+    background-image: -o-linear-gradient(top, #4D90FE, #4787ED);
+    border: 1px solid #3079ED;
+    color: #FFFFFF;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.102);
+}
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+.product-info {
+    position: relative;
+    text-align: justify;
+    margin: 0px 400px 0px 0px;
+}
+
+.product-info img {
+   margin-left: 100px;
+}
+
+#footer-wrapper {
+    -webkit-box-shadow: 0px 0px 20px 2px black;
+    -moz-box-shadow: 0px 0px 20px 2px black;
+    box-shadow: 0px 11px 20px 2px black;
+    border: 1px solid black;
+    background:  #5b5b5b url("../img/bg-tile.png") repeat 0 0;
+    height: 90px;
+    margin: 0px auto 40px;
+    width: 998px;
+    behavior: url(ie-css3.htc);
+}
+
+#footer-container-right {
+    top: 20px;
+    color: white;
+    margin-left: 20px;
+}
+
+div#bottomPanel {
+    display: none;
+    -webkit-box-shadow: 0px 0px 20px 2px black;
+    -moz-box-shadow: 0px 0px 20px 2px black;
+    box-shadow: 0px 0px 20px 2px black;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    height: 40px;
+    width: 100%;
+    background-color: cadetblue;
+    text-align: center;
+    z-index: 999;
+    behavior: url(ie-css3.htc);
 }
 
 /* 8. Menu

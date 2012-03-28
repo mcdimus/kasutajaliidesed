@@ -19,116 +19,92 @@
                         <img src="img/logo.png" width="70%" height="70%" alt="TODO"/>
                     </a>
                 </div>
-                <div id="user-info">
-                    <ul id="premium_amember_widget-3" class="premium-amember-widget">
-                        <li>
-                            <a href="/amember/login.php" class="top-level-user sign-in">
-                                <span>Sign In</span>
-                            </a>
-                            
-                        </li>
-                        <li>
-                            <a href="register.html" class="top-level-user join-premium">
-                                <span>Register</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+                <!--                <div id="user-info">
+                                    <ul id="premium_amember_widget-3" class="premium-amember-widget">
+                                        <li>
+                                            <a href="/amember/login.php" class="top-level-user sign-in">
+                                                <span>Sign In</span>
+                                            </a>
+
+                                        </li>
+                                        <li>
+                                            <a href="register.html" class="top-level-user join-premium">
+                                                <span>Register</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>-->
             </div>
             <!--end header-wrapper-->
-            <div id="menu-container">
-                <div id="menu-title">Current page title</div>
-                <ul id="css3menu">
-                    <li class="topfirst">
-                        <a href="index.html#overview" title="Overview">Overview</a>
-                    </li>
-                    <li>
-                        <a href="index.html#new" title="What's New">
-                            <span>What's New</span>
-                        </a>
-                        <ul class="submenu">
-                            <li class="subitem">
-                                <a href="#" title="Apr 25, 2010 - Version 1.6 released! ">Apr 25, 2010 - Version 1.6 released! </a>
-                            </li>
-                            <li class="subitem">
-                                <a href="#" title="Apr 29, 2010 - Version 1.6.1 released! ">Apr 29, 2010 - Version 1.6.1 released! </a>
-                            </li>
-                            <li class="subitem">
-                                <a href="#" title="May 15, 2010 - Version 2.0 released! ">May 15, 2010 - Version 2.0 released! </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="index.html#help" title="How to Use">
-                            <span>How to Use</span>
-                        </a>
-                        <ul class="submenu">
-                            <li class="subitem">
-                                <a href="#" title="Quick Help">Quick Help</a>
-                            </li>
-                            <li class="subitem">
-                                <a href="/rq/" title="FAQ">FAQ</a>
-                            </li>
-                            <li class="subitem">
-                                <a href="#" title="Feedback">Feedback</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="mac.html" title="Demos">
-                            <span>Demos</span>
-                        </a>
-                        <ul class="submenu">
-                            <li class="subitem">
-                                <a href="#" title="Android">
-                                    <span>Android</span>
-                                </a>
-                                <ul class="submenu">
-                                    <li class="subitem">
-                                        <a href="android-dark.html" title="Android Dark">Android Dark</a>
-                                    </li>
-                                    <li class="subitem">
-                                        <a href="android-orange.html" title="Android Orange">Android Orange</a>
-                                    </li>
-                                    <li class="subitem">
-                                        <a href="android-blue.html" title="Android Blue">Android Blue</a>
-                                    </li>
-                                    <li class="subitem">
-                                        <a href="android-green.html" title="Android Green">Android Green</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="subitem">
-                                <a href="#" title="Mac Style">
-                                    <span>Mac Style</span>
-                                </a>
-                                <ul class="submenu">
-                                    <li class="subitem">
-                                        <a href="mac.html" title="Mac Grey">Mac Grey</a>
-                                    </li>
-                                    <li class="subitem">
-                                        <a href="mac-green.html" title="Mac Dark Green">Mac Dark Green</a>
-                                    </li>
-                                    <li class="subitem">
-                                        <a href="apple.html" title="Apple">Apple</a>
-                                    </li>
-                                    <li class="subitem">
-                                        <a href="apple-black.html" title="Apple Black">Apple Black</a>
-                                    </li>
-                                    <li class="subitem">
-                                        <a href="apple-blue.html" title="Apple Blue">Apple Blue</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="toplast">
-                        <a href="index.html#contacts" title="Contact Us">Contact Us</a>
-                    </li>
-                </ul>
-            </div> <!--end menu-container-->
+
             <div id="content-wrapper">
-                hello
+                <div class="main ">
+                    <div class="sign-in">
+                        <div class="signin-box">
+                            <h2>
+                                Войти
+                            </h2>
+                            <form id="gaia_loginform" action="https://accounts.google.com/ServiceLoginAuth" method="post">
+
+                                <div class="email-div">
+                                    <label for="login">
+                                        <strong class="email-label">Имя пользователя</strong>
+                                    </label>
+                                    <input type="text" spellcheck="false" name="login" id="login" value="" placeholder="Your login..."/>
+                                </div>
+                                <div class="passwd-div">
+                                    <label for="Passwd">
+                                        <strong class="passwd-label">Пароль</strong>
+                                    </label>
+                                    <input type="password" name="Passwd" id="Passwd"/>
+                                </div>
+                                <input type="submit" class="g-button g-button-submit" name="signIn" id="signIn" value="Войти"/>
+
+                            </form>
+                            <ul>
+                                <li>
+                                    <a id="link-forgot-passwd" href="https://accounts.google.com/RecoverAccount?service=reader&continue=http%3A%2F%2Fwww.google.com%2Freader%2F" target="_top"> Забыли пароль? </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="signin-box">
+                            <h2>
+                                Нет аккаунта?
+                            </h2>
+                            <form id="gaia_loginform" action="https://accounts.google.com/ServiceLoginAuth" method="post">
+                                <input type="submit" class="g-button g-button-submit" name="signIn" id="signIn" value="Создать аккаунт"/>
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <div class="product-info reader">
+                        <div class="product-headers">
+                            <h1>Пиши и делай</h1>
+                        </div>
+                        <h3> У тебя в этой жизни много дел?
+                            Не можешь запомнить когда день рождение жены брата твоего твоюродного дядюшки?</h3>
+
+                        <img src="http://omfg.biz/omfg.jpg"  alt="OMFG"/>
+
+                        <h2>Организуй себя!</h2>
+                        <h3>Используя этот сервис ты сможешь:</h3>
+                        <ul class="features no-icon">
+                            <li>
+                                <h4> Быть на чеку </h4>
+                                <p> Никакое событие не застанет тебя врасплох. <strong>Ты будешь знать о событии</strong>.</p>
+                            </li>
+                            <li>
+                                <h4> Удивить окружающих </h4>
+                                <p> Ты помнишь обо <strong>всех</strong> важных датах.</p>
+                            </li>
+                            <li>
+                                <h4> Стать мододцом </h4>
+                                <p> Будь мужиком, <strong>*</strong>.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <!--end content-wrapper-->
             <div id="footer-wrapper">
