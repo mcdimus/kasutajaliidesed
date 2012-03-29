@@ -256,6 +256,7 @@ button.g-button, input[type="submit"].g-button {
 
 .g-button-submit:hover {
 	background-color: #59A9FF;
+    background-image: -o-linear-gradient(top, #59A9FF, #5FAFFF);
 }
 
 button, input, select, textarea {
@@ -281,6 +282,28 @@ button, input, select, textarea {
 form#regform {
     width: 300px;
     margin: auto;
+}
+
+.sign-out {
+    float: right;
+	width: auto;
+    background: #FAF7F7;
+    border: 1px solid #E5E5E5;
+    margin: 6px 12px 0px;
+    padding: 12px 12px;
+}
+
+.signout-div {
+	float: left;
+}
+
+#login-span {
+	position: relative;
+	top: 5px;
+}
+
+#signOut {
+	margin-left: 15px;
 }
 
 #footer-wrapper {
