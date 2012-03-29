@@ -82,7 +82,7 @@ div#main-wrapper {
 
 div#header-wrapper {
     background: url("../img/header-bg.png") repeat-x transparent;
-    height: 170px;
+    height: 85px;
     width: 100%;
 }
 
@@ -146,7 +146,7 @@ div#logo {
     box-shadow:         0px 11px 30px 2px black;
     border: 1px solid #888888;
     margin: auto;
-    background: whitesmoke;
+    background: #F5F5F5;
     min-height: 500px;
     width: 998px;
     behavior: url(ie-css3.htc);
@@ -163,7 +163,7 @@ div#logo {
     width: 335px;
 }
 .signin-box{
-    background: #F5F5F5;
+    background: #FAF7F7;
     border: 1px solid #E5E5E5;
     margin: 12px 12px 0px;
     padding: 20px 25px 15px;
@@ -253,6 +253,11 @@ button.g-button, input[type="submit"].g-button {
     color: #FFFFFF;
     text-shadow: 0px 1px rgba(0, 0, 0, 0.102);
 }
+
+.g-button-submit:hover {
+	background-color: #59A9FF;
+}
+
 button, input, select, textarea {
     font-family: inherit;
     font-size: inherit;
@@ -262,6 +267,11 @@ button, input, select, textarea {
     position: relative;
     text-align: justify;
     margin: 0px 400px 0px 0px;
+}
+
+.product-info h1 {
+	padding: 0;
+	margin: 0;
 }
 
 .product-info img {
@@ -356,6 +366,7 @@ ul#css3menu, ul#css3menu ul {
     -moz-border-radius:5px;
     -webkit-border-radius:5px;
     border-radius:5px;
+	behavior: url(ie-css3.htc);
 }
 
 ul#css3menu ul {
@@ -370,6 +381,7 @@ ul#css3menu ul {
     border-style:solid;
     border-color:#5f5f5f;
     padding:0;
+	behavior: url(ie-css3.htc);
 }
 ul#css3menu li:hover > * {
     display:block;
@@ -466,11 +478,13 @@ ul#css3menu li.topfirst>a{
     border-radius:4px 0 0 4px;
     -moz-border-radius:4px 0 0 4px;
     -webkit-border-radius:4px 0 0 4px;
+	behavior: url(ie-css3.htc);
 }
 ul#css3menu li.toplast>a{
     border-radius:0 4px 4px 0;
     -moz-border-radius:0 4px 4px 0;
     -webkit-border-radius:0 4px 4px 0;
+	behavior: url(ie-css3.htc);
 }
 ul#css3menu .submenu>li {
     margin:10px 0 0;
@@ -483,6 +497,7 @@ ul#css3menu .submenu {
     -webkit-border-radius:6px;
     border-color:#FFF;
     padding:0 10px 10px;
+	behavior: url(ie-css3.htc);
 }
 ul#css3menu li.subitem>a {
     background-color:#424542;
