@@ -166,7 +166,7 @@ div#logo img {
     float: right;
     width: 335px;
 }
-.signin-box{
+.signin-box {
     background: #FAF7F7;
     border: 1px solid #E5E5E5;
     margin: 12px 12px 0px;
@@ -299,7 +299,7 @@ form#regform {
 
 .signout-div {
     float: left;
-}
+}  
 
 #login-span {
     position: relative;
@@ -312,16 +312,46 @@ form#regform {
 
 
 div.tag-container {
-    padding: 5px;
-    margin: 15px;
-    border: 1px solid black;
     float: right;
-    width: 200px;
-    height: 400px;
+    width: auto;
+    background: #FAF7F7;
+    border: 1px solid #E5E5E5;
+    margin: 25px;
+    padding: 0px 25px 25px 10px;
 }
 
-button#addtag {
-    float:left;
+div.tag-container button, #newtag {
+    margin-top: 10px;
+}
+
+div.todo {
+    width: 600px;
+    padding: 0px 20px 20px;
+    margin: 20px;
+    border: 1px solid #E5E5E5;
+    background: #FAF7F7;
+}
+
+div#new-todo {
+    display: none;
+    padding-bottom: 20px;
+}
+
+div#new-todo div span {
+    font-weight: bold;
+}
+
+div#new-todo input {
+    width: auto;
+    clear: none;
+}
+
+div#new-todo textarea {
+    width: 100%;
+}
+
+div#new-todo button {
+    margin-top: 10px;
 }
 
 #footer-wrapper {
