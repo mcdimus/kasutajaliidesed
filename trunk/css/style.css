@@ -88,10 +88,14 @@ div#header-wrapper {
 
 div#logo {
     float: left;
-    width: 400px;
     margin-left: 150px;
-    margin-top: 0px;
+    margin-top: -20px;
 }
+
+div#logo img {
+	height: 105px;
+}
+
 /* User Info */
 #user-info ul {
     float: right;
