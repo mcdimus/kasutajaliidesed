@@ -42,10 +42,51 @@
                         </li>
                     </ul>
                     <button data-bind="click: deleteTags" id="deleteTags" class="g-button" name="deleteTags">Delete checked</button>
-                    <input type="text" id="newtag" name="newtag" placeholder="New tag name..." />
-                    <button data-bind="click: addTag" id="addtag" class="g-button" name="addtag">Add</button>
+                    <input type="text" id="newtag" name="newtag" class="tag-area-inputs" placeholder="New tag name..." />
+                    <button data-bind="click: addTag" id="addtag" class="g-button g-button-submit" name="addtag">Add</button>
+                </div>
+
+                <div class="main">
+                    <div class="todo" id="new-todo">
+                        <h3 class="todo-heading">New TODO</h3>
+                        <input type="checkbox" name="todo-urgent">urgent</input>
+                        <input type="checkbox" name="todo-important">important</input>
+                        <div id="todo-for-tags"><span>tags: </span></div>
+                        <input type="text" name="todo-name" placeholder="TODO name here ..."/>
+                        <input type="text" name="todo-date" placeholder="TODO date here ..."/>
+                        <textarea name="todo-text" placeholder="TODO text here ..."></textarea>
+                        <button name="todo-submit" class="g-button g-button-submit" onclick="somefunc();">Submit</button>
+                    </div>
+                    <button name="todo-add" id="todo-add" class="g-button g-button-submit" onclick="showHide()">Add TODO</button>
+                    <div class="todo">
+                        <h3 class="todo-heading">TODO #1</h2>
+                    </div>
+                    <div class="todo">
+                        <h3 class="todo-heading">TODO #2</h2>
+                    </div>
+                </div>
                     <script type="text/javascript" >
 
+                        function somefunc() {
+                            //TODO tag addenum to the new TODO on checkbox check
+
+                            // var smth = $('div.class-container input[type="checkbox"]').isChecked;
+                            // alert(smth);
+                        }
+
+                        function showHide() {
+                            var newTodoDiv = $('div#new-todo');
+                            var buttonTodoAdd = $('button#todo-add');
+                            if (buttonTodoAdd.text() == "Add TODO") {
+                                $(newTodoDiv).css('display', 'block');
+                                $(buttonTodoAdd).text('Cancel');
+                            } else {
+                                $(newTodoDiv).css('display', 'none');
+                                $(buttonTodoAdd).text('Add TODO');
+                            }
+                        }
+
+                        
                         function Tag(name, checked) {
                             return {
                                 name : ko.observable(name),
@@ -65,8 +106,6 @@
                             ]);
 
                             self.addTag = function () {
-
-                                // TODO use ko here
                                 var newTag = $('input[name=newtag]').val();
                                 if (newTag != '')
                                     self.tags.push(new Tag(newTag, false));
@@ -76,23 +115,20 @@
 
                                     return (tag.isChecked());
                                 });
-                                console.log(selectedTags[0].name());
-                                ko.utils.arrayForEach(selectedTags, function(tag) {
+                                $(selectedTags).each( function(index, tag) {
                                     self.tags.remove(tag);
                                 });
+                                // TODO delete KO? ja po4inil JQuery, t. k. 4erez KO v IE ne rabotalo.
+                                
+                                // ko.utils.arrayForEach(selectedTags, function(tag) {
+                                //     self.tags.remove(tag);
+                                // });
                             };
                         }
 
                         ko.applyBindings(new TagsViewModel());
 
                     </script>
-
-                </div>
-
-                <div class="main">
-                    Something BIG will be here!
-                </div>
-
             </div>
             <!--end content-wrapper-->
             <div id="footer-wrapper">
