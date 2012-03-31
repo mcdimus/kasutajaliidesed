@@ -338,6 +338,11 @@ div#new-todo {
 }
 
 div#new-todo div span {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+div#new-todo div span:first-child {
     font-weight: bold;
 }
 
