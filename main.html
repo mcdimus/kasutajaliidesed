@@ -42,12 +42,12 @@
                         </li>
                     </ul>
                     <button data-bind="click: deleteTags" id="deleteTags" class="g-button" name="deleteTags">Delete checked</button>
-                    <input type="text" id="newtag" name="newtag" class="tag-area-inputs" placeholder="New tag name..." />
+                    <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" class="tag-area-inputs" placeholder="New tag name..." />
                     <button data-bind="click: addTag" id="addtag" class="g-button g-button-submit" name="addtag">Add</button>
                 </div>
 
                 <div class="main">
-                    <div class="todo" id="new-todo">
+                    <div  class="todo" id="new-todo">
                         <h3 class="todo-heading">New TODO</h3>
                         <input type="checkbox" name="todo-urgent">urgent</input>
                         <input type="checkbox" name="todo-important">important</input>
@@ -58,35 +58,81 @@
                         <button name="todo-submit" class="g-button g-button-submit" onclick="somefunc();">Submit</button>
                     </div>
                     <button name="todo-add" id="todo-add" class="g-button g-button-submit" onclick="showHide()">Add TODO</button>
-                    <div class="todo">
-                        <h3 class="todo-heading">TODO #1</h2>
-                    </div>
-                    <div class="todo">
-                        <h3 class="todo-heading">TODO #2</h2>
-                    </div>
+                    
+                    <span data-bind="foreach: todos" id="todo-wrapper">
+                        <div  class="todo">
+                            <!-- TODO: rearrange and style elements -->
+                            <h3 data-bind="text: name" class="todo-heading">TODO #1</h3>
+                            <p> 
+                                <input data-bind="checked: isUrgent" type="checkbox" name="todo-urgent">urgent</input>
+                                <input data-bind="checked: isImportant" type="checkbox" name="todo-important">important</input>
+                            </p>
+                            <p>Deadline: <span data-bind="text: deadline"></span></p>
+                            <p>Description: <span data-bind="text: description"></span></p>
+                            <p>State: <span data-bind="text: state"></span></p>
+                            <p>Tags: <span data-bind="text: tagsString()"></span></p>
+                            <p> 
+                                <input data-bind="checked: isActive" type="checkbox" name="todo-urgent">Active</input>
+                            </p>
+                        </div>
+                    </span>
                 </div>
                     <script type="text/javascript" >
+                        // function showHide() {
+                        //     var newTodoDiv = $('div#new-todo');
+                        //     var buttonTodoAdd = $('button#todo-add');
+                        //     if (buttonTodoAdd.text() == "Add TODO") {
+                        //         $(newTodoDiv).css('display', 'block');
+                        //         $(buttonTodoAdd).text('Cancel');
+                        //     } else {
+                        //         $(newTodoDiv).css('display', 'none');
+                        //         $(buttonTodoAdd).text('Add TODO');
+                        //     }
+                        // }
 
+                        // refactored showHide() :
+                        (
+                            function($) {
+                                var newTodoDiv = $('div#new-todo');
+                                var buttonTodoAdd = $('button#todo-add');
+                                buttonTodoAdd.on('click', function() {
+
+                                    newTodoDiv.slideToggle();
+                                    if (buttonTodoAdd.text() == "Add TODO") {
+                                        $(buttonTodoAdd).text('Cancel');
+                                    } else {
+                                        $(buttonTodoAdd).text('Add TODO');
+                                    }
+                                });                                
+                            }
+                        )(jQuery);
                         function somefunc() {
                             //TODO tag addenum to the new TODO on checkbox check
 
                             // var smth = $('div.class-container input[type="checkbox"]').isChecked;
                             // alert(smth);
+                        } 
+
+                        function Todo(name, urgent, important, deadline, description, state, tags, active) {
+                            return {
+                                name : ko.observable(name),
+                                isUrgent : ko.observable(urgent),
+                                isImportant : ko.observable(important),
+                                deadline : ko.observable(deadline),
+                                description : ko.observable(description),
+                                state : ko.observable(state),
+                                tags : ko.observableArray(tags),
+                                isActive : ko.observable(active),
+                                tagsString : function() {
+                                    var string = '';
+                                    $(tags).each( function(index, value) {
+                                        string += value.name() + ' ';
+                                    });
+                                    return string;
+                                }
+                            };
                         }
 
-                        function showHide() {
-                            var newTodoDiv = $('div#new-todo');
-                            var buttonTodoAdd = $('button#todo-add');
-                            if (buttonTodoAdd.text() == "Add TODO") {
-                                $(newTodoDiv).css('display', 'block');
-                                $(buttonTodoAdd).text('Cancel');
-                            } else {
-                                $(newTodoDiv).css('display', 'none');
-                                $(buttonTodoAdd).text('Add TODO');
-                            }
-                        }
-
-                        
                         function Tag(name, checked) {
                             return {
                                 name : ko.observable(name),
@@ -94,9 +140,13 @@
                             };
                         }
 
-                        function TagsViewModel() {
+                        function appViewModel() {
                             var self = this;
 
+                            // ======================================================
+                            // == tag ViewModel 
+                            // ======================================================
+                            // observable variables
                             self.tags =
                                 ko.observableArray([
                                 new Tag("school",false),
@@ -105,28 +155,46 @@
                                 new Tag("work",false)
                             ]);
 
+                            self.newTagName = ko.observable("");
+
+                            // functions on observables
                             self.addTag = function () {
-                                var newTag = $('input[name=newtag]').val();
-                                if (newTag != '')
-                                    self.tags.push(new Tag(newTag, false));
+                                if (self.newTagName() != "")
+                                    self.tags.push(new Tag(self.newTagName(), false));
                             };
+
                             self.deleteTags = function() {
                                 var selectedTags = $.grep(self.tags(), function(tag) {
-
                                     return (tag.isChecked());
                                 });
+
                                 $(selectedTags).each( function(index, tag) {
                                     self.tags.remove(tag);
                                 });
-                                // TODO delete KO? ja po4inil JQuery, t. k. 4erez KO v IE ne rabotalo.
+                            };
+
+                            // ======================================================
+                            // == todo ViewModel 
+                            // ======================================================
+                            self.todos = 
+                                ko.observableArray([
+                                new Todo('TODO #1', false, true, '12:00 13.04.2012', 
+                                        'My fisrt todo. Hell yeah!', 'Pending', 
+                                        [new Tag("work",false), new Tag("school",false)], true),
+                                new Todo('TODO #2', true, false, '12:00 13.04.2012', 
+                                        'My second todo. Hell yeah!', 'Done', 
+                                        [new Tag("birthday",false), new Tag("school",false)], false),
+                                new Todo('TODO #3', true, true, '12:00 13.04.2012', 
+                                        'My third todo. Hell yeah!', 'Undone', 
+                                        [new Tag("work",false), new Tag("meeting",false)], true)
+                                ]);
+
+                            self.addTodo = function() {
                                 
-                                // ko.utils.arrayForEach(selectedTags, function(tag) {
-                                //     self.tags.remove(tag);
-                                // });
                             };
                         }
 
-                        ko.applyBindings(new TagsViewModel());
+                        ko.applyBindings(new appViewModel());
 
                     </script>
             </div>
