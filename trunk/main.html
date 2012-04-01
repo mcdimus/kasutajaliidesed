@@ -107,8 +107,8 @@
                         // Pins / unpins tags to new TODO when they are checked
                         $(function() {
                             var $divfortags = $('div#todo-for-tags');
-                            var $tag = $('div.tag-container input[type="checkbox"]');
-                            $tag.on('click', function() {
+                            var $tag = $('div.tag-container');
+                            $tag.on('click', 'input[type="checkbox"]', function() {
                                 if($(this).is(':checked')) {
                                    $(this).siblings('span').clone()
                                         .attr('id', 'todo-tag-' + $(this).siblings('span').text()).appendTo($divfortags);
