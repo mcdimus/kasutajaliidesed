@@ -15,7 +15,7 @@
             <div id="header-wrapper">
                 <div id="logo">
                     <a href="index.html" title="TODO">
-                        <img src="img/logo.png" width="70%" height="70%" alt="TODO"/>
+                        <img src="img/logo.png" alt="TODO"/>
                     </a>
                 </div>
             </div>
@@ -23,16 +23,16 @@
 
             <div id="content-wrapper">
                 <div class="main" >
-                    <form id="regform" action="main.html" autocomplete="on">
+                    <form id="regform" action="main.html" autocomplete="on" method="post">
                         <h1> Регистрация </h1>
                         <p>
                             <label for="username" class="uname" >Your username</label>
-                            <input id="username" name="username"  type="text" placeholder="mysuperusername690" />
+                            <input id="username" name="username" required="required" type="text" placeholder="mysuperusername690" />
                         </p>
                         <div id="regform_username_errorloc" class="error_strings"></div>
                         <p>
                             <label for="email" class="youmail" > Your email</label>
-                            <input id="email" name="email"  type="email" placeholder="mysupermail@mail.com"/>
+                            <input id="email" name="email"  required="required" type="email" placeholder="mysupermail@mail.com"/>
                         </p>
                         <div id="regform_email_errorloc" class="error_strings"></div>
                         <p>
@@ -52,7 +52,6 @@
                         //You should create the validator only after the definition of the HTML form
                         var frmvalidator  = new Validator("regform");
                         frmvalidator.EnableOnPageErrorDisplay();
-                        frmvalidator.EnableMsgsTogether();
 
                         frmvalidator.addValidation("username","req","Please enter your username");
                         frmvalidator.addValidation("username","maxlen=20",	"Max length for username is 20");

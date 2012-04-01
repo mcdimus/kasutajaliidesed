@@ -158,7 +158,7 @@ div#logo img {
 .main {
     max-width: 1000px;
     min-width: 780px;
-    padding: 44px;
+    padding: 40px;
     width: auto;
 }
 
@@ -337,13 +337,13 @@ div#new-todo {
     padding-bottom: 20px;
 }
 
+div#new-todo > * {
+    margin-top: 10px;
+}
+
 div#new-todo div span {
     padding-left: 5px;
     padding-right: 5px;
-}
-
-div#new-todo div span:first-child {
-    font-weight: bold;
 }
 
 div#new-todo input {
@@ -353,10 +353,6 @@ div#new-todo input {
 
 div#new-todo textarea {
     width: 100%;
-}
-
-div#new-todo button {
-    margin-top: 10px;
 }
 
 #footer-wrapper {

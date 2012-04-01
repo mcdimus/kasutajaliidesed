@@ -47,20 +47,30 @@
                 </div>
 
                 <div class="main">
-                    <div  class="todo" id="new-todo">
+                    <div class="todo" id="new-todo">
                         <h3 class="todo-heading">New TODO</h3>
-                        <input type="checkbox" name="todo-urgent">urgent</input>
-                        <input type="checkbox" name="todo-important">important</input>
-                        <div id="todo-for-tags"><span>tags: </span></div>
-                        <input type="text" name="todo-name" placeholder="TODO name here ..."/>
-                        <input type="text" name="todo-date" placeholder="TODO date here ..."/>
-                        <textarea name="todo-text" placeholder="TODO text here ..."></textarea>
-                        <button name="todo-submit" class="g-button g-button-submit">Submit</button>
+                        <label>Type:</label>
+                        <input type="checkbox" data-bind="checked: newTodoUrgent"/>urgent</input>
+                        <input type="checkbox" data-bind="checked: newTodoImportant"/>important</input>
+                        <label>Name:</label><input type="text" data-bind="value: newTodoName"/>
+                        <label>Deadline:</label><input type="text" data-bind="value: newTodoDeadline"/>
+                        <label>Description (optional): </label>
+                        <textarea data-bind="value: newTodoDescription" rows="4"></textarea>
+                        <label>State:</label>
+                        <select data-bind="value: newTodoState">
+                            <option value="Undone">Undone</option>
+                            <option value="In progress">In progress</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                        <label>Tags:</label><div id="todo-for-tags" data-bind="value: newTodoTags"></div>
+                        <button data-bind="click: addTodo" name="todo-submit" class="g-button g-button-submit">Submit</button>
                     </div>
-                    <button name="todo-add" id="todo-add" class="g-button g-button-submit" >Add TODO</button>
+                    <button name="todo-add" id="todo-add" class="g-button g-button-submit">Add TODO</button>
                     
                     <span data-bind="foreach: todos" id="todo-wrapper">
-                        <div  class="todo">
+                        <div class="todo">
                             <!-- TODO: rearrange and style elements -->
                             <h3 data-bind="text: name" class="todo-heading">TODO #1</h3>
                             <p> 
@@ -77,7 +87,7 @@
                         </div>
                     </span>
                 </div>
-                    <script type="text/javascript" >
+                    <script type="text/javascript">
                         // Shows / hides new TODO addenum field
                         (function($) {
                                 var newTodoDiv = $('div#new-todo');
@@ -96,16 +106,24 @@
 
                         // Pins / unpins tags to new TODO when they are checked
                         $(function() {
-                            $divfortags = $('div#todo-for-tags');
-                            $tag = $('div.tag-container input[type="checkbox"]');
+                            var $divfortags = $('div#todo-for-tags');
+                            var $tag = $('div.tag-container input[type="checkbox"]');
                             $tag.on('click', function() {
                                 if($(this).is(':checked')) {
-                                   $(this).siblings('span').clone().attr('id', 'todo-tag-' + $(this).siblings('span').text()).appendTo($divfortags);
+                                   $(this).siblings('span').clone()
+                                        .attr('id', 'todo-tag-' + $(this).siblings('span').text()).appendTo($divfortags);
                                 } else {
                                     $('span#todo-tag-' + $(this).siblings('span').text()).remove();
                                 }
                             });
                         });
+
+                        function Tag(name, checked) {
+                            return {
+                                name : ko.observable(name),
+                                isChecked : ko.observable(checked)
+                            };
+                        }
 
                         function Todo(name, urgent, important, deadline, description, state, tags, active) {
                             return {
@@ -124,13 +142,6 @@
                                     });
                                     return string;
                                 }
-                            };
-                        }
-
-                        function Tag(name, checked) {
-                            return {
-                                name : ko.observable(name),
-                                isChecked : ko.observable(checked)
                             };
                         }
 
@@ -184,8 +195,19 @@
                                         [new Tag("work",false), new Tag("meeting",false)], true)
                                 ]);
 
+                            self.newTodoUrgent = ko.observable();
+                            self.newTodoImportant = ko.observable();
+                            self.newTodoName = ko.observable();
+                            self.newTodoDeadline = ko.observable();
+                            self.newTodoDescription = ko.observable();
+                            self.newTodoState = ko.observable();
+                            self.newTodoTags = ko.observable();
+
+                            // TODO - tags addenum.
+
                             self.addTodo = function() {
-                                
+                                self.todos.push(new Todo(self.newTodoName(), self.newTodoUrgent(), self.newTodoImportant(),
+                                    self.newTodoDeadline(), self.newTodoDescription(), self.newTodoState(), [new Tag(self.newTodoTags(), false)],  false));
                             };
                         }
 

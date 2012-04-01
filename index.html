@@ -6,7 +6,7 @@
         <title>Kasutajaliidesed</title>
 
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"> </script>
-        <script type="text/javascript" src="js/tmp.js" ></script>
+        <script type="text/javascript" src="js/gen_validatorv4.js" ></script>
         <link rel="stylesheet" href="css/style.css"/>
     </head>
     <body>
@@ -44,21 +44,23 @@
                             <h2>
                                 Войти
                             </h2>
-                            <form id="gaia_loginform" action="main.html" method="post">
+                            <form id="loginForm" action="">
 
                                 <div class="email-div">
                                     <label for="login">
-                                        <strong class="email-label">Имя пользователя</strong>
+                                        <strong class="login-label">Имя пользователя</strong>
                                     </label>
-                                    <input type="text" spellcheck="false" name="login" id="login" value="" placeholder="Your login"/>
+                                    <input type="text" spellcheck="false" required="required" name="login" id="login" placeholder="Your login"/>
+                                    <div id="loginForm_login_errorloc" class="error_strings"></div>
                                 </div>
                                 <div class="passwd-div">
                                     <label for="Passwd">
                                         <strong class="passwd-label">Пароль</strong>
                                     </label>
-                                    <input type="password" name="Passwd" id="Passwd" placeholder="Your password"/>
+                                    <input type="password" required="required" name="passwd" id="passwd" placeholder="Your password"/>
+                                    <div id="loginForm_passwd_errorloc" class="error_strings"></div>
                                 </div>
-                                <input type="submit" class="g-button g-button-submit" name="signIn" id="signIn" value="Войти"/>
+                                <input type="submit" class="g-button g-button-submit" name="signIn" id="signIn" value="Sign in"/>
 
                             </form>
                             <ul>
@@ -71,8 +73,8 @@
                             <h2>
                                 Нет аккаунта?
                             </h2>
-                            <form id="gaia_loginform" action="register.html" method="get">
-                                <input type="submit" class="g-button g-button-submit" name="signIn" id="signIn" value="Создать аккаунт"/>
+                            <form id="gaia_redirform" action="register.html" method="get">
+                                <input type="submit" class="g-button g-button-submit" name="register" id="register" value="Создать аккаунт"/>
                             </form>
 
                         </div>
@@ -123,8 +125,41 @@
             </div>
             <!--end footer-wrapper-->
         </div>  <!--end main wrapper-->
+        <script type="text/javascript">
+            var frmvalidator  = new Validator("loginForm");
+            frmvalidator.EnableOnPageErrorDisplay();
+            
+            frmvalidator.addValidation("login","req","Please enter your username");
+            frmvalidator.addValidation("passwd","req","Please enter your password");
 
+            (function() {
+                var usersJSON = '[ { "username" : "nail", "password" : "test1" , "email" : "naiL@example.com" }, { "username" : "dmitri", "password" : "test2", "email" : "dmitri@example.com" }, { "username" : "aleksei", "password" : "test3", "email" : "aleksei@example.com" } ]    ';
+                var users = $.parseJSON(usersJSON);
+                $('input#signIn').on('click', function() {
+                    var $loginErrPlace = $('div#loginForm_login_errorloc');
+                    var $passwdErrPlace = $('div#loginForm_passwd_errorloc');
+                    var username = $('input#login').val();
+                    var password = $('input#passwd').val();
+                    $loginErrPlace.text('');
+                    $passwdErrPlace.text('');
+                    $.each(users, function(index, user) {
+                        if (username == user.username) {
+                            if (password == user.password) {
+                                redirect();
+                            } else {
+                                $passwdErrPlace.text('wrong password');
+                            }
+                        }
+                    });
+                });
+            })();
 
+            function redirect() {
+                                    location.replace("http://stackoverflow.com");
+                                    window.location.href = "http://stackoverflow.com";
+
+            }
+        </script>
         <div id="bottomPanel" > Bottom panel here.</div>
 
     </body>
