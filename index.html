@@ -29,7 +29,7 @@
                             <h2>
                                 Войти
                             </h2>
-                            <form id="loginForm" action="">
+                            <form id="loginForm" action="main.html" method="post">
 
                                 <div class="email-div">
                                     <label for="login">
@@ -45,14 +45,14 @@
                                     <input type="password" required="required" name="passwd" id="passwd" placeholder="Your password"/>
                                     <div id="loginForm_passwd_errorloc" class="error_strings"></div>
                                 </div>
+                                <!-- <button class="g-button g-button-submit" name="signIn" id="signIn">Sign in</button> -->
                                 <input type="submit" class="g-button g-button-submit" name="signIn" id="signIn" value="Sign in"/>
-
                             </form>
-                            <ul>
+                            <!-- <ul>
                                 <li>
                                     <a id="link-forgot-passwd" href="#" target="_top"> Забыли пароль? </a>
                                 </li>
-                            </ul>
+                            </ul> -->
                         </div>
                         <div class="signin-box">
                             <h2>
@@ -118,24 +118,26 @@
             frmvalidator.addValidation("passwd","req","Please enter your password");
 
             (function() {
-                var usersJSON = '[ { "username" : "nail", "password" : "test1" , "email" : "naiL@example.com" }, { "username" : "dmitri", "password" : "test2", "email" : "dmitri@example.com" }, { "username" : "aleksei", "password" : "test3", "email" : "aleksei@example.com" } ]    ';
-                var users = $.parseJSON(usersJSON);
-                $('input#signIn').on('click', function() {
-                    var $loginErrPlace = $('div#loginForm_login_errorloc');
-                    var $passwdErrPlace = $('div#loginForm_passwd_errorloc');
-                    var username = $('input#login').val();
-                    var password = $('input#passwd').val();
-                    $loginErrPlace.text('');
+                var usersJSON = '[ { "username" : "nail", "password" : "test1" , "email" : "naiL@example.com" }, { "username" : "dmitri", "password" : "test2", "email" : "dmitri@example.com" }, { "username" : "aleksei", "password" : "test3", "email" : "aleksei@example.com" } ]';
+                var users = $.parseJSON(usersJSON),
+                    $loginForm = $('#loginForm');
+                $loginForm.submit( function(obj) {
+                    var $passwdErrPlace = $('div#loginForm_passwd_errorloc'),
+                        username = $('input#login').val(),
+                        password = $('input#passwd').val(),
+                        found = false;
                     $passwdErrPlace.text('');
                     $.each(users, function(index, user) {
                         if (username == user.username) {
                             if (password == user.password) {
-                                redirect();
-                            } else {
-                                $passwdErrPlace.text('wrong password');
+                                found = true;
                             }
                         }
                     });
+                    if(!found) {
+                        obj.preventDefault();
+                        $passwdErrPlace.text('wrong login and/or password');
+                    }
                 });
             })();
 
