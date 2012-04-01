@@ -64,7 +64,7 @@
                             <option value="Completed">Completed</option>
                             <option value="Cancelled">Cancelled</option>
                         </select>
-                        <label>Tags:</label><div id="todo-for-tags" data-bind="value: newTodoTags"></div>
+                        <label>Tags:</label><div id="todo-for-tags" data-bind="text: newTodoTags"></div>
                         <button data-bind="click: addTodo" name="todo-submit" class="g-button g-button-submit">Submit</button>
                     </div>
                     <button name="todo-add" id="todo-add" class="g-button g-button-submit">Add TODO</button>
@@ -103,15 +103,16 @@
                             }
                         )(jQuery);
 
-
                         // Pins / unpins tags to new TODO when they are checked
                         $(function() {
                             var $divfortags = $('div#todo-for-tags');
                             var $tag = $('div.tag-container');
                             $tag.on('click', 'input[type="checkbox"]', function() {
                                 if($(this).is(':checked')) {
-                                   $(this).siblings('span').clone()
-                                        .attr('id', 'todo-tag-' + $(this).siblings('span').text()).appendTo($divfortags);
+                                   $(this).siblings('span')
+                                        .clone()
+                                        .attr('id', 'todo-tag-' + $(this).siblings('span').text())
+                                        .appendTo($divfortags);
                                 } else {
                                     $('span#todo-tag-' + $(this).siblings('span').text()).remove();
                                 }
@@ -126,6 +127,9 @@
                         }
 
                         function Todo(name, urgent, important, deadline, description, state, tags, active) {
+                            if (!active) {
+                                active = true;
+                            }
                             return {
                                 name : ko.observable(name),
                                 isUrgent : ko.observable(urgent),
@@ -206,8 +210,25 @@
                             // TODO - tags addenum.
 
                             self.addTodo = function() {
-                                self.todos.push(new Todo(self.newTodoName(), self.newTodoUrgent(), self.newTodoImportant(),
-                                    self.newTodoDeadline(), self.newTodoDescription(), self.newTodoState(), [new Tag(self.newTodoTags(), false)],  false));
+                                var tags = new Array();
+                                $('div#todo-for-tags')
+                                    .children()
+                                    .each( function(index,value) {
+                                        tags.push(new Tag($(value).text(), false));
+                                    }
+                                );
+                                self.todos.push(
+                                    new Todo(
+                                        self.newTodoName(), 
+                                        self.newTodoUrgent(), 
+                                        self.newTodoImportant(),
+                                        self.newTodoDeadline(), 
+                                        self.newTodoDescription(), 
+                                        self.newTodoState(), 
+                                        tags,  
+                                        false
+                                    )
+                                );
                             };
                         }
 
