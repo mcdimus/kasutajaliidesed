@@ -17,37 +17,54 @@
                         <img src="img/logo.png" alt="TODO"/>
                     </a>
                 </div>
-                <div class="sign-out">
-                    <form id="signout-form" action="index.html" method="post">
-                        <div class="signout-div">
-                            <span id="login-span">
-                                User:
-                                <strong class="login-label">Username</strong>
-                            </span>
-                            <input type="hidden" spellcheck="false" name="login" value=""/>
-                        </div>
-                        <input type="submit" class="g-button g-button-submit" name="signOut" id="signOut" value="Sign out"/>
-                    </form>
-                </div>
             </div>
             <!--end header-wrapper-->
 
             <div id="content-wrapper">
-                <div class="tag-container" >
-                    <h3>Tags</h3>
-                    <ul data-bind="foreach: tags">
-                        <li>
-                            <input type="checkbox" data-bind="checked: isChecked" />
-                            <span data-bind="text: name"></span>
-                        </li>
-                    </ul>
-                    <button data-bind="click: deleteTags" id="deleteTags" class="g-button" name="deleteTags">Delete checked</button>
-                    <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" class="tag-area-inputs" placeholder="New tag name..." />
-                    <button data-bind="click: addTag" id="addtag" class="g-button g-button-submit" name="addtag">Add</button>
+                <div class="right-panel">
+                <div class="sign-out fineBox">
+                    <form id="signout-form" action="index.html" method="post">
+                        <div class="signout-div">
+                            <span id="login-span">
+                                <strong class="login-label">User:</strong>
+                                <span>Username</span>
+                            </span>
+                            <input type="hidden" name="login" value=""/>
+                        </div>
+                        <input type="submit" class="g-button g-button-submit" name="signOut" id="signOut" value="Sign out"/>
+                    </form>
                 </div>
+                    <div class="tag-container fineBox" >
+                        <h3>Tags</h3>
+                        <ul data-bind="foreach: tags">
+                            <li>
+                                <input type="checkbox" data-bind="checked: isChecked" />
+                                <span data-bind="text: name"></span>
+                            </li>
+                        </ul>
+                        <div>
+                        <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag name..." />
+                            <button data-bind="click: addTag" id="addtag" class="g-button g-button-submit" name="addtag">Add</button>
+                            <button data-bind="click: deleteTags" id="deleteTags" class="g-button" name="deleteTags">Delete checked</button>
+                        </div>
+                    </div>
 
+                    <div class="search-form fineBox">
+                        <h3>Search</h3>
+                        <input type="text" id="search-keyword" name="search-keyword" placeholder="keyword" />
+                        <div>
+                            <button class="g-button g-button-submit" name="search" id="search">Search</button>
+                            <button class="g-button" name="show-advanced-search" id="advanced-search-show">Advanced search</button>
+                        </div>
+                    </div>
+                </div>
+                    <div class="advanced-search-form fineBox">
+                        <h3>Advanced search</h3>
+                        <input type="text" placeholder="keywords ..." />
+                        <button class="g-button g-button-submit" name="advanced-search" id="advanced-search">Search</button>
+                    </div>
                 <div class="main">
-                    <div class="todo" id="new-todo">
+                    <div class="todo fineBox" id="new-todo">
                         <h3 class="todo-heading">New TODO</h3>
                         <label>Type:</label>
                         <input type="checkbox" data-bind="checked: newTodoUrgent"/>urgent</input>
@@ -68,9 +85,9 @@
                         <button data-bind="click: addTodo" name="todo-submit" class="g-button g-button-submit">Submit</button>
                     </div>
                     <button name="todo-add" id="todo-add" class="g-button g-button-submit">Add TODO</button>
-                    
+
                     <span data-bind="foreach: todos" id="todo-wrapper">
-                        <div class="todo">
+                        <div class="todo fineBox">
                             <!-- TODO: rearrange and style elements -->
                             <h3 data-bind="text: name" class="todo-heading">TODO #1</h3>
                             <p> 
@@ -88,16 +105,17 @@
                     </span>
                 </div>
                     <script type="text/javascript">
-                        // Shows / hides new TODO addenum field
+
+                        // Shows / hides new TODO addenum form
                         (function($) {
-                                var newTodoDiv = $('div#new-todo');
-                                var buttonTodoAdd = $('button#todo-add');
-                                buttonTodoAdd.on('click', function() {
-                                    newTodoDiv.slideToggle();
-                                    if (buttonTodoAdd.text() == "Add TODO") {
-                                        $(buttonTodoAdd).text('Cancel');
+                                var $newTodoDiv = $('div#new-todo');
+                                var $buttonTodoAdd = $('button#todo-add');
+                                $buttonTodoAdd.on('click', function() {
+                                    $newTodoDiv.slideToggle();
+                                    if ($buttonTodoAdd.text() == "Add TODO") {
+                                        $buttonTodoAdd.text('Cancel');
                                     } else {
-                                        $(buttonTodoAdd).text('Add TODO');
+                                        $buttonTodoAdd.text('Add TODO');
                                     }
                                 });                                
                             }
@@ -118,6 +136,14 @@
                                 }
                             });
                         });
+                        
+                        // Shows / hides advanced search form
+                        (function() {
+                            $('#advanced-search-show').on('click', function() {
+                                $('.advanced-search-form').toggle();
+                                // console.log($('div#todo-wrapper span[data-bind="lala"]'));
+                            });
+                        })();
 
                         function Tag(name, checked) {
                             return {

@@ -288,22 +288,28 @@ form#regform {
     margin: auto;
 }
 
-.sign-out {
-    float: right;
+.fineBox {
     width: auto;
     background: #FAF7F7;
     border: 1px solid #E5E5E5;
-    margin: 6px 12px 0px;
+}
+
+.sign-out {
+    margin: 25px;
     padding: 12px 12px;
 }
 
 .signout-div {
     float: left;
-}  
+}
+
+#signOut {
+    margin-left: 20px;
+}
 
 #login-span {
     position: relative;
-    top: 5px;
+    top: 6px;
 }
 
 #signOut {
@@ -311,25 +317,44 @@ form#regform {
 }
 
 
-div.tag-container {
+div.right-panel {
     float: right;
-    width: auto;
-    background: #FAF7F7;
-    border: 1px solid #E5E5E5;
+}
+
+div.right-panel button, #newtag {
+    margin-top: 10px;
+
+}
+
+div.tag-container, div.search-form, div.advanced-search-form {
     margin: 25px;
     padding: 0px 25px 25px 10px;
 }
 
-div.tag-container button, #newtag {
-    margin-top: 10px;
+#newtag ,#search-keyword {
+    padding: 0px;
+}
+
+div.advanced-search-form {
+    display: none;
+    position: fixed;
+    margin-top: 80px;
+    margin-left: 50px;
+    width:300px;
+}
+
+button#advanced-search-show {
+    margin-left: 5px;
+}
+
+button#deleteTags {
+    margin-left: 25px;
 }
 
 div.todo {
-    width: 600px;
-    padding: 0px 20px 20px;
+    width: 630px;
+    padding: 0px 20px;
     margin: 20px;
-    border: 1px solid #E5E5E5;
-    background: #FAF7F7;
 }
 
 div#new-todo {
