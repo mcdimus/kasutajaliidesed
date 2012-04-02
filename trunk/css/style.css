@@ -300,20 +300,16 @@ form#regform {
 }
 
 .signout-div {
-    float: left;
-}
-
-#signOut {
-    margin-left: 20px;
+    margin-bottom: 7px;
 }
 
 #login-span {
     position: relative;
-    top: 6px;
+    top: 5px;
 }
 
 #signOut {
-    margin-left: 15px;
+    float:right;
 }
 
 
@@ -327,11 +323,11 @@ div.right-panel button, #newtag {
 }
 
 div.tag-container, div.search-form, div.advanced-search-form {
-    margin: 25px;
-    padding: 0px 25px 25px 10px;
+    margin: 20px;
+    padding: 0px 20px 20px;
 }
 
-#newtag ,#search-keyword {
+#newtag, #search-keyword {
     padding: 0px;
 }
 
@@ -343,16 +339,13 @@ div.advanced-search-form {
     width:300px;
 }
 
-button#advanced-search-show {
+#deleteTags, #advanced-search-show {
     margin-left: 5px;
-}
-
-button#deleteTags {
-    margin-left: 25px;
+    float: right;
 }
 
 div.todo {
-    width: 630px;
+    width: 620px;
     padding: 0px 20px;
     margin: 20px;
 }
