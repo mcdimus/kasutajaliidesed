@@ -8,49 +8,31 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"> </script>
         <script type="text/javascript" src="http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.0.0.debug.js"> </script>
         <script type="text/javascript" src="js/jquery.pagination.js"></script>
+        <script type="text/javascript" src="js/pagination.js"></script>
         <script type="text/javascript" src="js/jquery.json-2.3.js"></script>
 
         <link rel="stylesheet" href="css/pagination.css" />
         <link rel="stylesheet" href="css/style.css"/>
 
         <script type="text/javascript">
-            // test data for pagination
-            var members = [
-                ['Fred G. Aandahl', '1951-1953', 'North Dakota', 'Republican', '1897-1966'],
-                ['Watkins Moorman Abbitt', '1948-1973', 'Virginia', 'Democratic', '1908-1998'],
-                ['Amos Abbott', '1843-1849', 'Massachusetts', 'Whig', '1786-1868'],
-                ['Jo Abbott', '1887-1897', 'Texas', 'Democratic', '1840-1908'],
-                ['Joel Abbott', '1817-1825', 'Georgia', 'Democratic-Republican', '1776-1826'],
-                ['Josiah Gardner Abbott', '1876-1877', 'Massachusetts', 'Democratic', '1841-1891'],
-                ['Nehemiah Abbott', '1857-1859', 'Maine', 'Republican', '1804-1877'],
-                ['James Abdnor', '1973-1981', 'South Dakota', 'Republican', '1923-'],
-                ['Pete Abele', '1963-1965', 'Ohio', 'Republican', '1916-2000'],
-                ['James Abercrombie', '1851-1855', 'Alabama', 'Whig', '1795-1861'],
-                ['John Abercrombie', '1913-1917', 'Alabama', 'Democratic', '1866-1940'],
-                ['Charles Laban Abernethy', '1922-1935', 'North Carolina', 'Democratic', '1872-1955'],
-                ['Thomas Abernethy', '1943-1973', 'Mississippi', 'Democratic', '1903-1998'],
-                ['James Abourezk', '1971-1973', 'South Dakota', 'Democratic', '1931-'],
-                ['Bella Abzug', '1971-1977', 'New York', 'Democratic', '1920-1998']
-
-            ];
 
             var todosJSON = [
                 {"name":"TODO #1", "deadline":"12:00 13.04.2012", "description":"My fisrt todo. Hell yeah!",
                     "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
                 {"name":"TODO #2", "deadline":"12:00 13.04.2012", "description":"My second todo. Hell yeah!",
                     "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
-                {"name":"TODO #1", "deadline":"12:00 13.04.2012", "description":"My third todo. Hell yeah!",
+                {"name":"TODO #3", "deadline":"12:00 13.04.2012", "description":"My third todo. Hell yeah!",
                     "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
-                {"name":"TODO #1", "deadline":"12:00 13.04.2012", "description":"My fourth todo. Hell yeah!",
+                {"name":"TODO #4", "deadline":"12:00 13.04.2012", "description":"My fourth todo. Hell yeah!",
                     "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
-                {"name":"TODO #1", "deadline":"12:00 13.04.2012", "description":"My fifth todo. Hell yeah!",
+                {"name":"TODO #5", "deadline":"12:00 13.04.2012", "description":"My fifth todo. Hell yeah!",
                     "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"}
             ];
 
             var todosJSONstring = $.toJSON(todosJSON);
 
             $(document).ready(function() {
-            
+
                 // Shows / hides new todo addenum form
                 var $newTodoDiv = $('div#new-todo'),
                 $buttonTodoAdd = $('button#todo-add');
@@ -80,12 +62,12 @@
                     $clickedSpan = $(this);
                     if($clickedSpan.attr('data-clicked') == 'false') {
                         $clickedSpan.attr('data-clicked', 'true')
-                            .addClass('clicked')
-                            .clone().attr('id', 'todo-tag-' + $clickedSpan.text())
-                            .appendTo($('div#todo-for-tags-hidden'));
+                        .addClass('clicked')
+                        .clone().attr('id', 'todo-tag-' + $clickedSpan.text())
+                        .appendTo($('div#todo-for-tags-hidden'));
                     } else {
                         $clickedSpan.attr('data-clicked', 'false')
-                            .removeClass('clicked');
+                        .removeClass('clicked');
                         $('span#todo-tag-' + $clickedSpan.text()).remove();
                     }
                 });
@@ -104,8 +86,8 @@
                 $tag.on('click', 'input[type="checkbox"]', function() {
                     if($(this).is(':checked')) {
                         $(this).siblings('span').clone()
-                            .attr('id', 'todo-tag-' + $(this).siblings('span').text())
-                            .appendTo($divfortags);
+                        .attr('id', 'todo-tag-' + $(this).siblings('span').text())
+                        .appendTo($divfortags);
                     } else {
                         $('span#todo-tag-' + $(this).siblings('span').text()).remove();
                     }
@@ -113,7 +95,7 @@
 
                 // Shows / hides tag checkboxes
                 var $deleteTags = $('#deleteTags');
-                    $('#deleteTags').on('click', function() {
+                $('#deleteTags').on('click', function() {
                     if ($deleteTags.text() == "Edit") {
                         $deleteTags.text('Delete checked');
                         $('div.tag-container input[type="checkbox"]').removeClass('tag-checkbox-hidden');
@@ -130,28 +112,28 @@
                     };
                 }
 
-                function Todo(name, urgent, important, deadline, description, state, tags, active) {
-                    if (!active) {
-                        active = true;
-                    }
-                    return {
-                        name : ko.observable(name),
-                        isUrgent : ko.observable(urgent),
-                        isImportant : ko.observable(important),
-                        deadline : ko.observable(deadline),
-                        description : ko.observable(description),
-                        state : ko.observable(state),
-                        tags : ko.observableArray(tags),
-                        isActive : ko.observable(active),
-                        tagsString : function() {
-                            var string = '';
-                            $(tags).each( function(index, value) {
-                                string += value.name() + ' ';
-                            });
-                            return string;
-                        }
-                    };
-                }
+//                function Todo(name, urgent, important, deadline, description, state, tags, active) {
+//                    if (!active) {
+//                        active = true;
+//                    }
+//                    return {
+//                        name : ko.observable(name),
+//                        isUrgent : ko.observable(urgent),
+//                        isImportant : ko.observable(important),
+//                        deadline : ko.observable(deadline),
+//                        description : ko.observable(description),
+//                        state : ko.observable(state),
+//                        tags : ko.observableArray(tags),
+//                        isActive : ko.observable(active),
+//                        tagsString : function() {
+//                            var string = '';
+//                            $(tags).each( function(index, value) {
+//                                string += value.name() + ' ';
+//                            });
+//                            return string;
+//                        }
+//                    };
+//                }
 
                 function appViewModel() {
                     var self = this;
@@ -187,95 +169,87 @@
                         });
                     };
 
-                    // ======================================================
-                    // == todo ViewModel
-                    // ======================================================
-                    self.todos =
-                        ko.observableArray([
-                        new Todo('TODO #1', false, true, '12:00 13.04.2012',
-                        'My fisrt todo. Hell yeah!', 'Pending',
-                        [new Tag("work",false), new Tag("school",false)], true),
-                        new Todo('TODO #2', true, false, '12:00 13.04.2012',
-                        'My second todo. Hell yeah!', 'Done',
-                        [new Tag("birthday",false), new Tag("school",false)], false),
-                        new Todo('TODO #3', true, true, '12:00 13.04.2012',
-                        'My third todo. Hell yeah!', 'Undone',
-                        [new Tag("work",false), new Tag("meeting",false)], true)
-                    ]);
-
-                    self.newTodoUrgent = ko.observable();
-                    self.newTodoImportant = ko.observable();
-                    self.newTodoName = ko.observable();
-                    self.newTodoDeadline = ko.observable();
-                    self.newTodoDescription = ko.observable();
-                    self.newTodoState = ko.observable();
-                    self.newTodoTags = ko.observable();
-
-                    self.addTodo = function() {
-                        var tags = new Array();
-                        $('div#todo-for-tags-hidden')
-                        .children()
-                        .each( function(index,value) {
-                            tags.push(new Tag($(value).text(), false));
-                        }
-                    );
-                        self.todos.push(
-                        new Todo(
-                        self.newTodoName(),
-                        self.newTodoUrgent(),
-                        self.newTodoImportant(),
-                        self.newTodoDeadline(),
-                        self.newTodoDescription(),
-                        self.newTodoState(),
-                        tags,
-                        false
-                    )
-                    );
-                    };
+//                    // ======================================================
+//                    // == todo ViewModel
+//                    // ======================================================
+//                    self.todos =
+//                        ko.observableArray([
+//                        new Todo('TODO #1', false, true, '12:00 13.04.2012',
+//                        'My fisrt todo. Hell yeah!', 'Pending',
+//                        [new Tag("work",false), new Tag("school",false)], true),
+//                        new Todo('TODO #2', true, false, '12:00 13.04.2012',
+//                        'My second todo. Hell yeah!', 'Done',
+//                        [new Tag("birthday",false), new Tag("school",false)], false),
+//                        new Todo('TODO #3', true, true, '12:00 13.04.2012',
+//                        'My third todo. Hell yeah!', 'Undone',
+//                        [new Tag("work",false), new Tag("meeting",false)], true)
+//                    ]);
+//
+//                    self.newTodoUrgent = ko.observable();
+//                    self.newTodoImportant = ko.observable();
+//                    self.newTodoName = ko.observable();
+//                    self.newTodoDeadline = ko.observable();
+//                    self.newTodoDescription = ko.observable();
+//                    self.newTodoState = ko.observable();
+//                    self.newTodoTags = ko.observable();
+//
+//                    self.addTodo = function() {
+//                        var tags = new Array();
+//                        $('div#todo-for-tags-hidden')
+//                        .children()
+//                        .each( function(index,value) {
+//                            tags.push(new Tag($(value).text(), false));
+//                        }
+//                    );
+//                        self.todos.push(
+//                        new Todo(
+//                        self.newTodoName(),
+//                        self.newTodoUrgent(),
+//                        self.newTodoImportant(),
+//                        self.newTodoDeadline(),
+//                        self.newTodoDescription(),
+//                        self.newTodoState(),
+//                        tags,
+//                        false
+//                    )
+//                    );
+//                    };
                 }
 
                 ko.applyBindings(new appViewModel());
 
+                $('#addTodo').on('click', function() {
+                    var todo = {};
+                    todo.urgent = $('input#urgent').attr('checked');
+                    todo.important = $('input#important').attr('checked');
+                    todo.name = $('input#name').val();
+                    todo.deadline = $('input#deadline').val();
+                    todo.description = $('textarea#description').val();
+                    todo.state = $('select#state').val();
+                    todo.active = 'checked';
+                    todo.tags = 'dasd';
 
-                /**
-                 * Callback function that displays the content.
-                 *
-                 * Gets called every time the user clicks on a pagination link.
-                 *
-                 * @param {int}page_index New Page index
-                 * @param {jQuery} jq the container with the pagination links as a jQuery object
-                 */
-//                function pageselectCallback(page_index, jq){
-//                    // Get number of elements per pagionation page from options
-//                    var items_per_page = opt.items_per_page;
-//                    var max_elem = Math.min((page_index+1) * items_per_page, members.length);
-//                    var newcontent = '';
-//
-//                    // Iterate through a selection of the content and build an HTML string
-//                    for(var i=page_index*items_per_page;i<max_elem;i++)
-//                    {
-//                        newcontent += '<dt>' + members[i][0] + '</dt>';
-//                        newcontent += '<dd class="state">' + members[i][2] + '</dd>';
-//                        newcontent += '<dd class="party">' + members[i][3] + '</dd>';
-//                    }
-//
-//                    // Replace old content with new content
-//                    $('#Searchresult').html(newcontent);
-//
-//                    // Prevent click eventpropagation
-//                    return false;
-//                }
-//                //When document has loaded, initialize pagination and form
-//                var opt = {
-//                    callback: pageselectCallback,
-//                    items_per_page: 5,
-//                    num_display_entries: 5,
-//                    num_edge_entries: 2,
-//                    prev_text: "Prev",
-//                    next_text: "Next"
-//                };
-//                // Create pagination element with options from var
-//                $("#Pagination").pagination(members.length, opt);
+                    todosJSON.unshift(todo); //adds new items to the beginning of an array
+                    displayTodos();
+
+                });
+
+                //When document has loaded, initialize pagination and form
+                var pagination_options = {
+                    callback: pageselectCallback,
+                    items_per_page: 2,
+                    num_display_entries: 5,
+                    num_edge_entries: 1,
+                    prev_text: "Prev",
+                    next_text: "Next",
+                    data_container: "#todo-wrapper"
+                };
+
+                function displayTodos() {
+                    // Create pagination element with options from var
+                    $("#Pagination").pagination(todosJSON, pagination_options);
+                }
+                displayTodos();
             });
         </script>
     </head>
@@ -294,11 +268,11 @@
 
                 <div class="sign-out fineBox">
                     <form id="signout-form" action="index.html" method="post">
-                            <span id="username-span">
-                                <strong>User:</strong>
-                                <span>Username</span>
-                            </span>
-                            <input type="hidden" name="login" value=""/>
+                        <span id="username-span">
+                            <strong>User:</strong>
+                            <span>Username</span>
+                        </span>
+                        <input type="hidden" name="login" value=""/>
                         <input type="submit" class="g-button g-button-submit" name="signOut" id="signOut" value="Sign out"/>
                     </form>
                 </div> <!--end of sign-out -->
@@ -312,12 +286,12 @@
                                 <span data-bind="text: name"></span>
                             </li>
                         </ul>
-                            <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag name..." />
+                        <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag name..." />
                         <button data-bind="click: addTag" id="addtag" class="g-button g-button-submit" name="addtag">Add</button>
                         <button data-bind="click: deleteTags" id="deleteTags" class="g-button" name="deleteTags">Edit</button>
                     </div> <!--end of tag-container -->
                 </div> <!--end of right-panel -->
-                
+
                 <div class="main">
                     <button name="todo-add" id="todo-add" class="g-button g-button-submit">Add TODO</button>
                     <div class="search-form">
@@ -332,22 +306,17 @@
                         <button class="g-button g-button-submit" name="advanced-search" id="advanced-search">Search</button>
                     </div>
 
-
-<!--                    <div id="Pagination" class="pagination"></div>
-                    <br />
-                    <dl id="Searchresult"></dl>-->
-
                     <div class="todo fineBox" id="new-todo">
-                        <h3 class="todo-heading">New TODO</h3>
+<!--                        <h3 class="todo-heading">New TODO</h3>
                         <label>Type:</label>
-                        <input type="checkbox" data-bind="checked: newTodoUrgent"/>urgent</input>
-                        <input type="checkbox" data-bind="checked: newTodoImportant"/>important</input>
-                        <label>Name:</label><input type="text" data-bind="value: newTodoName"/>
-                        <label>Deadline:</label><input type="text" data-bind="value: newTodoDeadline"/>
+                        <input id="urgent" type="checkbox" data-bind="checked: newTodoUrgent" />urgent
+                        <input id="important" type="checkbox" data-bind="checked: newTodoImportant"/>important
+                        <label>Name:</label><input id="name" type="text" data-bind="value: newTodoName"/>
+                        <label>Deadline:</label><input id="deadline" type="text" data-bind="value: newTodoDeadline"/>
                         <label>Description (optional): </label>
-                        <textarea data-bind="value: newTodoDescription" rows="4"></textarea>
+                        <textarea id="description" data-bind="value: newTodoDescription" rows="4"></textarea>
                         <label>State:</label>
-                        <select data-bind="value: newTodoState">
+                        <select id="state" data-bind="value: newTodoState">
                             <option value="Undone">Undone</option>
                             <option value="In progress">In progress</option>
                             <option value="Pending">Pending</option>
@@ -357,28 +326,75 @@
                         <label>Tags:</label>
                         <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
                         <div id="todo-for-tags-hidden" data-bind="text: newTodoTags"></div>
-                        <button data-bind="click: addTodo" name="todo-submit" class="g-button g-button-submit" id="addTodo">Submit</button>
+                        <button data-bind="click: addTodo" name="todo-submit" class="g-button g-button-submit" id="addTodo">Submit</button>-->
+                        <h3 class="todo-heading">New TODO</h3>
+                        <label>Type:</label>
+                        <input id="urgent" type="checkbox" />urgent
+                        <input id="important" type="checkbox" />important
+                        <label>Name:</label><input id="name" type="text" />
+                        <label>Deadline:</label><input id="deadline" type="text" />
+                        <label>Description (optional): </label>
+                        <textarea id="description" rows="4"></textarea>
+                        <label>State:</label>
+                        <select id="state" >
+                            <option value="Undone">Undone</option>
+                            <option value="In progress">In progress</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                        <label>Tags:</label>
+                        <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
+                        <div id="todo-for-tags-hidden" ></div>
+                        <button  name="todo-submit" class="g-button g-button-submit" id="addTodo">Submit</button>
                     </div> <!--end of new-todo -->
 
-                    <div data-bind="foreach: todos" id="todo-wrapper">
-                        <div class="todo fineBox">
-                            <!-- TODO: rearrange and style elements -->
-                            <h3 data-bind="text: name" class="todo-heading">TODO #1</h3>
-                            <p>
-                                <input data-bind="checked: isUrgent" type="checkbox" name="todo-urgent">urgent</input>
-                                <input data-bind="checked: isImportant" type="checkbox" name="todo-important">important</input>
-                            </p>
-                            <p>Deadline: <span data-bind="text: deadline"></span></p>
-                            <p>Description: <span data-bind="text: description"></span></p>
-                            <p>State: <span data-bind="text: state"></span></p>
-                            <p>Tags: <span data-bind="text: tagsString()"></span></p>
-                            <p>
-                                <input data-bind="checked: isActive" type="checkbox" name="todo-urgent">Active</input>
-                            </p>
-                        </div>                
-                    </div> <!--end of todo-wrapper -->
+                    <div>
+                        Show on page: <select id="showOnPage">
+                            <option>2</option>
+                            <option>5</option>
+                            <option>10</option>
+                            <option>20</option>
+                            <option>30</option>
+                        </select>
+                        Sort by: <select id="sortBy">
+                            <option>Name</option>
+                            <option>Description</option>
+                            <option>bla</option>
+                            <option>bla</option>
+                            <option>bla</option>
+                        </select>
+
+
+                    </div>
+                    <div id="Pagination" class="pagination"></div>
+
+                    <!--                    <div data-bind="foreach: todos" id="todo-wrapper">
+                                            <div class="todo fineBox">
+                                                 TODO: rearrange and style elements
+                                                <h3 data-bind="text: name" class="todo-heading">TODO #1</h3>
+                                                <p>
+                                                    <input data-bind="checked: isUrgent" type="checkbox" name="todo-urgent">urgent</input>
+                                                    <input data-bind="checked: isImportant" type="checkbox" name="todo-important">important</input>
+                                                </p>
+                                                <p>Deadline: <span data-bind="text: deadline"></span></p>
+                                                <p>Description: <span data-bind="text: description"></span></p>
+                                                <p>State: <span data-bind="text: state"></span></p>
+                                                <p>Tags: <span data-bind="text: tagsString()"></span></p>
+                                                <p>
+                                                    <input data-bind="checked: isActive" type="checkbox" name="todo-urgent">Active</input>
+                                                </p>
+
+                                            </div>
+
+                                        </div> end of todo-wrapper -->
+                    <div id="todo-wrapper">
+
+                    </div>
+
                     <span id="jumpHere"></span>
                 </div><!--end of main -->
+
 
             </div> <!--end of content-wrapper-->
 

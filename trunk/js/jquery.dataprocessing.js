@@ -1,3 +1,13 @@
+/**
+ * jQuery Data Processing Plugin
+ * version: 0.1 (2012-04-03)
+ *
+ * This document is licensed as free software under the terms of the
+ * MIT License: http://www.opensource.org/licenses/mit-license.php
+ *
+ * Author Dmitri Maksimov
+ */
+
 (function( $, window, document, undefined ) {
     var Processor = {
         init: function( data, options ) {
@@ -18,8 +28,6 @@
                 self.options = $.processData.options;
             }
 
-
-
             return true;
         },
         cycle: function() {
@@ -27,6 +35,10 @@
 
             if (self.options.sort) {
                 self.sort();
+            }
+
+            if (self.options.filter) {
+                self.filter();
             }
 
             return self.data;
@@ -53,9 +65,24 @@
             };
 
             self.data.sort(comparator);
+        },
+        filter: function() {
+            var self = this;
+
+            var field = self.options.filterBy;
+            var criteria = self.options.filterCriteria;
+
+            self.data = $.grep(self.data, function(value, index) {
+                return (value[field].indexOf(criteria) != -1)
+            });
         }
+
     }
 
+    /*
+    * Data - is array of objects in JSON format.
+    * Options - settings which should be used during the processing.
+    */
     $.processData = function( data, options ) {
         var processor = Object.create( Processor );
         if (!processor.init( data, options )) {
@@ -63,16 +90,17 @@
             return false;
         }
 
-        processor.cycle();
-
-        // should return the data?
-        return true;
+        return processor.cycle();
     };
 
     $.processData.options = {
         sort: false,
         sortBy: 'name',
-        sortDir: 'ASC'
+        sortDir: 'ASC',
+        filter: false,
+        filterBy: 'name',
+        filterCriteria: ''
     };
+
 })( jQuery, window, document );
 
