@@ -145,8 +145,9 @@
     });
 
     // Extend jQuery
-    $.fn.pagination = function(maxentries, opts){
-
+    $.fn.pagination = function(data, opts){
+        var mainData = data;
+        maxentries = data.length;
         // Initialize options with default values
         opts = $.extend({
             items_per_page:10,
@@ -197,7 +198,7 @@
             containers.empty();
             links.appendTo(containers);
             // call the callback and propagate the event if it does not return false
-            var continuePropagation = opts.callback(new_current_page, containers);
+            var continuePropagation = opts.callback(new_current_page,mainData,opts, containers);
             return continuePropagation;
         }
 
@@ -252,8 +253,49 @@
         }
         // call callback function
         if(opts.load_first_page) {
-            opts.callback(current_page, containers);
+            opts.callback(current_page,mainData,opts, containers);
         }
     } // End of $.fn.pagination block
 
 })(jQuery);
+
+// Added by Dmitri Maksimov
+// for use only in Kasutajaliidesed project.
+// (04.03.12)
+/**
+* Callback function that displays the content.
+*
+* Gets called every time the user clicks on a pagination link.
+*
+* @param {int}page_index New Page index
+* @param {jQuery} jq the container with the pagination links as a jQuery object
+*/
+function pageselectCallback(page_index, todosJSON,opt, jq){
+    // Get number of elements per pagionation page from options
+    var items_per_page = opt.items_per_page;
+    var max_elem = Math.min((page_index+1) * items_per_page, todosJSON.length);
+    var newcontent = '';
+
+    // Iterate through a selection of the content and build an HTML string
+    for(var i=page_index*items_per_page;i<max_elem;i++)
+    {
+        newcontent += '<div class="todo fineBox">';
+
+        newcontent += '<h3 class="todo-heading">' + todosJSON[i].name + '</h3>';
+        newcontent += '<p><input type="checkbox" name="todo-urgent" checked="'+todosJSON[i].isUrgent+'">urgent</input>';
+        newcontent += '<input type="checkbox" name="todo-important" checked="'+todosJSON[i].isImportant+'">important</input></p>';
+        newcontent += '<p>Deadline: '+todosJSON[i].deadline+'</p>';
+        newcontent += '<p>Description: '+todosJSON[i].description+'</p>';
+        newcontent += '<p>State: '+todosJSON[i].state+'</p>';
+        newcontent += '<p>Tags: '+todosJSON[i].tags+'</p>';
+        newcontent += '<p><input type="checkbox" name="todo-active" checked="'+todosJSON[i].isActive+'">Active</input></p>';
+
+        newcontent += '</div>';
+    }
+    //
+    // Replace old content with new content
+    $(opt.data_container).html(newcontent);
+    //
+    // Prevent click eventpropagation
+    return false;
+}
