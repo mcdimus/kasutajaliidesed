@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8" />
@@ -49,10 +49,11 @@
 
             var todosJSONstring = $.toJSON(todosJSON);
 
-
             $(document).ready(function() {
-                var $newTodoDiv = $('div#new-todo');
-                var $buttonTodoAdd = $('button#todo-add');
+            
+                // Shows / hides new todo addenum form
+                var $newTodoDiv = $('div#new-todo'),
+                $buttonTodoAdd = $('button#todo-add');
                 $buttonTodoAdd.on('click', function() {
                     $newTodoDiv.slideToggle();
                     if ($buttonTodoAdd.text() == "Add TODO") {
@@ -62,14 +63,29 @@
                     }
                 });
 
-                // Pins / unpins tags to new TODO when they are checked
+                // Shows / hides advanced search form
+                var $advancedSearchDiv = $('div#advanced-search-div'),
+                $advancedSearchShow = $('button#advanced-search-show');
+                $advancedSearchShow.on('click', function() {
+                    $advancedSearchDiv.slideToggle();
+                    if ($advancedSearchShow.text() == "Advanced search") {
+                        $advancedSearchShow.text('Cancel');
+                    } else {
+                        $advancedSearchShow.text('Advanced search');
+                    }
+                });
 
-                var $divfortags = $('div#todo-for-tags');
-                var $tag = $('div.tag-container');
+                // TODO: Joyreactor-like tags
+                $('#xxx').on('click', 'span', function() {
+                    console.log(this);
+                });
+
+                // Pins / unpins tags to new todo when they are checked
+                var $divfortags = $('div#todo-for-tags'),
+                $tag = $('div.tag-container');
                 $tag.on('click', 'input[type="checkbox"]', function() {
                     if($(this).is(':checked')) {
-                        $(this).siblings('span')
-                        .clone()
+                        $(this).siblings('span').clone()
                         .attr('id', 'todo-tag-' + $(this).siblings('span').text())
                         .appendTo($divfortags);
                     } else {
@@ -77,14 +93,17 @@
                     }
                 });
 
-
-                // Shows / hides advanced search form
-
-                $('#advanced-search-show').on('click', function() {
-                    $('.advanced-search-form').toggle();
-                    // console.log($('div#todo-wrapper span[data-bind="lala"]'));
+                // Shows / hides tag checkboxes
+                var $deleteTags = $('#deleteTags');
+                    $('#deleteTags').on('click', function() {
+                    if ($deleteTags.text() == "Edit") {
+                        $deleteTags.text('Delete checked');
+                        $('div.tag-container input[type="checkbox"]').removeClass('tag-checkbox-hidden');
+                    } else {
+                        $deleteTags.text('Edit');
+                        $('div.tag-container input[type="checkbox"]').addClass('tag-checkbox-hidden');
+                    }
                 });
-
 
                 function Tag(name, checked) {
                     return {
@@ -255,54 +274,46 @@
 
             <div id="content-wrapper">
 
+                <div class="sign-out fineBox">
+                    <form id="signout-form" action="index.html" method="post">
+                            <span id="username-span">
+                                <strong>User:</strong>
+                                <span>Username</span>
+                            </span>
+                            <input type="hidden" name="login" value=""/>
+                        <input type="submit" class="g-button g-button-submit" name="signOut" id="signOut" value="Sign out"/>
+                    </form>
+                </div> <!--end of sign-out -->
+
                 <div class="right-panel">
-
-                    <div class="sign-out fineBox">
-                        <form id="signout-form" action="index.html" method="post">
-                            <input type="submit" class="g-button g-button-submit" name="signOut" id="signOut" value="Sign out"/>
-                            <div class="signout-div">
-                                <span id="login-span">
-                                    <strong class="login-label">User:</strong>
-                                    <span>Username</span>
-                                </span>
-                                <input type="hidden" name="login" value=""/>
-                            </div>
-                        </form>
-                    </div> <!--end of sign-out fineBox -->
-
                     <div class="tag-container fineBox" >
                         <h3>Tags</h3>
                         <ul data-bind="foreach: tags">
                             <li>
-                                <input type="checkbox" data-bind="checked: isChecked" />
+                                <input type="checkbox" class="tag-checkbox-hidden" data-bind="checked: isChecked" />
                                 <span data-bind="text: name"></span>
                             </li>
                         </ul>
-                        <div>
                             <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag name..." />
-                            <button data-bind="click: addTag" id="addtag" class="g-button g-button-submit" name="addtag">Add</button>
-                            <button data-bind="click: deleteTags" id="deleteTags" class="g-button" name="deleteTags">Delete checked</button>
-                        </div>
+                        <button data-bind="click: addTag" id="addtag" class="g-button g-button-submit" name="addtag">Add</button>
+                        <button data-bind="click: deleteTags" id="deleteTags" class="g-button" name="deleteTags">Edit</button>
                     </div> <!--end of tag-container -->
-
-                    <div class="search-form fineBox">
-                        <h3>Search</h3>
+                </div> <!--end of right-panel -->
+                
+                <div class="main">
+                    <button name="todo-add" id="todo-add" class="g-button g-button-submit">Add TODO</button>
+                    <div class="search-form">
                         <input type="text" id="search-keyword" name="search-keyword" placeholder="keyword" />
-                        <div>
-                            <button class="g-button g-button-submit" name="search" id="search">Search</button>
-                            <button class="g-button" name="show-advanced-search" id="advanced-search-show">Advanced search</button>
-                        </div>
+                        <button class="g-button g-button-submit" name="search" id="search">Search</button>
+                        <button class="g-button" name="show-advanced-search" id="advanced-search-show">Advanced search</button>
                     </div>
 
-                </div> <!--end of right-panel -->
+                    <div class="todo fineBox" id="advanced-search-div">
+                        <h3>Advanced search</h3>
+                        <input type="text" placeholder="keywords ..." />
+                        <button class="g-button g-button-submit" name="advanced-search" id="advanced-search">Search</button>
+                    </div>
 
-                <div class="advanced-search-form fineBox">
-                    <h3>Advanced search</h3>
-                    <input type="text" placeholder="keywords ..." />
-                    <button class="g-button g-button-submit" name="advanced-search" id="advanced-search">Search</button>
-                </div>
-
-                <div class="main">
 
 <!--                    <div id="Pagination" class="pagination"></div>
                     <br />
@@ -328,7 +339,6 @@
                         <label>Tags:</label><div id="todo-for-tags" data-bind="text: newTodoTags"></div>
                         <button data-bind="click: addTodo" name="todo-submit" class="g-button g-button-submit">Submit</button>
                     </div> <!--end of new-todo -->
-                    <button name="todo-add" id="todo-add" class="g-button g-button-submit">Add TODO</button>
 
                     <div data-bind="foreach: todos" id="todo-wrapper">
                         <div class="todo fineBox">
@@ -346,10 +356,10 @@
                                 <input data-bind="checked: isActive" type="checkbox" name="todo-urgent">Active</input>
                             </p>
                         </div>
+                    
                     </div> <!--end of todo-wrapper -->
-
+                
                 </div> <!--end of main -->
-
 
             </div> <!--end of content-wrapper-->
 
