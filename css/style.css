@@ -316,6 +316,10 @@ div#advanced-search-div input {
     width: auto;
 }
 
+button#todo-add {
+    min-width: 7.5em;
+}
+
 div.todo {
     width: 620px;
     padding: 0px 20px;
@@ -344,13 +348,29 @@ div#new-todo textarea {
     width: 100%;
 }
 
-span.tag-span {
-    cursor: pointer;
-    background-color: #FF00FF;
+div#todo-for-tags-hidden {
+    display: none;
 }
 
-span.tag-span:active {
-    background-color: #FFFF00;  
+div#todo-for-tags span {
+    cursor: pointer;
+    margin: 0px 2px 2px;
+    min-width: 46px;
+    color: #444444;
+    background-color: #F5F5F5;
+    border: 1px solid #DCDCDC;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 7px;
+}
+
+div#todo-for-tags span.clicked {
+    background-color: #4D90FE;
+    border: 1px solid #3079ED;
+    color: #FFFFFF;
+    text-shadow: 0px 1px rgba(0, 0, 0, 0.102);
 }
 
 #footer-wrapper {

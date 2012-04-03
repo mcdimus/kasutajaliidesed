@@ -55,7 +55,7 @@
                 var $newTodoDiv = $('div#new-todo'),
                 $buttonTodoAdd = $('button#todo-add');
                 $buttonTodoAdd.on('click', function() {
-                    $newTodoDiv.slideToggle();
+                    $newTodoDiv.toggle();
                     if ($buttonTodoAdd.text() == "Add TODO") {
                         $buttonTodoAdd.text('Cancel');
                     } else {
@@ -67,7 +67,7 @@
                 var $advancedSearchDiv = $('div#advanced-search-div'),
                 $advancedSearchShow = $('button#advanced-search-show');
                 $advancedSearchShow.on('click', function() {
-                    $advancedSearchDiv.slideToggle();
+                    $advancedSearchDiv.toggle();
                     if ($advancedSearchShow.text() == "Advanced search") {
                         $advancedSearchShow.text('Cancel');
                     } else {
@@ -75,9 +75,27 @@
                     }
                 });
 
-                // TODO: Joyreactor-like tags
-                $('#xxx').on('click', 'span', function() {
-                    console.log(this);
+                // Adds / removes tags to new todo
+                $('div#todo-for-tags').on('click', 'span', function() {
+                    $clickedSpan = $(this);
+                    if($clickedSpan.attr('data-clicked') == 'false') {
+                        $clickedSpan.attr('data-clicked', 'true')
+                            .addClass('clicked')
+                            .clone().attr('id', 'todo-tag-' + $clickedSpan.text())
+                            .appendTo($('div#todo-for-tags-hidden'));
+                    } else {
+                        $clickedSpan.attr('data-clicked', 'false')
+                            .removeClass('clicked');
+                        $('span#todo-tag-' + $clickedSpan.text()).remove();
+                    }
+                });
+
+                // TODO: Clears tags too fast, scrolling is bad
+                $('button#addTodo').on('click', function() {
+                    // $('div#todo-for-tags-hidden span').remove();
+                    // $('div#todo-for-tags span').attr('data-clicked', 'false')
+                    //     .removeClass('clicked');
+                    // window.scrollTo($('span#jumpHere').offset().left, $('span#jumpHere').offset().top);
                 });
 
                 // Pins / unpins tags to new todo when they are checked
@@ -86,8 +104,8 @@
                 $tag.on('click', 'input[type="checkbox"]', function() {
                     if($(this).is(':checked')) {
                         $(this).siblings('span').clone()
-                        .attr('id', 'todo-tag-' + $(this).siblings('span').text())
-                        .appendTo($divfortags);
+                            .attr('id', 'todo-tag-' + $(this).siblings('span').text())
+                            .appendTo($divfortags);
                     } else {
                         $('span#todo-tag-' + $(this).siblings('span').text()).remove();
                     }
@@ -195,7 +213,7 @@
 
                     self.addTodo = function() {
                         var tags = new Array();
-                        $('div#todo-for-tags')
+                        $('div#todo-for-tags-hidden')
                         .children()
                         .each( function(index,value) {
                             tags.push(new Tag($(value).text(), false));
@@ -305,7 +323,7 @@
                     <div class="search-form">
                         <input type="text" id="search-keyword" name="search-keyword" placeholder="keyword" />
                         <button class="g-button g-button-submit" name="search" id="search">Search</button>
-                        <button class="g-button" name="show-advanced-search" id="advanced-search-show">Advanced search</button>
+                        <button class="g-button" name="advanced-search-show" id="advanced-search-show">Advanced search</button>
                     </div>
 
                     <div class="todo fineBox" id="advanced-search-div">
@@ -336,8 +354,10 @@
                             <option value="Completed">Completed</option>
                             <option value="Cancelled">Cancelled</option>
                         </select>
-                        <label>Tags:</label><div id="todo-for-tags" data-bind="text: newTodoTags"></div>
-                        <button data-bind="click: addTodo" name="todo-submit" class="g-button g-button-submit">Submit</button>
+                        <label>Tags:</label>
+                        <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
+                        <div id="todo-for-tags-hidden" data-bind="text: newTodoTags"></div>
+                        <button data-bind="click: addTodo" name="todo-submit" class="g-button g-button-submit" id="addTodo">Submit</button>
                     </div> <!--end of new-todo -->
 
                     <div data-bind="foreach: todos" id="todo-wrapper">
@@ -355,11 +375,10 @@
                             <p>
                                 <input data-bind="checked: isActive" type="checkbox" name="todo-urgent">Active</input>
                             </p>
-                        </div>
-                    
+                        </div>                
                     </div> <!--end of todo-wrapper -->
-                
-                </div> <!--end of main -->
+                    <span id="jumpHere"></span>
+                </div><!--end of main -->
 
             </div> <!--end of content-wrapper-->
 
