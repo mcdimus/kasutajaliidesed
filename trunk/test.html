@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+        <script type="text/javascript" src="js/jquery-1.7.2.min.js"></script>
+        <script type="text/javascript" src="jquery.dataprocessing.js"></script>
+        <script type="text/javascript" >
+            $(document).ready(function() {
+
+                var todosJSON = [
+                    {"name":"TODO #1", "deadline":"12:00 13.04.2012", "description":"My fisrt todo. Hell yeah!",
+                        "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
+                    {"name":"TODO #2", "deadline":"12:00 13.04.2012", "description":"My second todo. Hell yeah!",
+                        "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
+                    {"name":"TODO #3", "deadline":"12:00 13.04.2012", "description":"My third todo. Hell yeah!",
+                        "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
+                    {"name":"TODO #4", "deadline":"12:00 13.04.2012", "description":"My fourth todo. Hell yeah!",
+                        "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
+                    {"name":"TODO #5", "deadline":"12:00 13.04.2012", "description":"My fifth todo. Hell yeah!",
+                        "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"}
+                ];
+
+                var result = $.processData(todosJSON, {sort:true});
+                console.log(result);
+            });
+        </script>
+    </head>
+    <body>
+        <div class="result">TODO write content</div>
+    </body>
+</html>
