@@ -96,54 +96,6 @@ div#logo img {
 	height: 105px;
 }
 
-/* User Info */
-#user-info ul {
-    float: right;
-    margin: 45px 0 0 0;
-}
-#user-info ul li {
-    display: block;
-    float: left;
-    position: relative;
-}
-#user-info ul li > a {
-    background: none;
-    color: #eeeddf;
-    display: block;
-    float: left;
-    font-family: MuseoSansRounded-500, Helvetica, Arial, sans-serif;
-    font-size: 12px;
-    line-height: 12px;
-    margin-left: 10px;
-    padding: 7px 10px;
-    text-decoration: none;
-    text-shadow: 0 1px 1px #000;
-    text-transform: uppercase;
-    /* CSS3 */
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-}
-#user-info ul li a.sign-out {
-    background: url(http://tutsplus.com/wp-content/themes/tuts-premium-theme/images/sprite-mini-icons.png) no-repeat 0px -160px;
-    padding-left: 25px
-}
-#user-info ul li a.sign-in {
-    background: url(http://tutsplus.com/wp-content/themes/tuts-premium-theme/images/sprite-mini-icons.png) no-repeat 0px -160px;
-    padding-left: 25px
-}
-#user-info ul li a.join-premium {
-    background: url(http://tutsplus.com/wp-content/themes/tuts-premium-theme/images/sprite-mini-icons.png) no-repeat 2px -190px;
-    padding-left: 25px
-}
-#user-info ul li a.my-account {
-    background: url(http://tutsplus.com/wp-content/themes/tuts-premium-theme/images/sprite-mini-icons.png) no-repeat 2px -220px;
-    padding-left: 25px
-}
-#user-info ul li > a:hover {
-    background-color: #000;
-}
-
 #content-wrapper {
     -webkit-box-shadow: 0px 11px 30px 2px black;
     -moz-box-shadow:    0px 11px 30px 2px black;
@@ -155,6 +107,7 @@ div#logo img {
     width: 998px;
     behavior: url(ie-css3.htc);
 }
+
 .main {
     max-width: 1000px;
     min-width: 780px;
@@ -166,12 +119,14 @@ div#logo img {
     float: right;
     width: 335px;
 }
+
 .signin-box {
     background: #FAF7F7;
     border: 1px solid #E5E5E5;
     margin: 12px 12px 0px;
     padding: 20px 25px 15px;
 }
+
 .signin-box h2 {
     font-size: 16px;
     height: 16px;
@@ -179,18 +134,22 @@ div#logo img {
     margin: 0px 0px 1.2em;
     position: relative;
 }
+
 .signin-box div {
     margin: 0px 0px 1.5em;
 }
+
 .signin-box label {
     display: block;
 }
+
 label {
     display: block;
     font-weight: 700;
     margin: 0px 0px 0.5em;
     font-size: 15px;
 }
+
 .signin-box .email-label, .signin-box .passwd-label {
     display: block;
     font-weight: 700;
@@ -200,12 +159,14 @@ label {
 strong {
     color: #222222;
 }
+
 .signin-box input[type="text"], .signin-box input[type="password"] {
     direction: ltr;
     font-size: 15px;
     height: 32px;
     width: 100%;
 }
+
 input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="text"], input[type="url"] {
     width: 100%;
     background: #FFFFFF;
@@ -227,12 +188,14 @@ input[type="email"], input[type="number"], input[type="password"], input[type="t
     height: 32px;
     margin: 0px 1.5em 1.2em 0px;
 }
+
 button.g-button, input[type="submit"].g-button {
     height: 29px;
     line-height: 29px;
     margin: 0px;
     vertical-align: bottom;
 }
+
 .g-button {
     -o-transition: all 0.22s cubic-bezier(0.25, 0.1, 0.25, 1) 0;
     background-color: #F5F5F5;
@@ -250,6 +213,7 @@ button.g-button, input[type="submit"].g-button {
     padding: 0px 8px;
     text-align: center;
 }
+
 .g-button-submit {
     background-color: #4D90FE;
     background-image: -o-linear-gradient(top, #4D90FE, #4787ED);
@@ -295,53 +259,61 @@ form#regform {
 }
 
 .sign-out {
-    margin: 25px;
-    padding: 12px 12px;
+    float: right;
+    margin: 20px;
+    padding: 15px;
 }
 
-.signout-div {
-    margin-bottom: 7px;
-}
-
-#login-span {
-    position: relative;
-    top: 5px;
+#username-span {
+    display: inline-block;
+    margin-top: 0.4em;
+    margin-bottom: 0.4em;
 }
 
 #signOut {
-    float:right;
+    margin-left: 10px;
 }
 
-
 div.right-panel {
+    clear: right;
+    min-width: 22em;
     float: right;
 }
 
 div.right-panel button, #newtag {
     margin-top: 10px;
-
 }
 
-div.tag-container, div.search-form, div.advanced-search-form {
+div.tag-container, div#advanced-search-div {
     margin: 20px;
     padding: 0px 20px 20px;
 }
 
-#newtag, #search-keyword {
-    padding: 0px;
-}
-
-div.advanced-search-form {
+input.tag-checkbox-hidden {
     display: none;
-    position: fixed;
-    margin-top: 80px;
-    margin-left: 50px;
-    width:300px;
 }
 
-#deleteTags, #advanced-search-show {
-    margin-left: 5px;
-    float: right;
+#newtag {
+    width: auto;
+}
+
+#deleteTags {
+    margin-left: 8px;
+}
+
+div.search-form {
+    display: inline-block;
+}
+
+input#search-keyword {
+    display: inline;
+    clear: none;
+    width: auto;
+}
+
+div#advanced-search-div input {
+    clear: none;
+    width: auto;
 }
 
 div.todo {
@@ -350,12 +322,12 @@ div.todo {
     margin: 20px;
 }
 
-div#new-todo {
+div#new-todo, div#advanced-search-div {
     display: none;
     padding-bottom: 20px;
 }
 
-div#new-todo > * {
+div#new-todo > *, div#advanced-search-div > * {
     margin-top: 10px;
 }
 
@@ -365,12 +337,20 @@ div#new-todo div span {
 }
 
 div#new-todo input {
-    width: auto;
     clear: none;
 }
 
 div#new-todo textarea {
     width: 100%;
+}
+
+span.tag-span {
+    cursor: pointer;
+    background-color: #FF00FF;
+}
+
+span.tag-span:active {
+    background-color: #FFFF00;  
 }
 
 #footer-wrapper {
