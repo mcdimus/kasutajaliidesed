@@ -96,10 +96,12 @@
     $.processData.options = {
         sort: false,
         sortBy: 'name',
-        sortDir: 'ASC',
+        sortDir: 'ASC', // ASC or DESC
+
         filter: false,
         filterBy: 'name',
-        filterCriteria: ''
+        filterCriteria: false
+
     };
 
 })( jQuery, window, document );

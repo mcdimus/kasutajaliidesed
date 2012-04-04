@@ -151,9 +151,9 @@
         // Initialize options with default values
         opts = $.extend({
             items_per_page:10,
-            num_display_entries:11,
+            num_display_entries:5,
             current_page:0,
-            num_edge_entries:0,
+            num_edge_entries:1,
             link_to:"#",
             prev_text:"Prev",
             next_text:"Next",
@@ -163,9 +163,8 @@
             renderer:"defaultRenderer",
             show_if_single_page:false,
             load_first_page:true,
-            callback:function(){
-                return false;
-            }
+            callback:pageselectCallback,
+            data_container: "#todo-wrapper"
         },opts||{});
 
         var containers = this,
@@ -282,13 +281,13 @@ function pageselectCallback(page_index, todosJSON,opt, jq){
         newcontent += '<div class="todo fineBox">';
 
         newcontent += '<h3 class="todo-heading">' + todosJSON[i].name + '</h3>';
-        newcontent += '<p><input type="checkbox" name="todo-urgent" checked="'+todosJSON[i].isUrgent+'">urgent</input>';
-        newcontent += '<input type="checkbox" name="todo-important" checked="'+todosJSON[i].isImportant+'">important</input></p>';
+        newcontent += '<p><input type="checkbox" name="todo-urgent" '+todosJSON[i].isUrgent+'>urgent</input>';
+        newcontent += '<input type="checkbox" name="todo-important" '+todosJSON[i].isImportant+'>important</input></p>';
         newcontent += '<p>Deadline: '+todosJSON[i].deadline+'</p>';
         newcontent += '<p>Description: '+todosJSON[i].description+'</p>';
         newcontent += '<p>State: '+todosJSON[i].state+'</p>';
         newcontent += '<p>Tags: '+todosJSON[i].tags+'</p>';
-        newcontent += '<p><input type="checkbox" name="todo-active" checked="'+todosJSON[i].isActive+'">Active</input></p>';
+        newcontent += '<p><input type="checkbox" name="todo-active" '+todosJSON[i].isActive+'>Active</input></p>';
 
         newcontent += '</div>';
     }
