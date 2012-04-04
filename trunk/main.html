@@ -10,6 +10,7 @@
         <script type="text/javascript" src="js/jquery.pagination.js"></script>
         <script type="text/javascript" src="js/pagination.js"></script>
         <script type="text/javascript" src="js/jquery.json-2.3.js"></script>
+        <script type="text/javascript" src="js/jquery.dataprocessing.js"></script>
 
         <link rel="stylesheet" href="css/pagination.css" />
         <link rel="stylesheet" href="css/style.css"/>
@@ -18,18 +19,16 @@
 
             var todosJSON = [
                 {"name":"TODO #1", "deadline":"12:00 13.04.2012", "description":"My fisrt todo. Hell yeah!",
-                    "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
+                    "isUrgent":'checked="checked"',"isImportant":false,"isActive":'checked="checked"',"state":"Pending","tags":"bla bla bla"},
                 {"name":"TODO #2", "deadline":"12:00 13.04.2012", "description":"My second todo. Hell yeah!",
-                    "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
+                    "isUrgent":true,"isImportant":'checked="checked"',"isActive":'checked="checked"',"state":"Pending","tags":"bla bla bla"},
                 {"name":"TODO #3", "deadline":"12:00 13.04.2012", "description":"My third todo. Hell yeah!",
-                    "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
+                    "isUrgent":'checked="checked"',"isImportant":false,"isActive":'checked="checked"',"state":"Pending","tags":"bla bla bla"},
                 {"name":"TODO #4", "deadline":"12:00 13.04.2012", "description":"My fourth todo. Hell yeah!",
-                    "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"},
+                    "isUrgent":'checked="checked"',"isImportant":'checked="checked"',"isActive":'checked="checked"',"state":"Pending","tags":"bla bla bla"},
                 {"name":"TODO #5", "deadline":"12:00 13.04.2012", "description":"My fifth todo. Hell yeah!",
-                    "isUrgent":true,"isImportant":false,"isActive":true,"state":"Pending","tags":"bla bla bla"}
+                    "isUrgent":'checked="checked"',"isImportant":false,"isActive":'checked="checked"',"state":"Pending","tags":"bla bla bla"}
             ];
-
-            var todosJSONstring = $.toJSON(todosJSON);
 
             $(document).ready(function() {
 
@@ -112,29 +111,6 @@
                     };
                 }
 
-//                function Todo(name, urgent, important, deadline, description, state, tags, active) {
-//                    if (!active) {
-//                        active = true;
-//                    }
-//                    return {
-//                        name : ko.observable(name),
-//                        isUrgent : ko.observable(urgent),
-//                        isImportant : ko.observable(important),
-//                        deadline : ko.observable(deadline),
-//                        description : ko.observable(description),
-//                        state : ko.observable(state),
-//                        tags : ko.observableArray(tags),
-//                        isActive : ko.observable(active),
-//                        tagsString : function() {
-//                            var string = '';
-//                            $(tags).each( function(index, value) {
-//                                string += value.name() + ' ';
-//                            });
-//                            return string;
-//                        }
-//                    };
-//                }
-
                 function appViewModel() {
                     var self = this;
 
@@ -168,86 +144,75 @@
                             $('span#todo-tag-' + tag.name()).remove();
                         });
                     };
-
-//                    // ======================================================
-//                    // == todo ViewModel
-//                    // ======================================================
-//                    self.todos =
-//                        ko.observableArray([
-//                        new Todo('TODO #1', false, true, '12:00 13.04.2012',
-//                        'My fisrt todo. Hell yeah!', 'Pending',
-//                        [new Tag("work",false), new Tag("school",false)], true),
-//                        new Todo('TODO #2', true, false, '12:00 13.04.2012',
-//                        'My second todo. Hell yeah!', 'Done',
-//                        [new Tag("birthday",false), new Tag("school",false)], false),
-//                        new Todo('TODO #3', true, true, '12:00 13.04.2012',
-//                        'My third todo. Hell yeah!', 'Undone',
-//                        [new Tag("work",false), new Tag("meeting",false)], true)
-//                    ]);
-//
-//                    self.newTodoUrgent = ko.observable();
-//                    self.newTodoImportant = ko.observable();
-//                    self.newTodoName = ko.observable();
-//                    self.newTodoDeadline = ko.observable();
-//                    self.newTodoDescription = ko.observable();
-//                    self.newTodoState = ko.observable();
-//                    self.newTodoTags = ko.observable();
-//
-//                    self.addTodo = function() {
-//                        var tags = new Array();
-//                        $('div#todo-for-tags-hidden')
-//                        .children()
-//                        .each( function(index,value) {
-//                            tags.push(new Tag($(value).text(), false));
-//                        }
-//                    );
-//                        self.todos.push(
-//                        new Todo(
-//                        self.newTodoName(),
-//                        self.newTodoUrgent(),
-//                        self.newTodoImportant(),
-//                        self.newTodoDeadline(),
-//                        self.newTodoDescription(),
-//                        self.newTodoState(),
-//                        tags,
-//                        false
-//                    )
-//                    );
-//                    };
                 }
 
                 ko.applyBindings(new appViewModel());
 
                 $('#addTodo').on('click', function() {
                     var todo = {};
-                    todo.urgent = $('input#urgent').attr('checked');
-                    todo.important = $('input#important').attr('checked');
+
+                    todo.isUrgent = $('input#urgent').attr('checked') ? 'checked="checked"' : '';
+                    todo.isImportant = $('input#important').attr('checked') ? 'checked="checked"' : '';
                     todo.name = $('input#name').val();
                     todo.deadline = $('input#deadline').val();
                     todo.description = $('textarea#description').val();
                     todo.state = $('select#state').val();
-                    todo.active = 'checked';
-                    todo.tags = 'dasd';
+                    todo.isActive = 'checked="checked"';
+                    todo.tags = '';
+                    $('div#todo-for-tags-hidden span').each(function() {
+                        todo.tags += $(this).html() + ' ';
+                    });
 
                     todosJSON.unshift(todo); //adds new items to the beginning of an array
                     displayTodos();
 
                 });
 
-                //When document has loaded, initialize pagination and form
-                var pagination_options = {
-                    callback: pageselectCallback,
-                    items_per_page: 2,
-                    num_display_entries: 5,
-                    num_edge_entries: 1,
-                    prev_text: "Prev",
-                    next_text: "Next",
-                    data_container: "#todo-wrapper"
+                // init options
+                var options = {
+                    pagination : {
+                        items_per_page: $('select#showOnPage').val(),
+                        data_container: "#todo-wrapper"
+                    },
+                    dataprocessing : {
+                        sort: false,
+                        filter: false
+                    }
                 };
+                // change options
+                $('div#todo-display-settings').on('change', 'select', function() {
+                    id = $(this).attr('id');
+                    switch (id) {
+                        case 'sortDir' :
+                            options.dataprocessing.sort = true;
+                            options.dataprocessing.sortDir = $(this).val();
+                            break;
+                        case 'sortBy' :
+                            options.dataprocessing.sort = true;
+                            options.dataprocessing.sortBy = $(this).val();
+                            break;
+                        case 'showOnPage' :
+                            options.pagination.items_per_page = $(this).val();
+                            break;
+                    }
+                    displayTodos();
+                });
+
+                $('button#search').on('click', function() {
+                    options.dataprocessing.filter = true;
+                    options.dataprocessing.filterCriteria = $('input#search-keyword').val();
+                    displayTodos();
+                });
+                $('button#clear').on('click', function() {
+                    options.dataprocessing.filter = false;
+                    $('input#search-keyword').val('');
+                    displayTodos();
+                });
 
                 function displayTodos() {
+                    processedTodosJSON = $.processData(todosJSON, options.dataprocessing);
                     // Create pagination element with options from var
-                    $("#Pagination").pagination(todosJSON, pagination_options);
+                    $("#Pagination").pagination(processedTodosJSON, options.pagination);
                 }
                 displayTodos();
             });
@@ -297,6 +262,7 @@
                     <div class="search-form">
                         <input type="text" id="search-keyword" name="search-keyword" placeholder="keyword" />
                         <button class="g-button g-button-submit" name="search" id="search">Search</button>
+                        <button class="g-button g-button-submit" name="clear-search" id="clear">Clear</button>
                         <button class="g-button" name="advanced-search-show" id="advanced-search-show">Advanced search</button>
                     </div>
 
@@ -307,26 +273,6 @@
                     </div>
 
                     <div class="todo fineBox" id="new-todo">
-<!--                        <h3 class="todo-heading">New TODO</h3>
-                        <label>Type:</label>
-                        <input id="urgent" type="checkbox" data-bind="checked: newTodoUrgent" />urgent
-                        <input id="important" type="checkbox" data-bind="checked: newTodoImportant"/>important
-                        <label>Name:</label><input id="name" type="text" data-bind="value: newTodoName"/>
-                        <label>Deadline:</label><input id="deadline" type="text" data-bind="value: newTodoDeadline"/>
-                        <label>Description (optional): </label>
-                        <textarea id="description" data-bind="value: newTodoDescription" rows="4"></textarea>
-                        <label>State:</label>
-                        <select id="state" data-bind="value: newTodoState">
-                            <option value="Undone">Undone</option>
-                            <option value="In progress">In progress</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                        <label>Tags:</label>
-                        <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
-                        <div id="todo-for-tags-hidden" data-bind="text: newTodoTags"></div>
-                        <button data-bind="click: addTodo" name="todo-submit" class="g-button g-button-submit" id="addTodo">Submit</button>-->
                         <h3 class="todo-heading">New TODO</h3>
                         <label>Type:</label>
                         <input id="urgent" type="checkbox" />urgent
@@ -350,51 +296,31 @@
                     </div> <!--end of new-todo -->
 
                     <div>
-                        Show on page: <select id="showOnPage">
-                            <option>2</option>
-                            <option>5</option>
-                            <option>10</option>
-                            <option>20</option>
-                            <option>30</option>
-                        </select>
-                        Sort by: <select id="sortBy">
-                            <option>Name</option>
-                            <option>Description</option>
-                            <option>bla</option>
-                            <option>bla</option>
-                            <option>bla</option>
-                        </select>
-
-
+                        <div id="todo-display-settings">
+                            Show on page: <select id="showOnPage">
+                                <option value="2">2</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </select>
+                            Sort by: <select id="sortBy">
+                                <option value="name">Name</option>
+                                <option value="description">Description</option>
+                                <option value="state">State</option>
+                            </select>
+                            <select id="sortDir">
+                                <option value="ASC">ASC</option>
+                                <option value="DESC">DESC</option>
+                            </select>
+                        </div>
                     </div>
                     <div id="Pagination" class="pagination"></div>
 
-                    <!--                    <div data-bind="foreach: todos" id="todo-wrapper">
-                                            <div class="todo fineBox">
-                                                 TODO: rearrange and style elements
-                                                <h3 data-bind="text: name" class="todo-heading">TODO #1</h3>
-                                                <p>
-                                                    <input data-bind="checked: isUrgent" type="checkbox" name="todo-urgent">urgent</input>
-                                                    <input data-bind="checked: isImportant" type="checkbox" name="todo-important">important</input>
-                                                </p>
-                                                <p>Deadline: <span data-bind="text: deadline"></span></p>
-                                                <p>Description: <span data-bind="text: description"></span></p>
-                                                <p>State: <span data-bind="text: state"></span></p>
-                                                <p>Tags: <span data-bind="text: tagsString()"></span></p>
-                                                <p>
-                                                    <input data-bind="checked: isActive" type="checkbox" name="todo-urgent">Active</input>
-                                                </p>
-
-                                            </div>
-
-                                        </div> end of todo-wrapper -->
-                    <div id="todo-wrapper">
-
-                    </div>
+                    <div id="todo-wrapper"></div>
 
                     <span id="jumpHere"></span>
                 </div><!--end of main -->
-
 
             </div> <!--end of content-wrapper-->
 
@@ -407,7 +333,7 @@
                     </li>
                     <!--end copyright-->
                     <li id="designed">
-                        Designed by Dmitri Maksimov
+                        Designed by Nail Saberov & Dmitri Maksimov
                     </li>
                     <!--end designed -->
                 </ul>
