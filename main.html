@@ -310,8 +310,8 @@
                             </li>
                         </ul>
                         <input type="text" data-bind="value: newTagName, valueUpdate: 'afterkeydown', event: { keypress: addTagOnEnter }" id="newtag" name="newtag" placeholder="New tag name..." />
-                        <button data-bind="click: addTag" id="addtag" class="g-button g-button-submit" name="addtag">Add</button>
-                        <button data-bind="click: deleteTags" id="deleteTags" class="g-button" name="deleteTags">Edit</button>
+                        <button data-bind="click: addTag" id="addtag" name="addtag">Add</button>
+                        <button data-bind="click: deleteTags" id="deleteTags" name="deleteTags">Edit</button>
                     </div> <!--end of tag-container -->
                 </div> <!--end of right-panel -->
 
@@ -320,7 +320,7 @@
                     <div class="todo fineBox" id="advanced-search-div">
                         <h3>Advanced search</h3>
                         <input type="text" placeholder="keywords ..." />
-                        <button class="g-button g-button-submit" name="advanced-search" id="advanced-search">Search</button>
+                        <button name="advanced-search" id="advanced-search">Search</button>
                     </div>
 
                     <div class="todo fineBox" id="settings">

@@ -121,8 +121,8 @@ div#logo img {
 .signin-box {
     background: #FAF7F7;
     border: 1px solid #E5E5E5;
-    margin: 12px 12px 0px;
-    padding: 20px 25px 15px;
+    margin: 25px;
+    padding: 20px;
 }
 
 .signin-box h2 {
@@ -184,56 +184,37 @@ input[type="email"], input[type="number"], input[type="password"], input[type="t
 .signin-box input[type="submit"] {
     font-size: 13px;
     height: 32px;
-    margin: 0px 1.5em 1.2em 0px;
-}
-
-button.g-button, input[type="submit"].g-button {
-    height: 29px;
-    line-height: 29px;
-    margin: 0px;
-    vertical-align: bottom;
-}
-
-.g-button {
-    -webkit-transition: all 0.22s cubic-bezier(0.25, 0.1, 0.25, 1) 0;
-    -moz-transition: all 0.22s cubic-bezier(0.25, 0.1, 0.25, 1) 0;
-    -o-transition: all 0.22s cubic-bezier(0.25, 0.1, 0.25, 1) 0;
-    background-color: #F5F5F5;
-    background-image: -o-linear-gradient(top, #F5F5F5, #F1F1F1);
-    border: 1px solid #DCDCDC;
-    border-radius: 2px;
-    color: #444444;
-    cursor: pointer;
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    height: 27px;
-    line-height: 27px;
-    min-width: 46px;
-    padding: 0px 8px;
-    text-align: center;
-}
-
-.g-button-submit {
-    /*background-color: #4D90FE;
-    background-image: -o-linear-gradient(top, #4D90FE, #4787ED);
-    border: 1px solid #3079ED;
-    color: #FFFFFF;*/
-
-    color: #FFFFFF;
+    margin: 0px 1.5em 1.2em 0px;color: #FFFFFF;
     background: rgb(77,154,254);
-    background: -webkit-gradient(linear, left top, left bottombottom, from(rgb(77,154,254)), to(rgb(71,135,237)));
-    background: -moz-linear-gradient(top, rgb(71,135,237), rgb(71,135,237));
     background: -o-linear-gradient(top, rgb(71,135,237), rgb(71,135,237));
     border: 1px solid #3079ED;
     text-shadow: 0px 1px rgba(0, 0, 0, 0.102);
 }
 
-.g-button-submit:hover {
-    background: #59A9FF;
-    background: -webkit-gradient(linear, left top, left bottombottom, from(89,169,255), to(rgb(95,175,255)));
-    background: -moz-linear-gradient(top, rgb(89,169,255), rgb(95,175,255));
-    background: -o-linear-gradient(top, #59A9FF, #5FAFFF);
+.signin-box input[type="submit"]:hover {
+    background: #71A6FE;
+    background: -o-linear-gradient(top, #71A6FE, #71A6FE); 
+}
+
+button, input[type="submit"] {
+    display: inline-block;
+    margin: 0px;
+    padding: 0px 8px;
+    min-width: 46px;
+    height: 29px;
+    line-height: 29px;
+    vertical-align: bottom;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    -webkit-transition: all 0.22s cubic-bezier(0.25, 0.1, 0.25, 1) 0;
+    -moz-transition: all 0.22s cubic-bezier(0.25, 0.1, 0.25, 1) 0;
+    -o-transition: all 0.22s cubic-bezier(0.25, 0.1, 0.25, 1) 0;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: #F5F5F5;
+    background-image: -o-linear-gradient(top, #F5F5F5, #F1F1F1);
+    border: 1px solid #DCDCDC;
 }
 
 button, input, select, textarea {
@@ -502,6 +483,20 @@ li.menuitem:hover {
     border: 1px solid #2f8893;
 }
 
+button.cyan {
+    /*color: #FFFFFF;
+    background: rgb(77,154,254);
+    background: -webkit-gradient(linear, left top, left bottombottom, from(rgb(77,154,254)), to(rgb(71,135,237)));
+    background: -moz-linear-gradient(top, rgb(77,154,254), rgb(71,135,237));
+    background: -o-linear-gradient(top, rgb(77,154,254), rgb(71,135,237));
+    border: 1px solid #3E7BCB;*/
+}
+
+button.cyan:hover {
+    /*background: #71A6FE;
+    background: -o-linear-gradient(top, #71A6FE, #71A6FE);*/
+}
+
 .body-dark {
     background: rgb(16,16,16) url('../img/dark.png') repeat; 
 }  
@@ -526,6 +521,20 @@ li.menuitem:hover {
     background: -moz-linear-gradient(top, rgb(71,135,237), rgb(71,135,237));
     background: -o-linear-gradient(top, rgb(71,135,237), rgb(71,135,237));
     border: 1px solid #3079ED;
+}
+
+button.google-blue {
+    color: #FFFFFF;
+    background: rgb(77,154,254);
+    background: -webkit-gradient(linear, left top, left bottombottom, from(rgb(77,154,254)), to(rgb(71,135,237)));
+    background: -moz-linear-gradient(top, rgb(77,154,254), rgb(71,135,237));
+    background: -o-linear-gradient(top, rgb(77,154,254), rgb(71,135,237));
+    border: 1px solid #3E7BCB;
+}
+
+button.google-blue:hover {
+    background: #71A6FE;
+    background: -o-linear-gradient(top, #71A6FE, #71A6FE);
 }
 
 .body-gray {
