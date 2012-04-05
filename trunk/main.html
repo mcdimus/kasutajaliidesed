@@ -12,7 +12,6 @@
         <script type="text/javascript" src="js/jquery.json-2.3.js"></script>
         <script type="text/javascript" src="js/jquery.dataprocessing.js"></script>
 
-        <link rel="stylesheet" href="css/pagination.css" />
         <link rel="stylesheet" href="css/style.css"/>
 
         <script type="text/javascript">
@@ -32,9 +31,14 @@
 
             $(document).ready(function() {
 
+                // Exit by submitting exit form
+                $('#sign-out').on('click', function() {
+                    $('#signout-form').submit();
+                });
+
                 // Shows / hides new todo addenum form
                 var $newTodoDiv = $('div#new-todo'),
-                $buttonTodoAdd = $('button#todo-add');
+                $buttonTodoAdd = $('#todo-add');
                 $buttonTodoAdd.on('click', function() {
                     $newTodoDiv.toggle();
                     if ($buttonTodoAdd.text() == "Add TODO") {
@@ -56,6 +60,21 @@
                     }
                 });
 
+                // Show / hide settings form
+                var $divMenu = $('#menu');
+                $divMenu.on('click', 'li', function() {
+                    if($(this).text() == "Settings") {
+                        $('#settings').toggle();
+                    }
+                });
+
+                // Changes color theme
+                $('#colortheme-picker').on('change', function() {
+                    $('#menu').removeClass().addClass($(this).val());
+                    $('button').removeClass().addClass($(this).val());
+                    $('body').removeClass().addClass('body-' + $(this).val());
+                });
+
                 // Adds / removes tags to new todo
                 $('div#todo-for-tags').on('click', 'span', function() {
                     $clickedSpan = $(this);
@@ -71,26 +90,24 @@
                     }
                 });
 
-                // TODO: Clears tags too fast, scrolling is bad
-                $('button#addTodo').on('click', function() {
-                    // $('div#todo-for-tags-hidden span').remove();
-                    // $('div#todo-for-tags span').attr('data-clicked', 'false')
-                    //     .removeClass('clicked');
-                    // window.scrollTo($('span#jumpHere').offset().left, $('span#jumpHere').offset().top);
+                $("#newtag").keypress(function(event) {
+                    if (event.which == 13) {
+                        simpleSearch();
+                    }
                 });
 
                 // Pins / unpins tags to new todo when they are checked
-                var $divfortags = $('div#todo-for-tags'),
-                $tag = $('div.tag-container');
-                $tag.on('click', 'input[type="checkbox"]', function() {
-                    if($(this).is(':checked')) {
-                        $(this).siblings('span').clone()
-                        .attr('id', 'todo-tag-' + $(this).siblings('span').text())
-                        .appendTo($divfortags);
-                    } else {
-                        $('span#todo-tag-' + $(this).siblings('span').text()).remove();
-                    }
-                });
+                // var $divfortags = $('div#todo-for-tags'),
+                // $tag = $('div.tag-container');
+                // $tag.on('click', 'input[type="checkbox"]', function() {
+                //     if($(this).is(':checked')) {
+                //         $(this).siblings('span').clone()
+                //         .attr('id', 'todo-tag-' + $(this).siblings('span').text())
+                //         .appendTo($divfortags);
+                //     } else {
+                //         $('span#todo-tag-' + $(this).siblings('span').text()).remove();
+                //     }
+                // });
 
                 // Shows / hides tag checkboxes
                 var $deleteTags = $('#deleteTags');
@@ -134,6 +151,16 @@
                             self.tags.push(new Tag(self.newTagName(), false));
                     };
 
+                    self.addTagOnEnter = function(event) {
+                        var keyCode = event.keyCode;
+                        console.log(event.keyCode);
+                        if (keyCode == 13) {
+                            this.addTag();
+                            return false;
+                        }
+                        return true;
+                    }
+
                     self.deleteTags = function() {
                         var selectedTags = $.grep(self.tags(), function(tag) {
                             return (tag.isChecked());
@@ -148,6 +175,8 @@
 
                 ko.applyBindings(new appViewModel());
 
+
+                // Adds new todo
                 $('#addTodo').on('click', function() {
                     var todo = {};
 
@@ -166,6 +195,12 @@
                     todosJSON.unshift(todo); //adds new items to the beginning of an array
                     displayTodos();
 
+                    // clears selected tags
+                    $('div#todo-for-tags-hidden span').remove();
+                    $('div#todo-for-tags span').attr('data-clicked', 'false')
+                        .removeClass('clicked');
+                    // window.scrollTo($('span#jumpHere').offset().left, $('span#jumpHere').offset().top);
+
                 });
 
                 // init options
@@ -179,6 +214,7 @@
                         filter: false
                     }
                 };
+
                 // change options
                 $('div#todo-display-settings').on('change', 'select', function() {
                     id = $(this).attr('id');
@@ -198,12 +234,25 @@
                     displayTodos();
                 });
 
-                $('button#search').on('click', function() {
+                // Simple search
+                function simpleSearch() {
                     options.dataprocessing.filter = true;
                     options.dataprocessing.filterCriteria = $('input#search-keyword').val();
-                    displayTodos();
+                    displayTodos(); 
+                }
+
+                // Button listener for search
+                $('#search').on('click', simpleSearch());
+
+                // 'Enter' key listener for search
+                $("#search-keyword").keypress(function(event) {
+                    if (event.which == 13) {
+                        simpleSearch();
+                    }
                 });
-                $('button#clear').on('click', function() {
+
+                // Clear search results
+                $('#clear-search').on('click', function() {
                     options.dataprocessing.filter = false;
                     $('input#search-keyword').val('');
                     displayTodos();
@@ -218,7 +267,7 @@
             });
         </script>
     </head>
-    <body>
+    <body class="body-dark">
         <div id="main-wrapper">
             <div id="header-wrapper">
                 <div id="logo">
@@ -226,21 +275,30 @@
                         <img src="img/logo.png" alt="TODO"/>
                     </a>
                 </div>
+                <div id="menu" class="dark">
+                    <ul>
+                        <li><input type="text" id="search-keyword" placeholder="keyword" />
+                            <div>
+                                <a id="advanced-search-show" href="index.html">Advanced search</a>
+                                <a id="clear-search" href="">Clear</a>
+                            </div>
+                        </li>
+                        <li class="menuitem" id="search">Search</li>
+                        <li id="todo-add" class="menuitem">Add TODO</li>
+                        <li class="menuitem">Settings</li>
+                        <li class="menuitem" id="sign-out">
+                            Logout
+                            <form id="signout-form" action="index.html" method="post">
+                                <input type="hidden" name="login" value=""/>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+
             </div>
             <!--end header-wrapper-->
 
             <div id="content-wrapper">
-
-                <div class="sign-out fineBox">
-                    <form id="signout-form" action="index.html" method="post">
-                        <span id="username-span">
-                            <strong>User:</strong>
-                            <span>Username</span>
-                        </span>
-                        <input type="hidden" name="login" value=""/>
-                        <input type="submit" class="g-button g-button-submit" name="signOut" id="signOut" value="Sign out"/>
-                    </form>
-                </div> <!--end of sign-out -->
 
                 <div class="right-panel">
                     <div class="tag-container fineBox" >
@@ -251,25 +309,49 @@
                                 <span data-bind="text: name"></span>
                             </li>
                         </ul>
-                        <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag name..." />
+                        <input type="text" data-bind="value: newTagName, valueUpdate: 'afterkeydown', event: { keypress: addTagOnEnter }" id="newtag" name="newtag" placeholder="New tag name..." />
                         <button data-bind="click: addTag" id="addtag" class="g-button g-button-submit" name="addtag">Add</button>
                         <button data-bind="click: deleteTags" id="deleteTags" class="g-button" name="deleteTags">Edit</button>
                     </div> <!--end of tag-container -->
                 </div> <!--end of right-panel -->
 
                 <div class="main">
-                    <button name="todo-add" id="todo-add" class="g-button g-button-submit">Add TODO</button>
-                    <div class="search-form">
-                        <input type="text" id="search-keyword" name="search-keyword" placeholder="keyword" />
-                        <button class="g-button g-button-submit" name="search" id="search">Search</button>
-                        <button class="g-button g-button-submit" name="clear-search" id="clear">Clear</button>
-                        <button class="g-button" name="advanced-search-show" id="advanced-search-show">Advanced search</button>
-                    </div>
 
                     <div class="todo fineBox" id="advanced-search-div">
                         <h3>Advanced search</h3>
                         <input type="text" placeholder="keywords ..." />
                         <button class="g-button g-button-submit" name="advanced-search" id="advanced-search">Search</button>
+                    </div>
+
+                    <div class="todo fineBox" id="settings">
+                        <h3>Settings</h3>
+                        <select id="colortheme-picker">
+                            <option value="cyan">Cyan</option>
+                            <option value="dark">Dark</option>
+                            <option value="google-blue">Google-blue</option>
+                            <option value="gray">Gray</option>
+                            <option value="magenta">Magenta</option>
+                            <option value="orange">Orange</option>
+                            <option value="yellow">Yellow</option>
+                        </select>
+                        <div id="todo-display-settings">
+                            Show on page: <select id="showOnPage">
+                                <option value="2">2</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </select>
+                            Sort by: <select id="sortBy">
+                                <option value="name">Name</option>
+                                <option value="description">Description</option>
+                                <option value="state">State</option>
+                            </select>
+                            <select id="sortDir">
+                                <option value="ASC">Ascending</option>
+                                <option value="DESC">Descending</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="todo fineBox" id="new-todo">
@@ -296,30 +378,13 @@
                     </div> <!--end of new-todo -->
 
                     <div>
-                        <div id="todo-display-settings">
-                            Show on page: <select id="showOnPage">
-                                <option value="2">2</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                            </select>
-                            Sort by: <select id="sortBy">
-                                <option value="name">Name</option>
-                                <option value="description">Description</option>
-                                <option value="state">State</option>
-                            </select>
-                            <select id="sortDir">
-                                <option value="ASC">ASC</option>
-                                <option value="DESC">DESC</option>
-                            </select>
-                        </div>
                     </div>
-                    <div id="Pagination" class="pagination"></div>
-
                     <div id="todo-wrapper"></div>
-
-                    <span id="jumpHere"></span>
+                    
+                    <div id="Pagination" class="pagination"></div>
+                    
+                    <!-- <span id="jumpHere"></span> -->
+                
                 </div><!--end of main -->
 
             </div> <!--end of content-wrapper-->
