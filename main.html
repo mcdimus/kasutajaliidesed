@@ -5,7 +5,7 @@
 
         <title>Kasutajaliidesed</title>
 
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"> </script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
         <script type="text/javascript" src="http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.0.0.debug.js"> </script>
         <script type="text/javascript" src="js/jquery.pagination.js"></script>
         <script type="text/javascript" src="js/jquery.json-2.3.js"></script>
@@ -41,10 +41,12 @@
                 $buttonTodoAdd.on('click', function() {
                     $newTodoDiv.toggle();
                     if ($buttonTodoAdd.text() == "Add TODO") {
+                        $('div#overlay').css('visibility','visible');
                         $newTodoDiv.css('border', $('#menu').css('border'));
                         $buttonTodoAdd.text('Cancel');
                         $('body').css('overflow', 'hidden');
                     } else {
+                        $('div#overlay').css('visibility','hidden');
                         $buttonTodoAdd.text('Add TODO');
                         $('body').css('overflow', 'auto');
                     }
@@ -229,7 +231,7 @@
                 function simpleSearch() {
                     options.dataprocessing.filter = true;
                     options.dataprocessing.filterCriteria = $('input#search-keyword').val();
-                    displayTodos(); 
+                    displayTodos();
                 }
 
                 // Button listener for search
@@ -259,15 +261,16 @@
         </script>
     </head>
     <body class="body-dark">
+        <div id="overlay"></div>
         <div id="main-wrapper">
             <div id="header-wrapper">
-                
+
                 <div id="logo">
                     <a href="index.html" title="TODO">
-                        <img src="img/logo.png" alt="TODO"/>
+                        <img src="img/logo1.png" alt="TODO"/>
                     </a>
                 </div>
-                
+
                 <div id="menu" class="dark">
                     <ul>
                         <li><input type="text" id="search-keyword" placeholder="keyword" />
@@ -375,9 +378,9 @@
                     <div>
                     </div>
                     <div id="todo-wrapper"></div>
-                    
+
                     <div class="for-pagination"></div>
-                
+
                 </div><!--end of main -->
 
             </div> <!--end of content-wrapper-->
