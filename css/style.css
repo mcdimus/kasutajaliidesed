@@ -8,8 +8,9 @@
  * 6. Content
  * 7. Footer
  * 8. Menu
- * 9. Pagination
- * 10. Color themes
+ * 9. Sub-menu
+ * 10. Pagination
+ * 11. Color themes
  ****************************************************************************************************
 */
 .error_strings{
@@ -83,10 +84,13 @@ div#main-wrapper {
 
 div#header-wrapper {
     height: 70px;
-    width: 100%;
+    width: 1024px;
+    margin: 0px auto;
 }
 
 div#logo {
+    position: relative;
+    z-index: 11;
     float: left;
     margin-left: 10px;
     margin-top: -20px;
@@ -106,11 +110,6 @@ div#logo img {
     min-height: 500px;
     width: 998px;
     behavior: url(ie-css3.htc);
-}
-
-.main {
-    max-width: 1000px;
-    min-width: 780px;
 }
 
 .sign-in {
@@ -255,7 +254,6 @@ form#regform {
 }
 
 div.right-panel {
-    clear: right;
     min-width: 22.5em;
     float: right;
 }
@@ -302,36 +300,16 @@ div.todo {
     margin: 25px;
 }
 
-#new-todo, #advanced-search-div, #settings {
-    display: none;
-    padding-bottom: 20px;
-}
-
-div#new-todo > * {
-    margin-top: 10px;
-}
-
-div#new-todo div span {
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-div#new-todo input {
-    width: auto;
-    clear: none;
-    padding: 0;
-    height: 2em;
-}
-
-div#new-todo textarea {
-    width: 100%;
-}
-
 div#todo-for-tags-hidden {
     display: none;
 }
 
-div#todo-for-tags span {
+#todo-for-tags span {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     cursor: pointer;
     margin: 0px 2px 2px;
     min-width: 46px;
@@ -345,11 +323,8 @@ div#todo-for-tags span {
     border-radius: 7px;
 }
 
-div#todo-for-tags span.clicked {
-    background-color: #4D90FE;
-    border: 1px solid #3079ED;
+#todo-for-tags span.clicked {
     color: #FFFFFF;
-    text-shadow: 0px 1px rgba(0, 0, 0, 0.102);
 }
 
 #footer-wrapper {
@@ -390,25 +365,32 @@ div#bottomPanel {
 ----------------------------------------------------------------------------------------------------*/
 
 #menu {
+    position: relative;
+    z-index: 10;
     padding: 10px;
-    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);  
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,.25);
     -moz-box-shadow: 0 3px 6px rgba(0,0,0,.25);
     box-shadow: 0 3px 6px rgba(0,0,0,.25);
     -webkit-border-radius : 10px;
     -moz-border-radius : 10px;
     border-radius : 10px;  
     height: 29px;
-    margin: 20px;
+    margin: 20px 0px;
     width: auto;
     min-width: 68.5em;
 }
   
 #menu ul li {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
     list-style: none;  
     float:left;
     text-align: center;  
     padding: 5px 20px; 
-    min-width: 4.8em;
+    min-width: 4.9em;
 }
 
 li.menuitem {
@@ -431,18 +413,71 @@ li.menuitem:hover {
     letter-spacing: 1px;
 }
 
-/* 9. Pagination
+/* 9. Submenu
 ----------------------------------------------------------------------------------------------------*/
 
+.submenu {
+    z-index: 1;
+    background: #FAF7F7;
+    padding: 20px;
+    width: 660px;
+    position: relative;
+    margin: auto;
+    top: -25px;
+    -webkit-box-shadow: 0em 0em 0em 50em rgba(0,0,0,0.4);
+    -moz-box-shadow: 0em 0em 0em 50em rgba(0,0,0,0.4);
+    box-shadow: 0em 0em 0em 50em rgba(0,0,0,0.4);
+}
+
+#new-todo, #advanced-search-div, #settings {
+    display: none;
+    padding-bottom: 20px;
+}
+
+#new-todo {
+    display: none;
+}
+
+div#new-todo > * {
+    margin-top: 10px;
+}
+
+div#new-todo div span {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+div#new-todo input {
+    width: auto;
+    clear: none;
+    padding: 0;
+    height: 2em;
+}
+
+div#new-todo textarea {
+    width: 100%;
+}
+
+/* 10. Pagination
+----------------------------------------------------------------------------------------------------*/
+
+.for-pagination {
+    margin: 25px;
+}
+
 .pagination {
-    font-size: 80%;
-    min-height: 5em;
+    min-height: 2.8em;
+}
+
+.pagination > * {
+    border-radius: 3px;
 }
         
 .pagination a {
     text-decoration: none;
-    border: solid 1px #AAE;
-    color: #15B;
+    color: #444444;
+    background-color: #F5F5F5;
+    border: 1px solid #DCDCDC;
 }
 
 .pagination a, .pagination span {
@@ -450,24 +485,24 @@ li.menuitem:hover {
     float: left;
     padding: 0.3em 0.5em;
     margin-right: 5px;
-    margin-bottom: 5px;
-    min-width:1em;
-    text-align:center;
+    min-width: 1em;
+    font-size: 11px;
+    text-align: center;
 }
 
-.pagination .current {
-    background: #26B;
-    color: #fff;
-    border: solid 1px #AAE;
+.pagination span {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 }
 
-.pagination .current.prev, .pagination .current.next{
-    color:#999;
-    border-color:#999;
-    background:#fff;
+.pagination .prev, .pagination .next {
+    font-weight: 700;
 }
 
-/* 10. Color themes
+/* 11. Color themes
 ----------------------------------------------------------------------------------------------------*/
 
 .body-cyan {
@@ -477,24 +512,16 @@ li.menuitem:hover {
 .cyan {
     color: #FFFFFF;
     background: rgb(64,181,197);
-    background: -webkit-gradient(linear, left top, left bottombottom, from(rgb(64,181,197)), to(rgb(7,165,187)));
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(64,181,197)), to(rgb(7,165,187)));
     background: -moz-linear-gradient(top, rgb(64,181,197), rgb(7,165,187));
     background: -o-linear-gradient(top, rgb(64,181,197), rgb(7,165,187));
     border: 1px solid #2f8893;
 }
 
-button.cyan {
-    /*color: #FFFFFF;
-    background: rgb(77,154,254);
-    background: -webkit-gradient(linear, left top, left bottombottom, from(rgb(77,154,254)), to(rgb(71,135,237)));
-    background: -moz-linear-gradient(top, rgb(77,154,254), rgb(71,135,237));
-    background: -o-linear-gradient(top, rgb(77,154,254), rgb(71,135,237));
-    border: 1px solid #3E7BCB;*/
-}
-
 button.cyan:hover {
-    /*background: #71A6FE;
-    background: -o-linear-gradient(top, #71A6FE, #71A6FE);*/
+    background: rgb(102,196,209);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(102,196,209)), to(rgb(102,196,209)));
+    background: -o-linear-gradient(top, rgb(102,196,209), rgb(102,196,209));
 }
 
 .body-dark {
@@ -504,37 +531,35 @@ button.cyan:hover {
 .dark {
     color: #FFFFFF;
     background:  rgb(89,89,89);
-    background: -webkit-gradient(linear, left top, left bottombottom, from(rgb(89,89,89)), to(rgb(54,54,54)));
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(89,89,89)), to(rgb(54,54,54)));
     background: -moz-linear-gradient(top, rgb(89,89,89), rgb(54,54,54));
     background: -o-linear-gradient(top, rgb(89,89,89), rgb(54,54,54));
     border: 1px solid #272727;
 }
 
+button.dark:hover {
+    background: rgb(106,106,106);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(106,106,106)), to(rgb(106,106,106)));
+    background: -o-linear-gradient(top, rgb(106,106,106), rgb(106,106,106));  
+}
+
 .body-google-blue {
-    background: rgb(28,54,95) url('../img/cyan.png') repeat;
+    background: rgb(28,54,95) url('../img/google-blue.png') repeat;
 }
 
 .google-blue {
     color: #FFFFFF;
     background: rgb(77,154,254);
-    background: -webkit-gradient(linear, left top, left bottombottom, from(rgb(77,154,254)), to(rgb(71,135,237)));
-    background: -moz-linear-gradient(top, rgb(71,135,237), rgb(71,135,237));
-    background: -o-linear-gradient(top, rgb(71,135,237), rgb(71,135,237));
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(77,154,254)), to(rgb(71,135,237)));
+    background: -moz-linear-gradient(top, rgb(77,154,254)), to(rgb(71,135,237));
+    background: -o-linear-gradient(top, rgb(77,154,254), rgb(71,135,237));
     border: 1px solid #3079ED;
 }
 
-button.google-blue {
-    color: #FFFFFF;
-    background: rgb(77,154,254);
-    background: -webkit-gradient(linear, left top, left bottombottom, from(rgb(77,154,254)), to(rgb(71,135,237)));
-    background: -moz-linear-gradient(top, rgb(77,154,254), rgb(71,135,237));
-    background: -o-linear-gradient(top, rgb(77,154,254), rgb(71,135,237));
-    border: 1px solid #3E7BCB;
-}
-
 button.google-blue:hover {
-    background: #71A6FE;
-    background: -o-linear-gradient(top, #71A6FE, #71A6FE);
+    background: rgb(113,166,254);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(113,166,254)), to(rgb(113,166,254)));
+    background: -o-linear-gradient(top, rgb(113,166,254), rgb(113,166,254));
 }
 
 .body-gray {
@@ -544,10 +569,20 @@ button.google-blue:hover {
 .gray {
     color: #000000;
     background: rgb(240,240,240);
-    background: -webkit-gradient(linear, left top, left bottombottom, from(rgb(240,240,240)), to(rgb(204,204,204)));  
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(240,240,240)), to(rgb(204,204,204)));  
     background: -moz-linear-gradient(top, rgb(240,240,240), rgb(204,204,204));
     background: -o-linear-gradient(top, rgb(240,240,240), rgb(204,204,204));
     border: 1px solid #d6d6d6;
+}
+
+#todo-for-tags span.gray {
+    color: #000000;
+}
+
+button.gray:hover {
+    background: rgb(242,242,242);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(242,242,242)), to(rgb(242,242,242)));
+    background: -o-linear-gradient(top, rgb(242,242,242), rgb(242,242,242));
 }
 
 .body-magenta {
@@ -557,10 +592,16 @@ button.google-blue:hover {
 .magenta {
     color: #FFFFFF;
     background: rgb(190,64,120);
-    background: -webkit-gradient(linear, left top, from(rgb(190,64,120)), to(rgb(177,24,91)));
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(190,64,120)), to(rgb(177,24,91)));
     background: -moz-linear-gradient(top,rgb(190,64,120), rgb(177,24,91));
     background: -o-linear-gradient(top,rgb(190,64,120), rgb(177,24,91));
     border: 1px solid #841144;
+}
+
+button.magenta:hover {
+    background: rgb(203,102,147);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(203,102,147)), to(rgb(203,102,147)));
+    background: -o-linear-gradient(top, rgb(203,102,147), rgb(203,102,147));
 }
 
 .body-orange {
@@ -570,10 +611,16 @@ button.google-blue:hover {
 .orange {
     color: #FFFFFF;
     background: rgb(255,133,64);
-    background: -webkit-gradient(linear, left top, left bottombottom, from(rgb(255,133,64)), to(rgb(255,107,24)));
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,133,64)), to(rgb(255,107,24)));
     background: -moz-linear-gradient(top, rgb(255,133,64), rgb(255,107,24));
     background: -o-linear-gradient(top, rgb(255,133,64), rgb(255,107,24));
     border: 1px solid #c04f11;
+}
+
+button.orange:hover {
+    background: rgb(255,157,102);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,157,102)), to(rgb(255,157,102)));
+    background: -o-linear-gradient(top, rgb(255,157,102), rgb(255,157,102));
 }
 
 .body-yellow {
@@ -583,8 +630,14 @@ button.google-blue:hover {
 .yellow {
     color: #FFFFFF;
     background: rgb(255,199,79);
-    background: -webkit-gradient(linear, left top, left bottombottom, from(rgb(255,199,79)), to(rgb(255,188,43)));
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,199,79)), to(rgb(255,188,43)));
     background: -moz-linear-gradient(top, rgb(255,199,79), rgb(255,188,43));
     background: -o-linear-gradient(top, rgb(255,199,79), rgb(255,188,43));
     border: 1px solid #c08c1f;
+}
+
+button.yellow:hover {
+    background: rgb(255,210,114);
+    background: -webkit-gradient(linear, left top, left bottom, from(rgb(255,210,114)), to(rgb(255,210,114)));
+    background: -o-linear-gradient(top, rgb(255,210,114), rgb(255,210,114));
 }

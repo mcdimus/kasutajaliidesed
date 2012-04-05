@@ -72,7 +72,8 @@
                 classes:""
             }, appendopts||{});
             if(page_id == current_page){
-                lnk = $("<span class='current'>" + appendopts.text + "</span>");
+                // current => menu.class
+                lnk = $("<span class=" + $('#menu').attr('class') + ">" + appendopts.text + "</span>");
             }
             else
             {

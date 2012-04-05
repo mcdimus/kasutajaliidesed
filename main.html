@@ -8,7 +8,6 @@
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"> </script>
         <script type="text/javascript" src="http://cloud.github.com/downloads/SteveSanderson/knockout/knockout-2.0.0.debug.js"> </script>
         <script type="text/javascript" src="js/jquery.pagination.js"></script>
-        <script type="text/javascript" src="js/pagination.js"></script>
         <script type="text/javascript" src="js/jquery.json-2.3.js"></script>
         <script type="text/javascript" src="js/jquery.dataprocessing.js"></script>
 
@@ -42,9 +41,12 @@
                 $buttonTodoAdd.on('click', function() {
                     $newTodoDiv.toggle();
                     if ($buttonTodoAdd.text() == "Add TODO") {
+                        $newTodoDiv.css('border', $('#menu').css('border'));
                         $buttonTodoAdd.text('Cancel');
+                        $('body').css('overflow', 'hidden');
                     } else {
                         $buttonTodoAdd.text('Add TODO');
+                        $('body').css('overflow', 'auto');
                     }
                 });
 
@@ -70,9 +72,11 @@
 
                 // Changes color theme
                 $('#colortheme-picker').on('change', function() {
+                    $('.pagination span').removeClass($('#menu').attr('class')).
+                    addClass($(this).val());
+                    $('body').removeClass().addClass('body-' + $(this).val());
                     $('#menu').removeClass().addClass($(this).val());
                     $('button').removeClass().addClass($(this).val());
-                    $('body').removeClass().addClass('body-' + $(this).val());
                 });
 
                 // Adds / removes tags to new todo
@@ -80,12 +84,13 @@
                     $clickedSpan = $(this);
                     if($clickedSpan.attr('data-clicked') == 'false') {
                         $clickedSpan.attr('data-clicked', 'true')
+                        .addClass($('#menu').attr('class'))
                         .addClass('clicked')
                         .clone().attr('id', 'todo-tag-' + $clickedSpan.text())
                         .appendTo($('div#todo-for-tags-hidden'));
                     } else {
                         $clickedSpan.attr('data-clicked', 'false')
-                        .removeClass('clicked');
+                        .removeClass();
                         $('span#todo-tag-' + $clickedSpan.text()).remove();
                     }
                 });
@@ -95,19 +100,6 @@
                         simpleSearch();
                     }
                 });
-
-                // Pins / unpins tags to new todo when they are checked
-                // var $divfortags = $('div#todo-for-tags'),
-                // $tag = $('div.tag-container');
-                // $tag.on('click', 'input[type="checkbox"]', function() {
-                //     if($(this).is(':checked')) {
-                //         $(this).siblings('span').clone()
-                //         .attr('id', 'todo-tag-' + $(this).siblings('span').text())
-                //         .appendTo($divfortags);
-                //     } else {
-                //         $('span#todo-tag-' + $(this).siblings('span').text()).remove();
-                //     }
-                // });
 
                 // Shows / hides tag checkboxes
                 var $deleteTags = $('#deleteTags');
@@ -199,7 +191,6 @@
                     $('div#todo-for-tags-hidden span').remove();
                     $('div#todo-for-tags span').attr('data-clicked', 'false')
                         .removeClass('clicked');
-                    // window.scrollTo($('span#jumpHere').offset().left, $('span#jumpHere').offset().top);
 
                 });
 
@@ -242,7 +233,7 @@
                 }
 
                 // Button listener for search
-                $('#search').on('click', simpleSearch());
+                $('#search').on('click', simpleSearch);
 
                 // 'Enter' key listener for search
                 $("#search-keyword").keypress(function(event) {
@@ -261,7 +252,7 @@
                 function displayTodos() {
                     processedTodosJSON = $.processData(todosJSON, options.dataprocessing);
                     // Create pagination element with options from var
-                    $("#Pagination").pagination(processedTodosJSON, options.pagination);
+                    $("div.for-pagination").pagination(processedTodosJSON, options.pagination);
                 }
                 displayTodos();
             });
@@ -270,17 +261,19 @@
     <body class="body-dark">
         <div id="main-wrapper">
             <div id="header-wrapper">
+                
                 <div id="logo">
                     <a href="index.html" title="TODO">
                         <img src="img/logo.png" alt="TODO"/>
                     </a>
                 </div>
+                
                 <div id="menu" class="dark">
                     <ul>
                         <li><input type="text" id="search-keyword" placeholder="keyword" />
                             <div>
-                                <a id="advanced-search-show" href="index.html">Advanced search</a>
-                                <a id="clear-search" href="">Clear</a>
+                                <a id="advanced-search-show" href="#">Advanced search</a>
+                                <a id="clear-search" href="#">Clear</a>
                             </div>
                         </li>
                         <li class="menuitem" id="search">Search</li>
@@ -294,6 +287,29 @@
                         </li>
                     </ul>
                 </div>
+
+                    <div class="submenu" id="new-todo">
+                        <h3 class="todo-heading">New TODO</h3>
+                        <label>Type:</label>
+                        <input id="urgent" type="checkbox" />urgent
+                        <input id="important" type="checkbox" />important
+                        <label>Name:</label><input id="name" type="text" />
+                        <label>Deadline:</label><input id="deadline" type="text" />
+                        <label>Description (optional): </label>
+                        <textarea id="description" rows="4"></textarea>
+                        <label>State:</label>
+                        <select id="state" >
+                            <option value="Undone">Undone</option>
+                            <option value="In progress">In progress</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                        <label>Tags:</label>
+                        <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
+                        <div id="todo-for-tags-hidden" ></div>
+                        <button class="dark" name="todo-submit" class="g-button g-button-submit" id="addTodo">Submit</button>
+                    </div> <!--end of new-todo -->
 
             </div>
             <!--end header-wrapper-->
@@ -310,8 +326,8 @@
                             </li>
                         </ul>
                         <input type="text" data-bind="value: newTagName, valueUpdate: 'afterkeydown', event: { keypress: addTagOnEnter }" id="newtag" name="newtag" placeholder="New tag name..." />
-                        <button data-bind="click: addTag" id="addtag" name="addtag">Add</button>
-                        <button data-bind="click: deleteTags" id="deleteTags" name="deleteTags">Edit</button>
+                        <button class="dark" data-bind="click: addTag" id="addtag" name="addtag">Add</button>
+                        <button class="dark" data-bind="click: deleteTags" id="deleteTags" name="deleteTags">Edit</button>
                     </div> <!--end of tag-container -->
                 </div> <!--end of right-panel -->
 
@@ -320,14 +336,14 @@
                     <div class="todo fineBox" id="advanced-search-div">
                         <h3>Advanced search</h3>
                         <input type="text" placeholder="keywords ..." />
-                        <button name="advanced-search" id="advanced-search">Search</button>
+                        <button class="dark" name="advanced-search" id="advanced-search">Search</button>
                     </div>
 
                     <div class="todo fineBox" id="settings">
                         <h3>Settings</h3>
                         <select id="colortheme-picker">
                             <option value="cyan">Cyan</option>
-                            <option value="dark">Dark</option>
+                            <option selected="selected" value="dark">Dark</option>
                             <option value="google-blue">Google-blue</option>
                             <option value="gray">Gray</option>
                             <option value="magenta">Magenta</option>
@@ -354,36 +370,13 @@
                         </div>
                     </div>
 
-                    <div class="todo fineBox" id="new-todo">
-                        <h3 class="todo-heading">New TODO</h3>
-                        <label>Type:</label>
-                        <input id="urgent" type="checkbox" />urgent
-                        <input id="important" type="checkbox" />important
-                        <label>Name:</label><input id="name" type="text" />
-                        <label>Deadline:</label><input id="deadline" type="text" />
-                        <label>Description (optional): </label>
-                        <textarea id="description" rows="4"></textarea>
-                        <label>State:</label>
-                        <select id="state" >
-                            <option value="Undone">Undone</option>
-                            <option value="In progress">In progress</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                        <label>Tags:</label>
-                        <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
-                        <div id="todo-for-tags-hidden" ></div>
-                        <button  name="todo-submit" class="g-button g-button-submit" id="addTodo">Submit</button>
-                    </div> <!--end of new-todo -->
+                    <div class="for-pagination"></div>
 
                     <div>
                     </div>
                     <div id="todo-wrapper"></div>
                     
-                    <div id="Pagination" class="pagination"></div>
-                    
-                    <!-- <span id="jumpHere"></span> -->
+                    <div class="for-pagination"></div>
                 
                 </div><!--end of main -->
 
