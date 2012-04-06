@@ -35,23 +35,61 @@
                     $('#signout-form').submit();
                 });
 
+                var $overlay =  $('div#overlay');
+                function showOverlay() {
+                    $overlay.css('visibility','visible');
+                    $overlay.css('height', $('html').css('height'));
+                }
+
+                // Clear selected tags
+                function clearTags() {
+                    $('div#todo-for-tags-hidden span').remove();
+                    $('div#todo-for-tags span').attr('data-clicked', 'false')
+                    .removeClass();
+                }
+
                 // Hides new todo addenum form;
                 var $newTodoForm = $('div#new-todo'),
-                $buttonTodoAdd = $('#todo-add');
+                $newTodoShow = $('#new-todo-show');
                 function hideNewTodoForm() {
-                    $('div#overlay').css('visibility','hidden');
-                    $('body').css('overflow', 'auto');
-                    $buttonTodoAdd.text('Add TODO');
+                    $overlay.css('visibility','hidden');
+                    $newTodoShow.text('Add TODO');
+                    clearTags();
                     $newTodoForm.hide();
                 }
 
+                // Hides settings form
+                var $settings = $('#settings'),
+                $settingsShow = $('#settings-show');
+                function hideSettings() {
+                    $settingsShow.text('Settings');
+                    $overlay.css('visibility','hidden');
+                    $settings.hide();
+                }
+
+                // Adds / removes tags to new todo
+                $('div#todo-for-tags').on('click', 'span', function() {
+                    $clickedSpan = $(this);
+                    if($clickedSpan.attr('data-clicked') == 'false') {
+                        $clickedSpan.attr('data-clicked', 'true')
+                        .addClass($('#menu').attr('class'))
+                        .addClass('clicked')
+                        .clone().attr('id', 'todo-tag-' + $clickedSpan.text())
+                        .appendTo($('div#todo-for-tags-hidden'));
+                    } else {
+                        $clickedSpan.attr('data-clicked', 'false')
+                        .removeClass();
+                        $('span#todo-tag-' + $clickedSpan.text()).remove();
+                    }
+                });
+
                 // Shows / hides new todo addenum form
-                $buttonTodoAdd.on('click', function() {
+                $newTodoShow.on('click', function() {
                     $newTodoForm.toggle();
-                    if ($buttonTodoAdd.text() == "Add TODO") {
-                        $('div#overlay').css('visibility','visible');
-                        $('body').css('overflow', 'hidden');
-                        $buttonTodoAdd.text('Cancel');
+                    if ($newTodoShow.text() == "Add TODO") {
+                        hideSettings();
+                        showOverlay();
+                        $newTodoShow.text('Cancel');
                     } else {
                         hideNewTodoForm();
                     }
@@ -70,10 +108,14 @@
                 });
 
                 // Show / hide settings form
-                var $divMenu = $('#menu');
-                $divMenu.on('click', 'li', function() {
-                    if($(this).text() == "Settings") {
-                        $('#settings').toggle();
+                $settingsShow.on('click', function() {
+                    $settings.toggle();
+                    if($settingsShow.text() == "Settings") {
+                        hideNewTodoForm();
+                        $settingsShow.text('Close');
+                        showOverlay();
+                    } else {
+                        hideSettings();
                     }
                 });
 
@@ -87,26 +129,28 @@
                     $newTodoForm.css('border-color', $('#menu').css('border-left-color'));
                 });
 
-                // Adds / removes tags to new todo
-                $('div#todo-for-tags').on('click', 'span', function() {
-                    $clickedSpan = $(this);
-                    if($clickedSpan.attr('data-clicked') == 'false') {
-                        $clickedSpan.attr('data-clicked', 'true')
-                        .addClass($('#menu').attr('class'))
-                        .addClass('clicked')
-                        .clone().attr('id', 'todo-tag-' + $clickedSpan.text())
-                        .appendTo($('div#todo-for-tags-hidden'));
-                    } else {
-                        $clickedSpan.attr('data-clicked', 'false')
-                        .removeClass();
-                        $('span#todo-tag-' + $clickedSpan.text()).remove();
-                    }
-                });
+                // Simple search
+                function simpleSearch() {
+                    options.dataprocessing.filter = true;
+                    options.dataprocessing.filterCriteria = $('input#search-keyword').val();
+                    displayTodos();
+                }
 
-                $("#newtag").keypress(function(event) {
+                // Button listener for search
+                $('#search').on('click', simpleSearch);
+
+                // 'Enter' key listener for search
+                $("#search-keyword").keypress(function(event) {
                     if (event.which == 13) {
                         simpleSearch();
                     }
+                });
+
+                // Clear search results
+                $('#clear-search').on('click', function() {
+                    options.dataprocessing.filter = false;
+                    $('input#search-keyword').val('');
+                    displayTodos();
                 });
 
                 // Shows / hides tag checkboxes
@@ -192,15 +236,9 @@
                     $('div#todo-for-tags-hidden span').each(function() {
                         todo.tags += $(this).html() + ' ';
                     });
-
+                    clearTags();
                     todosJSON.unshift(todo); //adds new items to the beginning of an array
                     displayTodos();
-
-                    // clears selected tags
-                    $('div#todo-for-tags-hidden span').remove();
-                    $('div#todo-for-tags span').attr('data-clicked', 'false')
-                        .removeClass('clicked');
-
                 });
 
                 // init options
@@ -234,30 +272,6 @@
                     displayTodos();
                 });
 
-                // Simple search
-                function simpleSearch() {
-                    options.dataprocessing.filter = true;
-                    options.dataprocessing.filterCriteria = $('input#search-keyword').val();
-                    displayTodos();
-                }
-
-                // Button listener for search
-                $('#search').on('click', simpleSearch);
-
-                // 'Enter' key listener for search
-                $("#search-keyword").keypress(function(event) {
-                    if (event.which == 13) {
-                        simpleSearch();
-                    }
-                });
-
-                // Clear search results
-                $('#clear-search').on('click', function() {
-                    options.dataprocessing.filter = false;
-                    $('input#search-keyword').val('');
-                    displayTodos();
-                });
-
                 function displayTodos() {
                     processedTodosJSON = $.processData(todosJSON, options.dataprocessing);
                     // Create pagination element with options from var
@@ -287,8 +301,8 @@
                             </div>
                         </li>
                         <li class="menuitem" id="search">Search</li>
-                        <li id="todo-add" class="menuitem">Add TODO</li>
-                        <li class="menuitem">Settings</li>
+                        <li class="menuitem" id="new-todo-show">Add TODO</li>
+                        <li class="menuitem" id="settings-show">Settings</li>
                         <li class="menuitem" id="sign-out">
                             Logout
                             <form id="signout-form" action="index.html" method="post">
@@ -319,7 +333,42 @@
                         <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
                         <div id="todo-for-tags-hidden" ></div>
                         <button class="dark" name="todo-submit" class="g-button g-button-submit" id="addTodo">Submit</button>
-                    </div> <!--end of new-todo -->
+                    </div>
+
+                    <div class="submenu" id="settings">
+                        <h3>Settings</h3>
+                        <label>Color theme:</label>
+                        <select id="colortheme-picker">
+                            <option value="cyan">Cyan</option>
+                            <option selected="selected" value="dark">Dark</option>
+                            <option value="google-blue">Google-blue</option>
+                            <option value="gray">Gray</option>
+                            <option value="magenta">Magenta</option>
+                            <option value="orange">Orange</option>
+                            <option value="yellow">Yellow</option>
+                        </select>
+                        <div id="todo-display-settings">
+                            <label>Todos on page:</label>
+                            <select id="showOnPage">
+                                <option value="2">2</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                            </select>
+                            <label>Sort by:</label>
+                            <select id="sortBy">
+                                <option value="name">Name</option>
+                                <option value="description">Description</option>
+                                <option value="state">State</option>
+                            </select>
+                            <label>Sort direction:</label>
+                            <select id="sortDir">
+                                <option value="ASC">Ascending</option>
+                                <option value="DESC">Descending</option>
+                            </select>
+                        </div>
+                    </div>
 
             </div>
             <!--end header-wrapper-->
@@ -335,7 +384,7 @@
                                 <span data-bind="text: name"></span>
                             </li>
                         </ul>
-                        <input type="text" data-bind="value: newTagName, valueUpdate: 'afterkeydown', event: { keypress: addTagOnEnter }" id="newtag" name="newtag" placeholder="New tag name..." />
+                        <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag name..." />
                         <button class="dark" data-bind="click: addTag" id="addtag" name="addtag">Add</button>
                         <button class="dark" data-bind="click: deleteTags" id="deleteTags" name="deleteTags">Edit</button>
                     </div> <!--end of tag-container -->
@@ -347,37 +396,6 @@
                         <h3>Advanced search</h3>
                         <input type="text" placeholder="keywords ..." />
                         <button class="dark" name="advanced-search" id="advanced-search">Search</button>
-                    </div>
-
-                    <div class="todo fineBox" id="settings">
-                        <h3>Settings</h3>
-                        <select id="colortheme-picker">
-                            <option value="cyan">Cyan</option>
-                            <option selected="selected" value="dark">Dark</option>
-                            <option value="google-blue">Google-blue</option>
-                            <option value="gray">Gray</option>
-                            <option value="magenta">Magenta</option>
-                            <option value="orange">Orange</option>
-                            <option value="yellow">Yellow</option>
-                        </select>
-                        <div id="todo-display-settings">
-                            Show on page: <select id="showOnPage">
-                                <option value="2">2</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                            </select>
-                            Sort by: <select id="sortBy">
-                                <option value="name">Name</option>
-                                <option value="description">Description</option>
-                                <option value="state">State</option>
-                            </select>
-                            <select id="sortDir">
-                                <option value="ASC">Ascending</option>
-                                <option value="DESC">Descending</option>
-                            </select>
-                        </div>
                     </div>
 
                     <div class="for-pagination"></div>
