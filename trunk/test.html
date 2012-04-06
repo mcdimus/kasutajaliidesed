@@ -33,8 +33,74 @@
                 console.log(result);
             });
         </script>
+        <style type="text/css">
+            table.todo-instance {
+                border: 1px solid #E5E5E5;
+                border-collapse: collapse;
+                background: #FAF7F7;
+                width: 660px;
+                margin: 25px;
+                padding: 0px 20px;
+            }
+            table.todo-instance td#todo-active-checkbox {
+                border: 1px solid #E5E5E5;
+                text-align: center;
+                vertical-align: top;
+            }
+            table.todo-instance td#todo-date {
+                text-transform: capitalize;
+            }
+            table.todo-instance td#todo-date {
+                border-bottom: 1px solid #E5E5E5;
+            }
+            table.todo-instance td#todo-tags {
+                border: 1px solid #E5E5E5;
+                font-style: italic;
+            }
+            table.todo-instance td#todo-list {
+                border: 1px solid #E5E5E5;
+            }
+            table.todo-instance td#todo-list ul {
+                list-style-type: none;
+                list-style-position: inside;
+                padding: 0;
+                margin: 0;
+            }
+             table.todo-instance td#todo-state {
+                border: 1px solid #E5E5E5;
+                text-align: center;
+            }
+            table.todo-instance td#description {
+                border: 1px solid #E5E5E5;
+                text-align: justify;
+            }
+        </style>
     </head>
     <body>
         <div class="result">TODO write content</div>
+
+        <table class="todo-instance">
+            <tr>
+                <td rowspan="3" id="todo-active-checkbox"><input type="checkbox" name="active" value="ON" /></td>
+                <td colspan="3" id="todo-name">--------------NAME--------------</td>
+            </tr>
+            <tr>
+                <td colspan="3" id="todo-date">--------------DATE--------------</td>
+            </tr>
+            <tr>
+                <td id="todo-tags">--------------TAGS--------------</td>
+                <td id="todo-list">
+                    <ul>
+                        <li><input type="checkbox" name="urgent" value="ON" /> urgent</li>
+                        <li><input type="checkbox" name="important" value="ON" /> important</li>
+                    </ul>
+                </td>
+                <td id="todo-state">STATE</td>
+            </tr>
+            <tr>
+                <td colspan="4" id="todo-description">DESCRIPTION</td>
+            </tr>
+        </table>
+
     </body>
 </html>

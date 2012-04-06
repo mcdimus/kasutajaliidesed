@@ -279,18 +279,42 @@ function pageselectCallback(page_index, todosJSON,opt, jq){
     // Iterate through a selection of the content and build an HTML string
     for(var i=page_index*items_per_page;i<max_elem;i++)
     {
-        newcontent += '<div class="todo fineBox">';
+        // old template
+//        newcontent += '<div class="todo fineBox">';
+//
+//        newcontent += '<h3 class="todo-heading">' + todosJSON[i].name + '</h3>';
+//        newcontent += '<p><input type="checkbox" name="todo-urgent" '+todosJSON[i].isUrgent+'>urgent</input>';
+//        newcontent += '<input type="checkbox" name="todo-important" '+todosJSON[i].isImportant+'>important</input></p>';
+//        newcontent += '<p>Deadline: '+todosJSON[i].deadline+'</p>';
+//        newcontent += '<p>Description: '+todosJSON[i].description+'</p>';
+//        newcontent += '<p>State: '+todosJSON[i].state+'</p>';
+//        newcontent += '<p>Tags: '+todosJSON[i].tags+'</p>';
+//        newcontent += '<p><input type="checkbox" name="todo-active" '+todosJSON[i].isActive+'>Active</input></p>';
+//
+//        newcontent += '</div>';
 
-        newcontent += '<h3 class="todo-heading">' + todosJSON[i].name + '</h3>';
-        newcontent += '<p><input type="checkbox" name="todo-urgent" '+todosJSON[i].isUrgent+'>urgent</input>';
-        newcontent += '<input type="checkbox" name="todo-important" '+todosJSON[i].isImportant+'>important</input></p>';
-        newcontent += '<p>Deadline: '+todosJSON[i].deadline+'</p>';
-        newcontent += '<p>Description: '+todosJSON[i].description+'</p>';
-        newcontent += '<p>State: '+todosJSON[i].state+'</p>';
-        newcontent += '<p>Tags: '+todosJSON[i].tags+'</p>';
-        newcontent += '<p><input type="checkbox" name="todo-active" '+todosJSON[i].isActive+'>Active</input></p>';
-
-        newcontent += '</div>';
+        newcontent += '<table class="todo-instance"> \
+            <tr>\
+                <td rowspan="3" id="todo-active-checkbox"><input type="checkbox" name="active" value="ON" '+todosJSON[i].isActive+' /></td>\
+            <td colspan="3" id="todo-name">' + todosJSON[i].name + '</td>\
+            </tr>\
+            <tr>\
+                <td colspan="3" id="todo-tags">'+todosJSON[i].tags+'</td>\
+            </tr>\
+            <tr>\
+                <td id="todo-date">'+todosJSON[i].deadline+'</td>\
+                <td id="todo-list">\
+                    <ul>\
+                        <li><input type="checkbox" name="urgent" value="ON" '+todosJSON[i].isUrgent+' /> urgent</li>\
+                        <li><input type="checkbox" name="important" value="ON" '+todosJSON[i].isImportant+' /> important</li>\
+                    </ul>\
+                </td>\
+                <td id="todo-state">'+todosJSON[i].state+'</td>\
+            </tr>\
+            <tr>\
+                <td colspan="4" id="todo-description">'+todosJSON[i].description+'</td>\
+            </tr>\
+        </table>';
     }
     //
     // Replace old content with new content
