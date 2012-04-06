@@ -85,15 +85,15 @@ div#main-wrapper {
 div#header-wrapper {
     height: 70px;
     width: 1024px;
-    margin: 0px auto;
+    margin: 20px auto;
 }
 
 div#logo {
     position: relative;
     z-index: 11;
     float: left;
-/*    margin-left: 10px;
-    margin-top: -20px;*/
+    margin-top: 1px;
+    margin-left: -25px;
 }
 
 div#logo img {
@@ -418,16 +418,14 @@ li.menuitem:hover {
 ----------------------------------------------------------------------------------------------------*/
 
 .submenu {
+    position: relative;
     z-index: 2;
-    background: #FAF7F7;
     padding: 20px;
     width: 660px;
-    position: relative;
     margin: auto;
+    background: #FAF7F7;
+    border: 1px solid #272727;
     top: -25px;
-/*    -webkit-box-shadow: 0em 0em 0em 50em rgba(0,0,0,0.4);
-    -moz-box-shadow: 0em 0em 0em 50em rgba(0,0,0,0.4);
-    box-shadow: 0em 0em 0em 50em rgba(0,0,0,0.4);*/
 }
 
 #new-todo, #advanced-search-div, #settings {
