@@ -35,20 +35,25 @@
                     $('#signout-form').submit();
                 });
 
-                // Shows / hides new todo addenum form
-                var $newTodoDiv = $('div#new-todo'),
+                // Hides new todo addenum form;
+                var $newTodoForm = $('div#new-todo'),
                 $buttonTodoAdd = $('#todo-add');
+                function hideNewTodoForm() {
+                    $('div#overlay').css('visibility','hidden');
+                    $('body').css('overflow', 'auto');
+                    $buttonTodoAdd.text('Add TODO');
+                    $newTodoForm.hide();
+                }
+
+                // Shows / hides new todo addenum form
                 $buttonTodoAdd.on('click', function() {
-                    $newTodoDiv.toggle();
+                    $newTodoForm.toggle();
                     if ($buttonTodoAdd.text() == "Add TODO") {
                         $('div#overlay').css('visibility','visible');
-                        $newTodoDiv.css('border', $('#menu').css('border'));
-                        $buttonTodoAdd.text('Cancel');
                         $('body').css('overflow', 'hidden');
+                        $buttonTodoAdd.text('Cancel');
                     } else {
-                        $('div#overlay').css('visibility','hidden');
-                        $buttonTodoAdd.text('Add TODO');
-                        $('body').css('overflow', 'auto');
+                        hideNewTodoForm();
                     }
                 });
 
@@ -79,6 +84,7 @@
                     $('body').removeClass().addClass('body-' + $(this).val());
                     $('#menu').removeClass().addClass($(this).val());
                     $('button').removeClass().addClass($(this).val());
+                    $newTodoForm.css('border-color', $('#menu').css('border-left-color'));
                 });
 
                 // Adds / removes tags to new todo
@@ -172,6 +178,7 @@
 
                 // Adds new todo
                 $('#addTodo').on('click', function() {
+                    hideNewTodoForm();
                     var todo = {};
 
                     todo.isUrgent = $('input#urgent').attr('checked') ? 'checked="checked"' : '';
