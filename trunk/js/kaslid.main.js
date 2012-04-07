@@ -57,22 +57,44 @@ $(document).ready(function() {
      * Search feature
      **************************************************/
 
+    // Shows overlay (shade on the page when showing popup windows)
+    var $overlay =  $('div#overlay');
+    function showOverlay() {
+        $overlay.css('visibility','visible');
+        $overlay.css('height', $('html').css('height'));
+    }
+
     // Simple search
     function simpleSearch() {
         options.dataprocessing.filter = true;
         options.dataprocessing.filterCriteria = $('input#search-keyword').val();
         displayTodos();
     }
+
+    // Hides advanced search form
+    function hideAdvancedSearch() {
+        $advancedSearchShow.attr('data-show','false');
+        $overlay.css('visibility','hidden');
+        $advancedSearchForm.hide();
+    }
+
     // Shows / hides advanced search form
-    var $advancedSearchDiv = $('div#advanced-search-div'),
+    var $advancedSearchForm = $('div#advanced-search-form'),
     $advancedSearchShow = $('button#advanced-search-show');
     $advancedSearchShow.on('click', function() {
-        $advancedSearchDiv.toggle();
-        if ($advancedSearchShow.text() == "Advanced search") {
-            $advancedSearchShow.text('Cancel');
+        if ($advancedSearchShow.attr('data-show') == 'false') {
+            hideSettings();
+            hideNewTodoForm();
+            $advancedSearchForm.show();
+            $advancedSearchShow.attr('data-show','true');
+            showOverlay();
         } else {
-            $advancedSearchShow.text('Advanced search');
+            hideAdvancedSearch();
         }
+    });
+
+    $('#cancel-advanced-search').on('click', function() {
+        hideAdvancedSearch();
     });
 
     // Button listener for search
@@ -97,28 +119,22 @@ $(document).ready(function() {
         $('#signout-form').submit();
     });
 
-    var $overlay =  $('div#overlay');
-    function showOverlay() {
-        $overlay.css('visibility','visible');
-        $overlay.css('height', $('html').css('height'));
-    }
-
     // Hides new todo addenum form;
     var $newTodoForm = $('div#new-todo'),
     $newTodoShow = $('#new-todo-show');
     function hideNewTodoForm() {
         $overlay.css('visibility','hidden');
-        $newTodoShow.text('Add TODO');
-        clearTags();
         $newTodoForm.hide();
+        $newTodoShow.attr('data-show', 'false');
+        clearTags();
     }
 
     // Hides settings form
     var $settings = $('#settings'),
     $settingsShow = $('#settings-show');
     function hideSettings() {
-        $settingsShow.text('Settings');
         $overlay.css('visibility','hidden');
+        $settingsShow.attr('data-show', 'false');
         $settings.hide();
     }
 
@@ -140,26 +156,36 @@ $(document).ready(function() {
 
     // Shows / hides new todo addenum form
     $newTodoShow.on('click', function() {
-        $newTodoForm.toggle();
-        if ($newTodoShow.text() == "Add TODO") {
+        if ($newTodoShow.attr('data-show') == 'false') {
+            $newTodoForm.show();
             hideSettings();
+            hideAdvancedSearch();
             showOverlay();
-            $newTodoShow.text('Cancel');
+            $newTodoShow.attr('data-show', 'true');
         } else {
             hideNewTodoForm();
         }
     });
 
+    $('#cancel-todo').on('click', function() {
+        hideNewTodoForm();
+    });
+
     // Show / hide settings form
     $settingsShow.on('click', function() {
-        $settings.toggle();
-        if($settingsShow.text() == "Settings") {
+        if($settingsShow.attr('data-show') == 'false') {
+            $settings.show();
             hideNewTodoForm();
-            $settingsShow.text('Close');
+            hideAdvancedSearch();
             showOverlay();
+            $settingsShow.attr('data-show', 'true');
         } else {
             hideSettings();
         }
+    });
+
+    $('#cancel-settings').on('click', function() {
+        hideSettings();
     });
 
     // Adds new todo

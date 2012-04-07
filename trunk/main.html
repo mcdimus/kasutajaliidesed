@@ -21,31 +21,29 @@
         <div id="overlay"></div>
         <div id="main-wrapper">
             <div id="header-wrapper">
-
+                <form id="signout-form" action="index.html" method="post">
+                    <input type="hidden" name="login" value=""/>
+                    <button class="dark" id="sign-out">Sign out</button>
+                </form>
                 <div id="logo">
                     <a href="index.html" title="TODO">
                         <img src="img/logo1.png" alt="TODO"/>
                     </a>
                 </div>
-
-                <div id="menu" class="dark">
+                <div class="dark" id="menu">
                     <ul>
-                        <li><input type="text" id="search-keyword" placeholder="keyword" />
-                            <div>
-                                <a id="advanced-search-show" href="#">Advanced search</a>
-                                <a id="clear-search" href="#">Clear</a>
-                            </div>
-                        </li>
-                        <li class="menuitem" id="search">Search</li>
-                        <li class="menuitem" id="new-todo-show">Add TODO</li>
-                        <li class="menuitem" id="settings-show">Settings</li>
-                        <li class="menuitem" id="sign-out">
-                            Logout
-                            <form id="signout-form" action="index.html" method="post">
-                                <input type="hidden" name="login" value=""/>
-                            </form>
-                        </li>
+                        <li class="menuitem" id="new-todo-show" data-show="false">Add TODO</li>
+                        <li class="menuitem">Projects</li>
+                        <li class="menuitem" id="settings-show" data-show="false">Settings</li>
                     </ul>
+                    <div id="search-form">
+                        <div id="search-field">
+                            <input type="text" id="search-keyword" placeholder="todo name" />
+                            <button class="dark" id="search">Search</button>
+                            <button id="clear-search"/>
+                        </div>
+                        <button class="dark" id="advanced-search-show" data-show="false">Advanced search</button>
+                    </div>
                 </div>
 
                 <div class="submenu" id="new-todo">
@@ -67,8 +65,9 @@
                     </select>
                     <label>Tags:</label>
                     <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
-                    <div id="todo-for-tags-hidden" ></div>
-                    <button class="dark" name="todo-submit" class="g-button g-button-submit" id="addTodo">Submit</button>
+                    <div id="todo-for-tags-hidden"></div>
+                    <button class="dark" name="todo-submit" id="addTodo">Submit</button>
+                    <button class="dark" id="cancel-todo">Cancel</button>
                 </div>
 
                 <div class="submenu" id="settings">
@@ -91,7 +90,7 @@
                             <option value="10">10</option>
                             <option value="20">20</option>
                             <option value="30">30</option>
-                        </select>
+                            </select>
                         <label>Sort by:</label>
                         <select id="sortBy">
                             <option value="name">Name</option>
@@ -104,7 +103,15 @@
                             <option value="DESC">Descending</option>
                         </select>
                     </div>
+                    <button class="dark" id="cancel-settings">Close</button>
                 </div>
+
+                <div class="submenu" id="advanced-search-form">
+                        <h3>Advanced search</h3>
+                        <input type="text" placeholder="keywords ..." />
+                        <button class="dark" name="advanced-search" id="advanced-search">Search</button>
+                        <button class="dark" id="cancel-advanced-search">Cancel</button>
+                    </div>
 
             </div>
             <!--end header-wrapper-->
@@ -112,7 +119,7 @@
             <div id="content-wrapper">
 
                 <div class="right-panel">
-                    <div class="tag-container fineBox" >
+                    <div class="tag-container" >
                         <h3>Tags</h3>
                         <ul data-bind="foreach: tags">
                             <li>
@@ -127,12 +134,6 @@
                 </div> <!--end of right-panel -->
 
                 <div class="main">
-
-                    <div class="todo fineBox" id="advanced-search-div">
-                        <h3>Advanced search</h3>
-                        <input type="text" placeholder="keywords ..." />
-                        <button class="dark" name="advanced-search" id="advanced-search">Search</button>
-                    </div>
 
                     <div class="for-pagination"></div>
 
