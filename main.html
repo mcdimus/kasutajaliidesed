@@ -11,275 +11,11 @@
         <script type="text/javascript" src="js/jquery.json-2.3.js"></script>
         <script type="text/javascript" src="js/jquery.dataprocessing.js"></script>
 
+        <script type="text/javascript" src="js/kaslid.main.js"></script>
+        <script type="text/javascript" src="js/kaslid.tags.js"></script>
+        <script type="text/javascript" src="js/kaslid.colorpicker.js"></script>
+
         <link rel="stylesheet" href="css/style.css"/>
-
-        <script type="text/javascript">
-
-            var todosJSON = [
-                {"name":"TODO #1", "deadline":"12:00 13.04.2012", "description":"My fisrt todo. Hell yeah!",
-                    "isUrgent":'checked="checked"',"isImportant":false,"isActive":'checked="checked"',"state":"Pending","tags":"bla bla bla"},
-                {"name":"TODO #2", "deadline":"12:00 13.04.2012", "description":"My second todo. Hell yeah!",
-                    "isUrgent":true,"isImportant":'checked="checked"',"isActive":'checked="checked"',"state":"Pending","tags":"bla bla bla"},
-                {"name":"TODO #3", "deadline":"12:00 13.04.2012", "description":"My third todo. Hell yeah!",
-                    "isUrgent":'checked="checked"',"isImportant":false,"isActive":'checked="checked"',"state":"Pending","tags":"bla bla bla"},
-                {"name":"TODO #4", "deadline":"12:00 13.04.2012", "description":"My fourth todo. Hell yeah!",
-                    "isUrgent":'checked="checked"',"isImportant":'checked="checked"',"isActive":'checked="checked"',"state":"Pending","tags":"bla bla bla"},
-                {"name":"TODO #5", "deadline":"12:00 13.04.2012", "description":"My fifth todo. Hell yeah!",
-                    "isUrgent":'checked="checked"',"isImportant":false,"isActive":'checked="checked"',"state":"Pending","tags":"bla bla bla"}
-            ];
-
-            $(document).ready(function() {
-
-                // Exit by submitting exit form
-                $('#sign-out').on('click', function() {
-                    $('#signout-form').submit();
-                });
-
-                var $overlay =  $('div#overlay');
-                function showOverlay() {
-                    $overlay.css('visibility','visible');
-                    $overlay.css('height', $('html').css('height'));
-                }
-
-                // Clear selected tags
-                function clearTags() {
-                    $('div#todo-for-tags-hidden span').remove();
-                    $('div#todo-for-tags span').attr('data-clicked', 'false')
-                    .removeClass();
-                }
-
-                // Hides new todo addenum form;
-                var $newTodoForm = $('div#new-todo'),
-                $newTodoShow = $('#new-todo-show');
-                function hideNewTodoForm() {
-                    $overlay.css('visibility','hidden');
-                    $newTodoShow.text('Add TODO');
-                    clearTags();
-                    $newTodoForm.hide();
-                }
-
-                // Hides settings form
-                var $settings = $('#settings'),
-                $settingsShow = $('#settings-show');
-                function hideSettings() {
-                    $settingsShow.text('Settings');
-                    $overlay.css('visibility','hidden');
-                    $settings.hide();
-                }
-
-                // Adds / removes tags to new todo
-                $('div#todo-for-tags').on('click', 'span', function() {
-                    $clickedSpan = $(this);
-                    if($clickedSpan.attr('data-clicked') == 'false') {
-                        $clickedSpan.attr('data-clicked', 'true')
-                        .addClass($('#menu').attr('class'))
-                        .addClass('clicked')
-                        .clone().attr('id', 'todo-tag-' + $clickedSpan.text())
-                        .appendTo($('div#todo-for-tags-hidden'));
-                    } else {
-                        $clickedSpan.attr('data-clicked', 'false')
-                        .removeClass();
-                        $('span#todo-tag-' + $clickedSpan.text()).remove();
-                    }
-                });
-
-                // Shows / hides new todo addenum form
-                $newTodoShow.on('click', function() {
-                    $newTodoForm.toggle();
-                    if ($newTodoShow.text() == "Add TODO") {
-                        hideSettings();
-                        showOverlay();
-                        $newTodoShow.text('Cancel');
-                    } else {
-                        hideNewTodoForm();
-                    }
-                });
-
-                // Shows / hides advanced search form
-                var $advancedSearchDiv = $('div#advanced-search-div'),
-                $advancedSearchShow = $('button#advanced-search-show');
-                $advancedSearchShow.on('click', function() {
-                    $advancedSearchDiv.toggle();
-                    if ($advancedSearchShow.text() == "Advanced search") {
-                        $advancedSearchShow.text('Cancel');
-                    } else {
-                        $advancedSearchShow.text('Advanced search');
-                    }
-                });
-
-                // Show / hide settings form
-                $settingsShow.on('click', function() {
-                    $settings.toggle();
-                    if($settingsShow.text() == "Settings") {
-                        hideNewTodoForm();
-                        $settingsShow.text('Close');
-                        showOverlay();
-                    } else {
-                        hideSettings();
-                    }
-                });
-
-                // Changes color theme
-                $('#colortheme-picker').on('change', function() {
-                    $('.pagination span').removeClass($('#menu').attr('class')).
-                    addClass($(this).val());
-                    $('body').removeClass().addClass('body-' + $(this).val());
-                    $('#menu').removeClass().addClass($(this).val());
-                    $('button').removeClass().addClass($(this).val());
-                    $newTodoForm.css('border-color', $('#menu').css('border-left-color'));
-                });
-
-                // Simple search
-                function simpleSearch() {
-                    options.dataprocessing.filter = true;
-                    options.dataprocessing.filterCriteria = $('input#search-keyword').val();
-                    displayTodos();
-                }
-
-                // Button listener for search
-                $('#search').on('click', simpleSearch);
-
-                // 'Enter' key listener for search
-                $("#search-keyword").keypress(function(event) {
-                    if (event.which == 13) {
-                        simpleSearch();
-                    }
-                });
-
-                // Clear search results
-                $('#clear-search').on('click', function() {
-                    options.dataprocessing.filter = false;
-                    $('input#search-keyword').val('');
-                    displayTodos();
-                });
-
-                // Shows / hides tag checkboxes
-                var $deleteTags = $('#deleteTags');
-                $('#deleteTags').on('click', function() {
-                    if ($deleteTags.text() == "Edit") {
-                        $deleteTags.text('Delete checked');
-                        $('div.tag-container input[type="checkbox"]').removeClass('tag-checkbox-hidden');
-                    } else {
-                        $deleteTags.text('Edit');
-                        $('div.tag-container input[type="checkbox"]').addClass('tag-checkbox-hidden');
-                    }
-                });
-
-                function Tag(name, checked) {
-                    return {
-                        name : ko.observable(name),
-                        isChecked : ko.observable(checked)
-                    };
-                }
-
-                function appViewModel() {
-                    var self = this;
-
-                    // ======================================================
-                    // == tag ViewModel
-                    // ======================================================
-                    // observable variables
-                    self.tags =
-                        ko.observableArray([
-                        new Tag("school",false),
-                        new Tag("birthday",false),
-                        new Tag("meeting",false),
-                        new Tag("work",false)
-                    ]);
-
-                    self.newTagName = ko.observable("");
-
-                    // functions on observables
-                    self.addTag = function () {
-                        if (self.newTagName() != "")
-                            self.tags.push(new Tag(self.newTagName(), false));
-                    };
-
-                    self.addTagOnEnter = function(event) {
-                        var keyCode = event.keyCode;
-                        console.log(event.keyCode);
-                        if (keyCode == 13) {
-                            this.addTag();
-                            return false;
-                        }
-                        return true;
-                    }
-
-                    self.deleteTags = function() {
-                        var selectedTags = $.grep(self.tags(), function(tag) {
-                            return (tag.isChecked());
-                        });
-
-                        $(selectedTags).each( function(index, tag) {
-                            self.tags.remove(tag);
-                            $('span#todo-tag-' + tag.name()).remove();
-                        });
-                    };
-                }
-
-                ko.applyBindings(new appViewModel());
-
-
-                // Adds new todo
-                $('#addTodo').on('click', function() {
-                    hideNewTodoForm();
-                    var todo = {};
-
-                    todo.isUrgent = $('input#urgent').attr('checked') ? 'checked="checked"' : '';
-                    todo.isImportant = $('input#important').attr('checked') ? 'checked="checked"' : '';
-                    todo.name = $('input#name').val();
-                    todo.deadline = $('input#deadline').val();
-                    todo.description = $('textarea#description').val();
-                    todo.state = $('select#state').val();
-                    todo.isActive = 'checked="checked"';
-                    todo.tags = '';
-                    $('div#todo-for-tags-hidden span').each(function() {
-                        todo.tags += $(this).html() + ' ';
-                    });
-                    clearTags();
-                    todosJSON.unshift(todo); //adds new items to the beginning of an array
-                    displayTodos();
-                });
-
-                // init options
-                var options = {
-                    pagination : {
-                        items_per_page: $('select#showOnPage').val(),
-                        data_container: "#todo-wrapper"
-                    },
-                    dataprocessing : {
-                        sort: false,
-                        filter: false
-                    }
-                };
-
-                // change options
-                $('div#todo-display-settings').on('change', 'select', function() {
-                    id = $(this).attr('id');
-                    switch (id) {
-                        case 'sortDir' :
-                            options.dataprocessing.sort = true;
-                            options.dataprocessing.sortDir = $(this).val();
-                            break;
-                        case 'sortBy' :
-                            options.dataprocessing.sort = true;
-                            options.dataprocessing.sortBy = $(this).val();
-                            break;
-                        case 'showOnPage' :
-                            options.pagination.items_per_page = $(this).val();
-                            break;
-                    }
-                    displayTodos();
-                });
-
-                function displayTodos() {
-                    processedTodosJSON = $.processData(todosJSON, options.dataprocessing);
-                    // Create pagination element with options from var
-                    $("div.for-pagination").pagination(processedTodosJSON, options.pagination);
-                }
-                displayTodos();
-            });
-        </script>
     </head>
     <body class="body-dark">
         <div id="overlay"></div>
@@ -312,63 +48,63 @@
                     </ul>
                 </div>
 
-                    <div class="submenu" id="new-todo">
-                        <h3 class="todo-heading">New TODO</h3>
-                        <label>Type:</label>
-                        <input id="urgent" type="checkbox" />urgent
-                        <input id="important" type="checkbox" />important
-                        <label>Name:</label><input id="name" type="text" />
-                        <label>Deadline:</label><input id="deadline" type="text" />
-                        <label>Description (optional): </label>
-                        <textarea id="description" rows="4"></textarea>
-                        <label>State:</label>
-                        <select id="state" >
-                            <option value="Undone">Undone</option>
-                            <option value="In progress">In progress</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                        <label>Tags:</label>
-                        <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
-                        <div id="todo-for-tags-hidden" ></div>
-                        <button class="dark" name="todo-submit" class="g-button g-button-submit" id="addTodo">Submit</button>
-                    </div>
+                <div class="submenu" id="new-todo">
+                    <h3 class="todo-heading">New TODO</h3>
+                    <label>Type:</label>
+                    <input id="urgent" type="checkbox" />urgent
+                    <input id="important" type="checkbox" />important
+                    <label>Name:</label><input id="name" type="text" />
+                    <label>Deadline:</label><input id="deadline" type="text" />
+                    <label>Description (optional): </label>
+                    <textarea id="description" rows="4"></textarea>
+                    <label>State:</label>
+                    <select id="state" >
+                        <option value="Undone">Undone</option>
+                        <option value="In progress">In progress</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <label>Tags:</label>
+                    <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
+                    <div id="todo-for-tags-hidden" ></div>
+                    <button class="dark" name="todo-submit" class="g-button g-button-submit" id="addTodo">Submit</button>
+                </div>
 
-                    <div class="submenu" id="settings">
-                        <h3>Settings</h3>
-                        <label>Color theme:</label>
-                        <select id="colortheme-picker">
-                            <option value="cyan">Cyan</option>
-                            <option selected="selected" value="dark">Dark</option>
-                            <option value="google-blue">Google-blue</option>
-                            <option value="gray">Gray</option>
-                            <option value="magenta">Magenta</option>
-                            <option value="orange">Orange</option>
-                            <option value="yellow">Yellow</option>
+                <div class="submenu" id="settings">
+                    <h3>Settings</h3>
+                    <label>Color theme:</label>
+                    <select id="colortheme-picker">
+                        <option value="cyan">Cyan</option>
+                        <option selected="selected" value="dark">Dark</option>
+                        <option value="google-blue">Google-blue</option>
+                        <option value="gray">Gray</option>
+                        <option value="magenta">Magenta</option>
+                        <option value="orange">Orange</option>
+                        <option value="yellow">Yellow</option>
+                    </select>
+                    <div id="todo-display-settings">
+                        <label>Todos on page:</label>
+                        <select id="showOnPage">
+                            <option value="2">2</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
                         </select>
-                        <div id="todo-display-settings">
-                            <label>Todos on page:</label>
-                            <select id="showOnPage">
-                                <option value="2">2</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="20">20</option>
-                                <option value="30">30</option>
-                            </select>
-                            <label>Sort by:</label>
-                            <select id="sortBy">
-                                <option value="name">Name</option>
-                                <option value="description">Description</option>
-                                <option value="state">State</option>
-                            </select>
-                            <label>Sort direction:</label>
-                            <select id="sortDir">
-                                <option value="ASC">Ascending</option>
-                                <option value="DESC">Descending</option>
-                            </select>
-                        </div>
+                        <label>Sort by:</label>
+                        <select id="sortBy">
+                            <option value="name">Name</option>
+                            <option value="description">Description</option>
+                            <option value="state">State</option>
+                        </select>
+                        <label>Sort direction:</label>
+                        <select id="sortDir">
+                            <option value="ASC">Ascending</option>
+                            <option value="DESC">Descending</option>
+                        </select>
                     </div>
+                </div>
 
             </div>
             <!--end header-wrapper-->

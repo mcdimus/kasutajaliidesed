@@ -292,27 +292,30 @@ function pageselectCallback(page_index, todosJSON,opt, jq){
 //        newcontent += '<p><input type="checkbox" name="todo-active" '+todosJSON[i].isActive+'>Active</input></p>';
 //
 //        newcontent += '</div>';
-
-        newcontent += '<table class="todo-instance"> \
+        disabledClass = '';
+        if (todosJSON[i].isActive == '') {
+            disabledClass = "disabled";
+        }
+        newcontent += '<table class="todo-instance '+disabledClass+'"> \
             <tr>\
-                <td rowspan="3" id="todo-active-checkbox"><input type="checkbox" name="active" value="ON" '+todosJSON[i].isActive+' /></td>\
-            <td colspan="3" id="todo-name">' + todosJSON[i].name + '</td>\
+                <td rowspan="3" class="todo-active-checkbox"><input type="checkbox" name="active" value="ON" '+todosJSON[i].isActive+' /></td>\
+            <td colspan="3" class="todo-name">' + todosJSON[i].name + '</td>\
             </tr>\
             <tr>\
-                <td colspan="3" id="todo-tags">'+todosJSON[i].tags+'</td>\
+                <td colspan="3" class="todo-tags">'+todosJSON[i].tags+'</td>\
             </tr>\
             <tr>\
-                <td id="todo-date">'+todosJSON[i].deadline+'</td>\
-                <td id="todo-list">\
+                <td class="todo-date">'+todosJSON[i].deadline+'</td>\
+                <td class="todo-list">\
                     <ul>\
-                        <li><input type="checkbox" name="urgent" value="ON" '+todosJSON[i].isUrgent+' /> urgent</li>\
-                        <li><input type="checkbox" name="important" value="ON" '+todosJSON[i].isImportant+' /> important</li>\
+                        <li><input type="checkbox" disabled="disabled" name="urgent" value="ON" '+todosJSON[i].isUrgent+' /> urgent</li>\
+                        <li><input type="checkbox" disabled="disabled" name="important" value="ON" '+todosJSON[i].isImportant+' /> important</li>\
                     </ul>\
                 </td>\
-                <td id="todo-state">'+todosJSON[i].state+'</td>\
+                <td class="todo-state">'+todosJSON[i].state+'</td>\
             </tr>\
             <tr>\
-                <td colspan="4" id="todo-description">'+todosJSON[i].description+'</td>\
+                <td colspan="4" class="todo-description">'+todosJSON[i].description+'</td>\
             </tr>\
         </table>';
     }
