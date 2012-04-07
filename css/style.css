@@ -408,6 +408,7 @@ table.todo-instance td.description {
 /* 8. Menu
 ----------------------------------------------------------------------------------------------------*/
 #sign-out {
+    z-index: 11;
     position: absolute;
     background: rgba(0,0,0,0);
     border: none;
@@ -417,7 +418,7 @@ table.todo-instance td.description {
 
 #sign-out:hover {
     width: 70px;
-    height: 35px;
+    height: 33px;
     color: #000000;
     background: #FFFFFF;
 }
