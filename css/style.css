@@ -92,7 +92,7 @@ div#main-wrapper {
 div#header-wrapper {
     height: 70px;
     width: 1024px;
-    margin: 20px auto;
+    margin: 25px auto 17px;
 }
 
 #content-wrapper {
@@ -216,7 +216,7 @@ button, input, select, textarea {
     font-size: inherit;
 }
 
-.product-info {
+/*.product-info {
     position: relative;
     text-align: justify;
     margin: 0px 400px 0px 0px;
@@ -229,17 +229,11 @@ button, input, select, textarea {
 
 .product-info img {
     margin-left: 100px;
-}
+}*/
 
 form#regform {
     width: 300px;
     margin: auto;
-}
-
-.fineBox {
-    width: auto;
-    background: #FAF7F7;
-    border: 1px solid #E5E5E5;
 }
 
 #search-keyword {
@@ -260,6 +254,9 @@ div.right-panel button, #newtag {
 div.tag-container {
     margin: 25px;
     padding: 0px 20px 20px;
+    width: auto;
+    background: #FAF7F7;
+    border: 1px solid #E5E5E5;
 }
 
 input.tag-checkbox-hidden {
@@ -272,23 +269,6 @@ input.tag-checkbox-hidden {
 
 #deleteTags {
     margin-left: 8px;
-}
-
-input#search-keyword {
-    display: inline;
-    clear: none;
-    width: auto;
-}
-
-div#advanced-search-div input {
-    clear: none;
-    width: auto;
-}
-
-div.todo {
-    width: 660px;
-    padding: 0px 20px;
-    margin: 25px;
 }
 
 div#todo-for-tags-hidden {
@@ -356,7 +336,6 @@ div#logo {
     position: relative;
     z-index: 11;
     float: left;
-    margin-left: -20px;
 }
 
 div#logo img {
@@ -378,7 +357,7 @@ table.todo-instance {
     border: 1px solid #E5E5E5;
     border-collapse: collapse;
     background: #FAF7F7;
-    width: 660px;
+    width: 700px;
     margin: 25px;
     padding: 0px 20px;
 }
@@ -428,19 +407,33 @@ table.todo-instance td.description {
 
 /* 8. Menu
 ----------------------------------------------------------------------------------------------------*/
+#sign-out {
+    position: absolute;
+    background: rgba(0,0,0,0);
+    border: none;
+    right: 20px;
+    top: 0px;
+}
+
+#sign-out:hover {
+    width: 70px;
+    height: 35px;
+    color: #000000;
+    background: #FFFFFF;
+}
 
 #menu {
     position: relative;
-    z-index: 10;
+    z-index: 9;
     padding: 10px;
     -webkit-box-shadow: 0px 6px 20px 2px rgba(0,0,0,0.5);
     -moz-box-shadow: 0px 6px 20px 2px rgba(0,0,0,0.5);
     box-shadow: 0px 6px 20px 2px rgba(0,0,0,0.5);
-    -webkit-border-radius : 10px;
-    -moz-border-radius : 10px;
-    border-radius : 10px;
+    -webkit-border-radius : 10px 10px 10px 10px;
+    -moz-border-radius : 10px 10px 10px 10px;
+    border-radius : 10px 10px 10px 10px;
     height: 29px;
-    margin: 20px 0px;
+    margin: 0px 0px;
     width: auto;
     min-width: 68.5em;
 }
@@ -453,7 +446,7 @@ table.todo-instance td.description {
     float:left;
     text-align: center;
     padding: 5px 20px;
-    min-width: 4.9em;
+    min-width: 3.8em;
 }
 
 li.menuitem {
@@ -471,9 +464,57 @@ li.menuitem:hover {
     -o-transition: all .4s ease-in-out;
 }
 
-#advanced-search-show, #clear-search {
-    font-size: 0.8em;
-    letter-spacing: 1px;
+#search-form {
+    clear: right;
+    float: right;
+    display: inline-block;
+    position: relative;
+    top: -2px;
+}
+
+#search-form > button, #search-field, #search-field * {
+    webkit-border-radius : 10px 10px 10px 10px;
+    -moz-border-radius : 10px 10px 10px 10px;
+    border-radius : 10px 10px 10px 10px;
+}
+
+#search-field {
+    background: #FFFFFF;
+    border: 2px solid #FFFFFF;
+}
+
+#search-field input {
+    display: inline;
+    clear: none;
+    border: none;
+    width: 12em;
+    height: 2.4em;
+}
+
+#search {
+    webkit-border-radius : 10px 0px 0px 10px;
+    -moz-border-radius : 10px 0px 0px 10px;
+    border-radius : 10px 0px 0px 10px;
+}
+
+#clear-search {
+    margin-left: -4px;
+    webkit-border-radius : 0px 10px 10px 0px;
+    -moz-border-radius : 0px 10px 10px 0px;
+    border-radius : 0px 10px 10px 0px;
+    background: rgba(255,0,0,0.6) url('../img/cancel.png') no-repeat center center;
+    min-width: 24px;
+    border: 1px solid #CC0000;
+}
+
+#search-form:hover #advanced-search-show {
+    display: block; 
+}
+
+#advanced-search-show {
+    display: none;
+    position: relative;
+    top: 12px;
 }
 
 /* 9. Submenu
@@ -490,7 +531,7 @@ li.menuitem:hover {
     top: -25px;
 }
 
-#new-todo, #advanced-search-div, #settings {
+#new-todo, #advanced-search-form, #settings {
     display: none;
     padding-bottom: 20px;
 }
@@ -523,6 +564,10 @@ li.menuitem:hover {
     width: 100%;
 }
 
+#cancel-todo, #cancel-advanced-search {
+    margin-left: 5px;
+}
+
 #overlay {
     visibility: hidden;
     position: absolute;
@@ -532,7 +577,7 @@ li.menuitem:hover {
     height:100%;
     text-align:center;
     z-index: 1;
-    background-image:url("../img/modal-bg.png" );
+    background-image: url("../img/modal-bg.png" );
 }
 
 #settings select {
