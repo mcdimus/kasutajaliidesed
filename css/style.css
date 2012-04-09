@@ -104,7 +104,7 @@ div#header-wrapper {
     background: #F5F5F5;
     min-height: 500px;
     width: 998px;
-    behavior: url(ie-css3.htc);
+    /*behavior: url(ie-css3.htc);*/
 }
 
 .sign-in {
@@ -129,10 +129,6 @@ div#header-wrapper {
 
 .signin-box div {
     margin: 0px 0px 1.5em;
-}
-
-.signin-box label {
-    display: block;
 }
 
 label {
@@ -178,7 +174,7 @@ input[type="email"], input[type="number"], input[type="password"], input[type="t
 .signin-box input[type="submit"] {
     font-size: 13px;
     height: 32px;
-    margin: 0px 1.5em 1.2em 0px;color: #FFFFFF;
+    color: #FFFFFF;
     background: rgb(77,154,254);
     background: -o-linear-gradient(top, rgb(71,135,237), rgb(71,135,237));
     border: 1px solid #3079ED;
@@ -223,9 +219,22 @@ button, input, select, textarea {
     padding: 30px;
 }
 
- div#header {
-    width: 100%;
-    border-bottom: 5px groove black;
+div#header {
+    position: relative;
+    z-index: 8;
+    width: 300px;
+    height: 50px;
+    background: rgba(77,154,254,0.4);
+    -webkit-box-shadow: 0px 0px 20px 22px black;
+    -moz-box-shadow: 0px 0px 20px 22px black;
+    box-shadow: 0px 0px 40px 20px rgba(0,0,255,0.25);
+    -webkit-border-radius : 10px 10px 10px 10px;
+    -moz-border-radius : 10px 10px 10px 10px;
+    border-radius : 10px 10px 10px 10px;
+}
+
+div#header:hover {
+    box-shadow: 0px 0px 40px 30px rgba(0,0,255,0.30);
 }
 
 .product-info h1 {
@@ -237,9 +246,10 @@ button, input, select, textarea {
     margin-left: 100px;
 }
 
-form#regform {
+div.regform {
     width: 300px;
-    margin: auto;
+    margin: 10px auto 10px;
+    height: 400px;
 }
 
 #search-keyword {
@@ -311,7 +321,7 @@ div#todo-for-tags-hidden {
     height: 90px;
     margin: 0px auto 40px;
     width: 998px;
-    behavior: url(ie-css3.htc);
+    /*behavior: url(ie-css3.htc);*/
 }
 
 #footer-container-right {
@@ -333,7 +343,7 @@ div#bottomPanel {
     background-color: cadetblue;
     text-align: center;
     z-index: 999;
-    behavior: url(ie-css3.htc);
+    /*behavior: url(ie-css3.htc);*/
 }
 
 /* 5. Header
@@ -512,6 +522,10 @@ li.menuitem:hover {
     background: rgba(255,0,0,0.6) url('../img/cancel.png') no-repeat center center;
     min-width: 24px;
     border: 1px solid #CC0000;
+}
+
+#clear-search:hover {
+    background-color: rgba(255,0,0,0.9);
 }
 
 #search-form:hover #advanced-search-show {
