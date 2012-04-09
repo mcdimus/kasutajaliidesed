@@ -286,6 +286,7 @@ function pageselectCallback(page_index, todosJSON,opt, jq){
         newcontent += '<table class="todo-instance '+disabledClass+'">';
         newcontent += '<tr>';
         newcontent += '<td rowspan="3" class="todo-active-checkbox">';
+        newcontent += '<input type="hidden" name="created" value="'+todosJSON[i].created+'" />';
         newcontent += '<input type="checkbox" name="active" value="ON" '+(todosJSON[i].isActive ? 'checked="checked" ': '') +' /><br/>';
         newcontent += (todosJSON[i].isActive ? 'active':'completed')+'</td>';
         newcontent += '<td colspan="3" class="todo-name">' + todosJSON[i].name + '</td>';
