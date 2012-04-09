@@ -279,50 +279,38 @@ function pageselectCallback(page_index, todosJSON,opt, jq){
     // Iterate through a selection of the content and build an HTML string
     for(var i=page_index*items_per_page;i<max_elem;i++)
     {
-        // old template
-//        newcontent += '<div class="todo fineBox">';
-//
-//        newcontent += '<h3 class="todo-heading">' + todosJSON[i].name + '</h3>';
-//        newcontent += '<p><input type="checkbox" name="todo-urgent" '+todosJSON[i].isUrgent+'>urgent</input>';
-//        newcontent += '<input type="checkbox" name="todo-important" '+todosJSON[i].isImportant+'>important</input></p>';
-//        newcontent += '<p>Deadline: '+todosJSON[i].deadline+'</p>';
-//        newcontent += '<p>Description: '+todosJSON[i].description+'</p>';
-//        newcontent += '<p>State: '+todosJSON[i].state+'</p>';
-//        newcontent += '<p>Tags: '+todosJSON[i].tags+'</p>';
-//        newcontent += '<p><input type="checkbox" name="todo-active" '+todosJSON[i].isActive+'>Active</input></p>';
-//
-//        newcontent += '</div>';
         disabledClass = '';
-        if (todosJSON[i].isActive == '') {
+        if (!todosJSON[i].isActive) {
             disabledClass = "disabled";
         }
-        newcontent += '<table class="todo-instance '+disabledClass+'"> \
-            <tr>\
-                <td rowspan="3" class="todo-active-checkbox"><input type="checkbox" name="active" value="ON" '+todosJSON[i].isActive+' /></td>\
-            <td colspan="3" class="todo-name">' + todosJSON[i].name + '</td>\
-            </tr>\
-            <tr>\
-                <td colspan="3" class="todo-tags">'+todosJSON[i].tags+'</td>\
-            </tr>\
-            <tr>\
-                <td class="todo-date">'+todosJSON[i].deadline+'</td>\
-                <td class="todo-list">\
-                    <ul>\
-                        <li><input type="checkbox" disabled="disabled" name="urgent" value="ON" '+todosJSON[i].isUrgent+' /> urgent</li>\
-                        <li><input type="checkbox" disabled="disabled" name="important" value="ON" '+todosJSON[i].isImportant+' /> important</li>\
-                    </ul>\
-                </td>\
-                <td class="todo-state">'+todosJSON[i].state+'</td>\
-            </tr>\
-            <tr>\
-                <td colspan="4" class="todo-description">'+todosJSON[i].description+'</td>\
-            </tr>\
-        </table>';
+        newcontent += '<table class="todo-instance '+disabledClass+'">';
+        newcontent += '<tr>';
+        newcontent += '<td rowspan="3" class="todo-active-checkbox">';
+        newcontent += '<input type="checkbox" name="active" value="ON" '+(todosJSON[i].isActive ? 'checked="checked" ': '') +' /><br/>';
+        newcontent += (todosJSON[i].isActive ? 'active':'completed')+'</td>';
+        newcontent += '<td colspan="3" class="todo-name">' + todosJSON[i].name + '</td>';
+        newcontent += '</tr>';
+        newcontent += '<tr>';
+        newcontent += '<td colspan="3" class="todo-tags">'+todosJSON[i].tags+'</td>';
+        newcontent += '</tr>';
+        newcontent += '<tr>';
+        newcontent += '<td class="todo-date">'+todosJSON[i].deadline+'</td>';
+        newcontent += '<td class="todo-list">';
+        newcontent += '<ul>';
+        newcontent += '<li><input type="checkbox" disabled="disabled" name="urgent" value="ON" '+(todosJSON[i].isUrgent ? 'checked="checked" ': '')+' /> urgent</li>';
+        newcontent += '<li><input type="checkbox" disabled="disabled" name="important" value="ON" '+(todosJSON[i].isImportant ? 'checked="checked" ': '')+' /> important</li>';
+        newcontent += '</ul>';
+        newcontent += '</td>';
+        newcontent += '<td class="todo-state">'+todosJSON[i].state+'</td>';
+        newcontent += '</tr>';
+        newcontent += '<tr>';
+        newcontent += '<td colspan="4" class="todo-description">'+todosJSON[i].description+'</td>';
+        newcontent += '</tr>';
+        newcontent += '</table>';
     }
-    //
+
     // Replace old content with new content
     $(opt.data_container).html(newcontent);
-    //
     // Prevent click eventpropagation
     return false;
 }
