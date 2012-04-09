@@ -1,5 +1,14 @@
+var categoryJSON = [
+"All",
+"University",
+"Relations",
+"Work",
+"Girlfriend"
+];
+
 var todosJSON = [
 {
+    "category":"University",
     "created":"1333999071096",
     "name":"TODO #1",
     "deadline":"12:00 13.04.2012",
@@ -11,6 +20,7 @@ var todosJSON = [
     "tags":"work meeting"
 },
 {
+    "category":"University",
     "created":"1333999071097",
     "name":"TODO #2",
     "deadline":"12:00 13.04.2012",
@@ -22,6 +32,7 @@ var todosJSON = [
     "tags":"work meeting"
 },
 {
+    "category":"Girlfriend",
     "created":"1333999071098",
     "name":"TODO #3",
     "deadline":"12:00 13.04.2012",
@@ -33,6 +44,7 @@ var todosJSON = [
     "tags":"work meeting"
 },
 {
+    "category":"Girlfriend",
     "created":"1333999071099",
     "name":"TODO #4",
     "deadline":"12:00 13.04.2012",
@@ -44,6 +56,7 @@ var todosJSON = [
     "tags":"work meeting"
 },
 {
+    "category":"Girlfriend",
     "created":"1333999071100",
     "name":"TODO #5",
     "deadline":"12:00 13.04.2012",
@@ -57,6 +70,71 @@ var todosJSON = [
 ];
 
 $(document).ready(function() {
+
+    //=================================================//
+    //-------------- Otptions -------------------------//
+    //=================================================//
+
+    // init options
+    var options = {
+        pagination : {
+            items_per_page: $('select#showOnPage').val(),
+            data_container: "#todo-wrapper"
+        },
+        dataprocessing : {
+            sort: false,
+            filter: false
+        }
+    };
+
+    // change options
+    $('div#todo-display-settings').on('change', 'select', function() {
+        id = $(this).attr('id');
+        switch (id) {
+            case 'sortDir' :
+                options.dataprocessing.sort = true;
+                options.dataprocessing.sortDir = $(this).val();
+                break;
+            case 'sortBy' :
+                options.dataprocessing.sort = true;
+                options.dataprocessing.sortBy = $(this).val();
+                break;
+            case 'showOnPage' :
+                options.pagination.items_per_page = $(this).val();
+                break;
+        }
+        displayTodos();
+    });
+
+    //=================================================//
+    //-------------- Categories -----------------------//
+    //=================================================//
+
+    function displayCategories() {
+
+        var categoryList = $('div.category-container ul');
+
+        $.each(categoryJSON, function(index, value) {
+
+            var li = $('<li></li>').text(value);
+            if (index == 0)
+                li.addClass('selected');
+
+            categoryList.append(li);
+        });
+    };
+    displayCategories();
+
+    $('div.category-container').on('click', 'li', function() {
+        $this = $(this);
+        $this.
+            siblings('li').
+            removeClass('selected').
+            end().
+            addClass('selected');
+
+        $('h2#current-category span').text($this.text());
+    });
 
     //=================================================//
     //-------------- Search feature -------------------//
@@ -205,41 +283,6 @@ $(document).ready(function() {
     });
 
     //=================================================//
-    //-------------- Otptions -------------------------//
-    //=================================================//
-
-    // init options
-    var options = {
-        pagination : {
-            items_per_page: $('select#showOnPage').val(),
-            data_container: "#todo-wrapper"
-        },
-        dataprocessing : {
-            sort: false,
-            filter: false
-        }
-    };
-
-    // change options
-    $('div#todo-display-settings').on('change', 'select', function() {
-        id = $(this).attr('id');
-        switch (id) {
-            case 'sortDir' :
-                options.dataprocessing.sort = true;
-                options.dataprocessing.sortDir = $(this).val();
-                break;
-            case 'sortBy' :
-                options.dataprocessing.sort = true;
-                options.dataprocessing.sortBy = $(this).val();
-                break;
-            case 'showOnPage' :
-                options.pagination.items_per_page = $(this).val();
-                break;
-        }
-        displayTodos();
-    });
-
-    //=================================================//
     //-------------- Add Todo -------------------------//
     //=================================================//
 
@@ -280,10 +323,6 @@ $(document).ready(function() {
     //-------------- Modify Todo ----------------------//
     //=================================================//
 
-    // clicked on input[name=active] :
-    //    add class 'disabled';
-    //
-    // PIECE OF SHIT
     $(document).on('change','input[name=active]', function() {
         var parentTable = $(this).parents('table');
         var created = parentTable.find('input[name=created]').val();

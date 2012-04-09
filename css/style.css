@@ -267,12 +267,20 @@ div.right-panel button, #newtag {
     margin-top: 10px;
 }
 
-div.tag-container {
+div.tag-container, div.category-container {
     margin: 25px;
     padding: 0px 20px 20px;
     width: auto;
     background: #FAF7F7;
     border: 1px solid #E5E5E5;
+}
+
+div.category-container li {
+    cursor: pointer;
+}
+
+div.category-container li:hover, div.category-container li.selected {
+    background-color: lightgray;
 }
 
 input.tag-checkbox-hidden {
