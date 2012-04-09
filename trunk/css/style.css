@@ -252,12 +252,6 @@ div.regform {
     height: 400px;
 }
 
-#search-keyword {
-    margin: 0px;
-    padding: 0px;
-    height: 1.75em;
-}
-
 div.right-panel {
     min-width: 22.5em;
     float: right;
@@ -293,31 +287,6 @@ input.tag-checkbox-hidden {
 
 #deleteTags {
     margin-left: 8px;
-}
-
-div#todo-for-tags-hidden {
-    display: none;
-}
-
-#todo-for-tags span {
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    user-select: none;
-    cursor: pointer;
-    margin: 0px 2px 2px;
-    min-width: 46px;
-    color: #444444;
-    background-color: #F5F5F5;
-    border: 1px solid #DCDCDC;
-    display: inline-block;
-    font-size: 11px;
-    font-weight: 700;
-    text-align: center;
-    border-radius: 7px;
-}
-
-#todo-for-tags span.clicked {
-    color: #FFFFFF;
 }
 
 #footer-wrapper {
@@ -560,7 +529,7 @@ li.menuitem:hover {
     top: -25px;
 }
 
-#new-todo, #advanced-search-form, #settings {
+#new-todo, #settings, #advanced-search-form {
     display: none;
     padding-bottom: 20px;
 }
@@ -571,6 +540,10 @@ li.menuitem:hover {
 
 #new-todo > * {
     margin-top: 10px;
+}
+
+#new-todo h3 {
+    margin-top: 20px;
 }
 
 #new-todo div span {
@@ -593,6 +566,31 @@ li.menuitem:hover {
     width: 100%;
 }
 
+div#todo-for-tags-hidden {
+    display: none;
+}
+
+#todo-for-tags span {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    margin: 0px 2px 2px;
+    min-width: 46px;
+    color: #444444;
+    background-color: #F5F5F5;
+    border: 1px solid #DCDCDC;
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 7px;
+}
+
+#todo-for-tags span.clicked {
+    color: #FFFFFF;
+}
+
 #cancel-todo, #cancel-advanced-search {
     margin-left: 5px;
 }
@@ -612,6 +610,33 @@ li.menuitem:hover {
 #settings select {
     display: block;
     margin-bottom: 10px;
+}
+
+#advanced-search-form {
+    /*display: block;*/
+}
+
+#advanced-search-form > * {
+    margin-top: 10px;
+    margin-bottom: 0px;
+}
+
+#advanced-search-form h3 {
+    margin-top: 20px;
+}
+
+
+#advanced-search-form input {
+    /*width: auto;*/
+}
+
+#advanced-search-form .search-date {
+    display: inline-block;
+    margin: 0px 5px;
+}
+
+#search-for-tags span {
+
 }
 
 /* 10. Pagination

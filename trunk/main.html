@@ -47,7 +47,7 @@
                 </div>
 
                 <div class="submenu" id="new-todo">
-                    <h3 class="todo-heading">New TODO</h3>
+                    <h3>New TODO</h3>
                     <label>Type:</label>
                     <input id="urgent" type="checkbox" />urgent
                     <input id="important" type="checkbox" />important
@@ -56,7 +56,7 @@
                     <label>Description (optional): </label>
                     <textarea id="description" rows="4"></textarea>
                     <label>State:</label>
-                    <select id="state" >
+                    <select id="state">
                         <option value="Undone">Undone</option>
                         <option value="In progress">In progress</option>
                         <option value="Pending">Pending</option>
@@ -108,9 +108,36 @@
 
                 <div class="submenu" id="advanced-search-form">
                         <h3>Advanced search</h3>
-                        <input type="text" placeholder="keywords ..." />
-                        <button class="dark" name="advanced-search" id="advanced-search">Search</button>
-                        <button class="dark" id="cancel-advanced-search">Cancel</button>
+                        <label>Keywords</label>
+                        <input type="text" placeholder="name, description" />
+                        <label>Type</label>
+                        <input type="checkbox">is active?
+                        <input type="checkbox">is urgent?
+                        <input type="checkbox">is important?
+                        <label>Category</label>
+                        <select>
+                            <option selected="selected" value="">[select one]</option>
+                        </select>
+                        <label>Date</label>
+                        <div class="search-date">From: <input type="text"></div>
+                        <div class="search-date">To: <input type="text"></div>
+                        <label>State</label>
+                        <select>
+                            <option selected="selected" value="">[select one]</option>
+                            <option value="Undone">Undone</option>
+                            <option value="In progress">In progress</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                        <label>Tags</label>
+                        <select data-bind="foreach: tags" size="5" multiple>
+                            <option data-bind="text: name"></option>
+                        </select>
+                        <div>
+                            <button class="dark" name="advanced-search" id="advanced-search">Search</button>
+                            <button class="dark" id="cancel-advanced-search">Cancel</button>
+                        </div>
                     </div>
 
             </div>
