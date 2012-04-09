@@ -13,59 +13,58 @@
         <div id="main-wrapper">
 
             <div id="header-wrapper">
-                <div id="logo">
-                    <a href="index.html" title="TODO">
-                        <img src="img/logo1.png" alt="TODO"/>
-                    </a>
+                <div id="header">
+                    <div id="logo">
+                        <a href="index.html" title="TODO">
+                            <img src="img/logo1.png" alt="TODO"/>
+                        </a>
+                    </div>
                 </div>
             </div>
             <!--end header-wrapper-->
 
             <div id="content-wrapper">
                 <div class="main" >
-                    <form id="regform" action="main.html" autocomplete="on" method="post">
-                        <h1> Регистрация </h1>
-                        <p>
-                            <label for="username" class="uname" >Your username</label>
-                            <input id="username" name="username" required="required" type="text" placeholder="mysuperusername690" />
-                        </p>
-                        <div id="regform_username_errorloc" class="error_strings"></div>
-                        <p>
-                            <label for="email" class="youmail" > Your email</label>
-                            <input id="email" name="email"  required="required" type="email" placeholder="mysupermail@mail.com"/>
-                        </p>
-                        <div id="regform_email_errorloc" class="error_strings"></div>
-                        <p>
-                            <label for="password" class="youpasswd">Your password </label>
+                    <div class="signin-box regform">
+                        <form id="regform" action="main.html" autocomplete="on" method="post">
+                            <h3>Registration</h3>
+                            <label for="username">Your username</label>
+                            <input id="username" name="username" type="text" placeholder="mysuperusername690" />
+                            <div id="regform_username_errorloc" class="error_strings"></div>
+                            
+                            <label for="email"> Your email</label>
+                            <input id="email" name="email" type="email" placeholder="mysupermail@mail.com"/>
+                            <div id="regform_email_errorloc" class="error_strings"></div>
+                            
+                            <label for="password">Your password</label>
                             <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO"/>
-                        </p>
-                        <p>
-                            <label for="password_confirm" class="youpasswd" >Please confirm your password </label>
+                            <div></div>
+                            
+                            <label for="password_confirm">Please confirm your password</label>
                             <input id="password_confirm" name="password_confirm" required="required" type="password" placeholder="eg. X8df!90EO"/>
+                            <div id="regform_password_confirm_errorloc" class="error_strings"></div>
+                            
+                            <input type="submit" value="Sign up"/>
+                        </form>
+                        <script language="JavaScript" type="text/javascript">
+                            //You should create the validator only after the definition of the HTML form
+                            var frmvalidator  = new Validator("regform");
+                            frmvalidator.EnableOnPageErrorDisplay();
+
+                            frmvalidator.addValidation("username","req","Please enter your username");
+                            frmvalidator.addValidation("username","maxlen=20",	"Max length for username is 20");
+
+                            frmvalidator.addValidation("email","maxlen=50","Max length for email is 50");
+                            frmvalidator.addValidation("email","req","Please enter your email");
+                            frmvalidator.addValidation("email","email","Please enter your email correctly");
+
+                            frmvalidator.addValidation("password_confirm","eqelmnt=password","The confirmed password is not same as password");
+                            
+                        </script>
+                        <p>
+                            <a href="index.html" >Уже есть аккаунт?</a>
                         </p>
-                        <div id="regform_password_confirm_errorloc" class="error_strings"></div>
-                        <p class="signin button">
-                            <input type="submit" class="g-button g-button-submit" value="Sign up"/>
-                        </p>
-                    </form>
-                    <script language="JavaScript" type="text/javascript">//<![CDATA[
-                        //You should create the validator only after the definition of the HTML form
-                        var frmvalidator  = new Validator("regform");
-                        frmvalidator.EnableOnPageErrorDisplay();
-
-                        frmvalidator.addValidation("username","req","Please enter your username");
-                        frmvalidator.addValidation("username","maxlen=20",	"Max length for username is 20");
-
-                        frmvalidator.addValidation("email","maxlen=50","Max length for email is 50");
-                        frmvalidator.addValidation("email","req","Please enter your email");
-                        frmvalidator.addValidation("email","email","Please enter your email correctly");
-
-                        frmvalidator.addValidation("password_confirm","eqelmnt=password","The confirmed password is not same as password");
-                        //]]>
-                    </script>
-                    <p>
-                        <a href="index.html" >Уже есть аккаунт?</a>
-                    </p>
+                    </div>
                 </div>
             </div>
             <!--end content-wrapper-->
@@ -85,7 +84,6 @@
             </div>
             <!--end footer-wrapper-->
         </div>  <!--end main wrapper-->
-
 
         <div id="bottomPanel" > Bottom panel here.</div>
 

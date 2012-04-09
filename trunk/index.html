@@ -13,50 +13,42 @@
 
         <div id="main-wrapper">
 
-            <div id="header-wrapper" style="display: none;">
-                <div id="logo">
-                    <a href="index.html" title="TODO">
-                        <img src="img/logo1.png" alt="TODO"/>
-                    </a>
-                </div>
-            </div>
-            <!--end header-wrapper-->
-
-            <div id="content-wrapper">
+            <div id="header-wrapper">
                 <div id="header">
                     <div id="logo">
                         <a href="index.html" title="TODO">
                             <img src="img/logo1.png" alt="TODO"/>
                         </a>
                     </div>
-                    <div class="product-headers">
-                        <h1>Пиши и делай</h1>
-                    </div>
                 </div>
+            </div>
+            <!--end header-wrapper-->
 
-                <div class="main ">
+            <div id="content-wrapper">
+                <div class="main">
                     <div class="sign-in">
                         <div class="signin-box">
-                            <h2>
-                                Войти
-                            </h2>
+                            <h2>Sign in</h2>
+                            <!-- <h2>Войти</h2> -->
                             <form id="loginForm" action="main.html" method="post">
 
                                 <div class="email-div">
                                     <label for="login">
-                                        <strong class="login-label">Имя пользователя</strong>
+                                        <strong class="login-label">User name</strong>
+                                        <!-- <strong class="login-label">Имя пользователя</strong> -->
                                     </label>
                                     <input type="text" spellcheck="false" required="required" name="login" id="login" placeholder="Your login"/>
                                     <div id="loginForm_login_errorloc" class="error_strings"></div>
                                 </div>
                                 <div class="passwd-div">
                                     <label for="Passwd">
-                                        <strong class="passwd-label">Пароль</strong>
+                                        <strong class="passwd-label">Password</strong>
+                                        <!-- <strong class="passwd-label">Пароль</strong> -->
                                     </label>
                                     <input type="password" required="required" name="passwd" id="passwd" placeholder="Your password"/>
                                     <div id="loginForm_passwd_errorloc" class="error_strings"></div>
                                 </div>
-                                <input type="submit" class="g-button g-button-submit" name="signIn" id="signIn" value="Sign in"/>
+                                <input type="submit" name="signIn" id="signIn" value="Sign in"/>
                             </form>
                             <!-- <ul>
                                 <li>
@@ -65,11 +57,10 @@
                             </ul> -->
                         </div>
                         <div class="signin-box">
-                            <h2>
-                                Нет аккаунта?
-                            </h2>
+                            <h2>No account?</h2>
+                            <!-- <h2>Нет аккаунта?</h2> -->
                             <form id="gaia_redirform" action="register.html" method="get">
-                                <input type="submit" class="g-button g-button-submit" name="register" id="register" value="Создать аккаунт"/>
+                                <input type="submit" name="register" id="register" value="Create account"/>
                             </form>
 
                         </div>
@@ -77,25 +68,40 @@
 
                     <div class="product-info reader">
 
-                        <h3> У тебя в этой жизни много дел?
-                            Не можешь запомнить когда день рождение жены брата твоего твоюродного дядюшки?</h3>
+                    <div class="product-headers">
+                        <h1>Write down and make it done</h1>
+                        <!-- <h1>Пиши и делай</h1> -->
+                    </div>
 
-                        <img src="http://omfg.biz/omfg.jpg"  alt="OMFG"/>
+                        <h3>Got a lot of work in your life?
+                            Can't remember the birthday of the your second-cousin's uncle brother's wife?</h3>
+                        <!-- <h3>У тебя в этой жизни много дел?
+                            Не можешь запомнить когда день рождение жены брата твоего твоюродного дядюшки?</h3> -->
 
-                        <h2>Организуй себя!</h2>
-                        <h3>Используя этот сервис ты сможешь:</h3>
+                        <img src="./img/omfg.jpg"  alt="OMFG"/>
+
+                        <h2>Organize yourself!</h2>
+                        <h3>By using this service you can:</h3>
+                        <!-- <h2>Организуй себя!</h2> -->
+                        <!-- <h3>Используя этот сервис ты сможешь:</h3> -->
                         <ul class="features no-icon">
                             <li>
-                                <h4> Быть на чеку </h4>
-                                <p> Никакое событие не застанет тебя врасплох. <strong>Ты будешь знать о событии</strong>.</p>
+                                <h4>Be on alert</h4>
+                                <p>No unexpected event will take you by surprise, because <strong>you will know about it</strong>.</p>
+                                <!-- <h4> Быть на чеку </h4>
+                                <p> Никакое событие не застанет тебя врасплох. <strong>Ты будешь знать о событии</strong>.</p> -->
                             </li>
                             <li>
-                                <h4> Удивить окружающих </h4>
-                                <p> Ты помнишь обо <strong>всех</strong> важных датах.</p>
+                                <h4>Suprise others</h4>
+                                <p>You remember <strong>all</strong> important occasions.</p>
+                                <!-- <h4> Удивить окружающих </h4>
+                                <p> Ты помнишь обо <strong>всех</strong> важных датах.</p> -->
                             </li>
                             <li>
-                                <h4> Стать мододцом </h4>
-                                <p> Будь мужиком, <strong>*</strong>.</p>
+                                <h4>Become a good lad </h4>
+                                <p>Be a man, <strong>%username%</strong>.</p>
+                                <!-- <h4> Стать мододцом </h4>
+                                <p> Будь мужиком, <strong>*</strong>.</p> -->
                             </li>
                         </ul>
                     </div>
@@ -111,7 +117,7 @@
                     </li>
                     <!--end copyright-->
                     <li id="designed">
-                        Designed by Dmitri Maksimov
+                        Designed by Dmitri Maksimov & Nail Saberov
                     </li>
                     <!--end designed -->
                 </ul>
@@ -126,7 +132,7 @@
             frmvalidator.addValidation("passwd","req","Please enter your password");
 
             (function() {
-                var usersJSON = '[ { "username" : "nail", "password" : "test1" , "email" : "naiL@example.com" }, { "username" : "dmitri", "password" : "test2", "email" : "dmitri@example.com" }, { "username" : "aleksei", "password" : "test3", "email" : "aleksei@example.com" } ]';
+                var usersJSON = '[ { "username" : "nail", "password" : "nail" , "email" : "naiL@example.com" }, { "username" : "dmitri", "password" : "dmitri", "email" : "dmitri@example.com" }, { "username" : "aleksei", "password" : "aleksei", "email" : "aleksei@example.com" } ]';
                 var users = $.parseJSON(usersJSON),
                 $loginForm = $('#loginForm');
                 $loginForm.submit( function(obj) {
@@ -148,12 +154,6 @@
                     }
                 });
             })();
-
-            function redirect() {
-                location.replace("http://stackoverflow.com");
-                window.location.href = "http://stackoverflow.com";
-
-            }
         </script>
         <div id="bottomPanel" > Bottom panel here.</div>
 
