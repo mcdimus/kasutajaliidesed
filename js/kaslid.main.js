@@ -1,68 +1,66 @@
 var todosJSON = [
 {
+    "created":"1333999071096",
     "name":"TODO #1",
     "deadline":"12:00 13.04.2012",
     "description":"My fisrt todo. Hell yeah!",
-    "isUrgent":'checked="checked"',
+    "isUrgent":true,
     "isImportant":false,
-    "isActive":'checked="checked"',
+    "isActive":true,
     "state":"Pending",
-    "tags":"bla bla bla"
+    "tags":"work meeting"
 },
 {
+    "created":"1333999071097",
     "name":"TODO #2",
     "deadline":"12:00 13.04.2012",
     "description":"My second todo. Hell yeah!",
-    "isUrgent":true,
-    "isImportant":'checked="checked"',
-    "isActive":'checked="checked"',
+    "isUrgent":false,
+    "isImportant":true,
+    "isActive":true,
     "state":"Pending",
-    "tags":"bla bla bla"
+    "tags":"work meeting"
 },
 {
+    "created":"1333999071098",
     "name":"TODO #3",
     "deadline":"12:00 13.04.2012",
     "description":"My third todo. Hell yeah!",
-    "isUrgent":'checked="checked"',
+    "isUrgent":true,
     "isImportant":false,
-    "isActive":'checked="checked"',
+    "isActive":true,
     "state":"Pending",
-    "tags":"bla bla bla"
+    "tags":"work meeting"
 },
 {
+    "created":"1333999071099",
     "name":"TODO #4",
     "deadline":"12:00 13.04.2012",
     "description":"My fourth todo. Hell yeah!",
-    "isUrgent":'checked="checked"',
-    "isImportant":'checked="checked"',
-    "isActive":'checked="checked"',
+    "isUrgent":true,
+    "isImportant":true,
+    "isActive":true,
     "state":"Pending",
-    "tags":"bla bla bla"
+    "tags":"work meeting"
 },
 {
+    "created":"1333999071100",
     "name":"TODO #5",
     "deadline":"12:00 13.04.2012",
     "description":"My fifth todo. Hell yeah!",
-    "isUrgent":'checked="checked"',
+    "isUrgent":true,
     "isImportant":false,
-    "isActive":'checked="checked"',
+    "isActive":true,
     "state":"Pending",
-    "tags":"bla bla bla"
+    "tags":"work meeting"
 }
 ];
 
 $(document).ready(function() {
 
-    /**************************************************
-     * Search feature
-     **************************************************/
-
-    // Shows overlay (shade on the page when showing popup windows)
-    var $overlay =  $('div#overlay');
-    function showOverlay() {
-        $overlay.css('visibility','visible');
-        $overlay.css('height', $('html').css('height'));
-    }
+    //=================================================//
+    //-------------- Search feature -------------------//
+    //=================================================//
 
     // Simple search
     function simpleSearch() {
@@ -114,10 +112,24 @@ $(document).ready(function() {
         displayTodos();
     });
 
+    //=================================================//
+    //-------------- Utils ----------------------------//
+    //=================================================//
+
+    // Shows overlay (shade on the page when showing popup windows)
+    var $overlay =  $('div#overlay');
+    function showOverlay() {
+        $overlay.css('visibility','visible');
+        $overlay.css('height', $('html').css('height'));
+    }
     // Exit by submitting exit form
     $('#sign-out').on('click', function() {
         $('#signout-form').submit();
     });
+
+    //=================================================//
+    //-------------- New Todo Form --------------------//
+    //=================================================//
 
     // Hides new todo addenum form;
     var $newTodoForm = $('div#new-todo'),
@@ -127,15 +139,6 @@ $(document).ready(function() {
         $newTodoForm.hide();
         $newTodoShow.attr('data-show', 'false');
         clearTags();
-    }
-
-    // Hides settings form
-    var $settings = $('#settings'),
-    $settingsShow = $('#settings-show');
-    function hideSettings() {
-        $overlay.css('visibility','hidden');
-        $settingsShow.attr('data-show', 'false');
-        $settings.hide();
     }
 
     // Adds / removes tags to new todo
@@ -171,6 +174,19 @@ $(document).ready(function() {
         hideNewTodoForm();
     });
 
+    //=================================================//
+    //-------------- Settings -------------------------//
+    //=================================================//
+
+    // Hides settings form
+    var $settings = $('#settings'),
+    $settingsShow = $('#settings-show');
+    function hideSettings() {
+        $overlay.css('visibility','hidden');
+        $settingsShow.attr('data-show', 'false');
+        $settings.hide();
+    }
+
     // Show / hide settings form
     $settingsShow.on('click', function() {
         if($settingsShow.attr('data-show') == 'false') {
@@ -188,27 +204,9 @@ $(document).ready(function() {
         hideSettings();
     });
 
-    // Adds new todo
-    $('#addTodo').on('click', function() {
-
-        var todo = {};
-
-        todo.isUrgent = $('input#urgent').attr('checked') ? 'checked="checked"' : '';
-        todo.isImportant = $('input#important').attr('checked') ? 'checked="checked"' : '';
-        todo.name = $('input#name').val();
-        todo.deadline = $('input#deadline').val();
-        todo.description = $('textarea#description').val();
-        todo.state = $('select#state').val();
-        todo.isActive = 'checked="checked"';
-        todo.tags = '';
-        $('div#todo-for-tags-hidden span').each(function() {
-            todo.tags += $(this).html() + ' ';
-        });
-        hideNewTodoForm();
-        clearTags();
-        todosJSON.unshift(todo); //adds new items to the beginning of an array
-        displayTodos();
-    });
+    //=================================================//
+    //-------------- Otptions -------------------------//
+    //=================================================//
 
     // init options
     var options = {
@@ -241,6 +239,29 @@ $(document).ready(function() {
         displayTodos();
     });
 
+    // Adds new todo
+    $('#addTodo').on('click', function() {
+
+        var todo = {};
+        todo.created = $.now();
+        todo.isUrgent = $('input#urgent').attr('checked') ? true : false;
+        todo.isImportant = $('input#important').attr('checked') ? true : false;
+        todo.name = $('input#name').val();
+        todo.deadline = $('input#deadline').val();
+        todo.description = $('textarea#description').val();
+        todo.state = $('select#state').val();
+        todo.isActive = true;
+        todo.tags = '';
+        $('div#todo-for-tags-hidden span').each(function() {
+            todo.tags += $(this).html() + ' ';
+        });
+        hideNewTodoForm();
+        clearTags();
+        todosJSON.unshift(todo); //adds new items to the beginning of an array
+        displayTodos();
+    });
+
+
     function displayTodos() {
         processedTodosJSON = $.processData(todosJSON, options.dataprocessing);
         // Create pagination element with options from var
@@ -248,9 +269,10 @@ $(document).ready(function() {
     }
     displayTodos();
 
+    // PIECE OF SHIT
     $('input[name=active]').on('change', function() {
         name =$(this).parents('table').toggleClass('disabled')
-               .find('td.todo-name').html();
+        .find('td.todo-name').html();
 
         $.each(todosJSON, function(index,value) {
             if (value.name === name) {
