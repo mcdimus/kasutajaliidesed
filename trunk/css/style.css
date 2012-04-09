@@ -216,10 +216,16 @@ button, input, select, textarea {
     font-size: inherit;
 }
 
-/*.product-info {
+.product-info {
     position: relative;
     text-align: justify;
     margin: 0px 400px 0px 0px;
+    padding: 30px;
+}
+
+ div#header {
+    width: 100%;
+    border-bottom: 5px groove black;
 }
 
 .product-info h1 {
@@ -229,7 +235,7 @@ button, input, select, textarea {
 
 .product-info img {
     margin-left: 100px;
-}*/
+}
 
 form#regform {
     width: 300px;
@@ -509,7 +515,7 @@ li.menuitem:hover {
 }
 
 #search-form:hover #advanced-search-show {
-    display: block; 
+    display: block;
 }
 
 #advanced-search-show {
