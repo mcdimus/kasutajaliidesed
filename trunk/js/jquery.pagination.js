@@ -292,7 +292,7 @@ function pageselectCallback(page_index, todosJSON,opt, jq){
         newcontent += '<td colspan="3" class="todo-name">' + todosJSON[i].name + '</td>';
         newcontent += '</tr>';
         newcontent += '<tr>';
-        newcontent += '<td colspan="3" class="todo-tags">'+todosJSON[i].tags+'</td>';
+        newcontent += '<td colspan="3" class="todo-tags">['+ todosJSON[i].category + ']: '+todosJSON[i].tags+'</td>';
         newcontent += '</tr>';
         newcontent += '<tr>';
         newcontent += '<td class="todo-date">'+todosJSON[i].deadline+'</td>';
