@@ -239,6 +239,10 @@ $(document).ready(function() {
         displayTodos();
     });
 
+    //=================================================//
+    //-------------- Add Todo -------------------------//
+    //=================================================//
+
     // Adds new todo
     $('#addTodo').on('click', function() {
 
@@ -261,6 +265,9 @@ $(document).ready(function() {
         displayTodos();
     });
 
+    //=================================================//
+    //-------------- Display Todos --------------------//
+    //=================================================//
 
     function displayTodos() {
         processedTodosJSON = $.processData(todosJSON, options.dataprocessing);
@@ -269,14 +276,30 @@ $(document).ready(function() {
     }
     displayTodos();
 
-    // PIECE OF SHIT
-    $('input[name=active]').on('change', function() {
-        name =$(this).parents('table').toggleClass('disabled')
-        .find('td.todo-name').html();
+    //=================================================//
+    //-------------- Modify Todo ----------------------//
+    //=================================================//
 
-        $.each(todosJSON, function(index,value) {
-            if (value.name === name) {
-                value.isActive = '';
+    // clicked on input[name=active] :
+    //    add class 'disabled';
+    //
+    // PIECE OF SHIT
+    $(document).on('change','input[name=active]', function() {
+        var parentTable = $(this).parents('table');
+        var created = parentTable.find('input[name=created]').val();
+        var newValueForActive;
+
+        if (parentTable.hasClass('disabled')) {
+            parentTable.removeClass('disabled');
+            newValueForActive = true;
+        } else {
+            parentTable.addClass('disabled');
+            newValueForActive = false;
+        }
+
+        $.each(todosJSON, function(index, value) {
+            if (value.created == created) {
+                value.isActive = newValueForActive;
             }
         });
     });
