@@ -90,7 +90,7 @@
                             <option value="10">10</option>
                             <option value="20">20</option>
                             <option value="30">30</option>
-                            </select>
+                        </select>
                         <label>Sort by:</label>
                         <select id="sortBy">
                             <option value="name">Name</option>
@@ -107,38 +107,38 @@
                 </div>
 
                 <div class="submenu" id="advanced-search-form">
-                        <h3>Advanced search</h3>
-                        <label>Keywords</label>
-                        <input type="text" placeholder="name, description" />
-                        <label>Type</label>
-                        <input type="checkbox">is active?
-                        <input type="checkbox">is urgent?
-                        <input type="checkbox">is important?
-                        <label>Category</label>
-                        <select>
-                            <option selected="selected" value="">[select one]</option>
-                        </select>
-                        <label>Date</label>
-                        <div class="search-date">From: <input type="text"></div>
-                        <div class="search-date">To: <input type="text"></div>
-                        <label>State</label>
-                        <select>
-                            <option selected="selected" value="">[select one]</option>
-                            <option value="Undone">Undone</option>
-                            <option value="In progress">In progress</option>
-                            <option value="Pending">Pending</option>
-                            <option value="Completed">Completed</option>
-                            <option value="Cancelled">Cancelled</option>
-                        </select>
-                        <label>Tags</label>
-                        <select data-bind="foreach: tags" size="5" multiple>
-                            <option data-bind="text: name"></option>
-                        </select>
-                        <div>
-                            <button class="dark" name="advanced-search" id="advanced-search">Search</button>
-                            <button class="dark" id="cancel-advanced-search">Cancel</button>
-                        </div>
+                    <h3>Advanced search</h3>
+                    <label>Keywords</label>
+                    <input type="text" placeholder="name, description" />
+                    <label>Type</label>
+                    <input type="checkbox">is active?
+                    <input type="checkbox">is urgent?
+                    <input type="checkbox">is important?
+                    <label>Category</label>
+                    <select>
+                        <option selected="selected" value="">[select one]</option>
+                    </select>
+                    <label>Date</label>
+                    <div class="search-date">From: <input type="text"></div>
+                    <div class="search-date">To: <input type="text"></div>
+                    <label>State</label>
+                    <select>
+                        <option selected="selected" value="">[select one]</option>
+                        <option value="Undone">Undone</option>
+                        <option value="In progress">In progress</option>
+                        <option value="Pending">Pending</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <label>Tags</label>
+                    <select data-bind="foreach: tags" size="5" multiple>
+                        <option data-bind="text: name"></option>
+                    </select>
+                    <div>
+                        <button class="dark" name="advanced-search" id="advanced-search">Search</button>
+                        <button class="dark" id="cancel-advanced-search">Cancel</button>
                     </div>
+                </div>
 
             </div>
             <!--end header-wrapper-->
@@ -150,10 +150,10 @@
                         <h3>Category</h3>
                         <ul>
 
-                        </ul><!--
-                        <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag name..." />
-                        <button class="dark" data-bind="click: addTag" id="addtag" name="addtag">Add</button>
-                        <button class="dark" data-bind="click: deleteTags" id="deleteTags" name="deleteTags">Edit</button>-->
+                        </ul>
+                        <input type="text" id="newcategory" name="newcategory" placeholder="New category..." />
+                        <button class="dark" id="addcategory" name="addcategory">Add</button>
+                        <button class="dark" id="deletecategories" name="deletecategories">Edit</button>
                     </div> <!--end of tag-container -->
                     <div class="tag-container" >
                         <h3>Tags</h3>
@@ -181,6 +181,7 @@
 
                 </div><!--end of main -->
 
+                <div style="clear: both;"></div>
             </div> <!--end of content-wrapper-->
 
             <div id="footer-wrapper">

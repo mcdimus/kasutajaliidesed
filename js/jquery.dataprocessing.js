@@ -37,6 +37,10 @@
                 self.sort();
             }
 
+            if (self.options.search) {
+                self.search();
+            }
+
             if (self.options.filter) {
                 self.filter();
             }
@@ -66,17 +70,25 @@
 
             self.data.sort(comparator);
         },
-        filter: function() {
+        search: function() {
             var self = this;
 
-            var field = self.options.filterBy;
-            var criteria = self.options.filterCriteria;
+            var field = self.options.searchBy;
+            var criteria = self.options.searchCriteria;
 
             self.data = $.grep(self.data, function(value, index) {
                 return (value[field].indexOf(criteria) != -1)
             });
-        }
+        },
+        filter: function() {
+            var self = this;
 
+            if (self.options.filter.category != 'All') {
+                self.data = $.grep(self.data, function(value, index) {
+                    return (value['category'] == self.options.filter.category);
+                });
+            }
+        }
     }
 
     /*
@@ -98,10 +110,13 @@
         sortBy: 'name',
         sortDir: 'ASC', // ASC or DESC
 
-        filter: false,
-        filterBy: 'name',
-        filterCriteria: false
+        search: false,
+        searchBy: 'name',
+        searchCriteria: false,
 
+        filter: {
+            category: 'All'
+        }
     };
 
 })( jQuery, window, document );

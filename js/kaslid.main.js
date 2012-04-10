@@ -83,7 +83,10 @@ $(document).ready(function() {
         },
         dataprocessing : {
             sort: false,
-            filter: false
+            search: false,
+            filter: {
+                category: 'All'
+            }
         }
     };
 
@@ -113,7 +116,7 @@ $(document).ready(function() {
     function displayCategories() {
 
         var categoryList = $('div.category-container ul');
-
+        categoryList.html('')
         $.each(categoryJSON, function(index, value) {
 
             var li = $('<li></li>').text(value);
@@ -134,6 +137,15 @@ $(document).ready(function() {
             addClass('selected');
 
         $('h2#current-category span').text($this.text());
+
+        options.dataprocessing.filter.category = $this.text();
+        displayTodos();
+    });
+
+    $('button#addcategory').on('click', function() {
+        var newCategoryName = $('input#newcategory').val();
+        categoryJSON.push(newCategoryName);
+        displayCategories();
     });
 
     //=================================================//
@@ -142,8 +154,8 @@ $(document).ready(function() {
 
     // Simple search
     function simpleSearch() {
-        options.dataprocessing.filter = true;
-        options.dataprocessing.filterCriteria = $('input#search-keyword').val();
+        options.dataprocessing.search = true;
+        options.dataprocessing.searchCriteria = $('input#search-keyword').val();
         displayTodos();
     }
 
@@ -185,7 +197,7 @@ $(document).ready(function() {
 
     // Clear search results
     $('#clear-search').on('click', function() {
-        options.dataprocessing.filter = false;
+        options.dataprocessing.search = false;
         $('input#search-keyword').val('');
         displayTodos();
     });
@@ -313,6 +325,7 @@ $(document).ready(function() {
     //=================================================//
 
     function displayTodos() {
+        console.log(options.dataprocessing);
         processedTodosJSON = $.processData(todosJSON, options.dataprocessing);
         // Create pagination element with options from var
         $("div.for-pagination").pagination(processedTodosJSON, options.pagination);
