@@ -12,7 +12,7 @@ var todosJSON = [
     "created":"1333999071096",
     "name":"TODO #1",
     "deadline":"12:00 13.04.2012",
-    "description":"My fisrt todo. Hell yeah!",
+    "description":"My first todo. Hell yeah!",
     "isUrgent":true,
     "isImportant":false,
     "isActive":true,
@@ -28,7 +28,7 @@ var todosJSON = [
     "isUrgent":false,
     "isImportant":true,
     "isActive":true,
-    "state":"Pending",
+    "state":"In progress",
     "tags":"work meeting"
 },
 {
@@ -40,7 +40,7 @@ var todosJSON = [
     "isUrgent":true,
     "isImportant":false,
     "isActive":true,
-    "state":"Pending",
+    "state":"Completed",
     "tags":"work meeting"
 },
 {
@@ -116,14 +116,18 @@ $(document).ready(function() {
     function displayCategories() {
 
         var categoryList = $('div.category-container ul');
+        var categoryOptions = $('select#search-category');
         categoryList.html('')
+        categoryOptions.html('');
         $.each(categoryJSON, function(index, value) {
 
             var li = $('<li></li>').text(value);
+            var option = $('<option></option>').attr('value', value).text(value);
             if (index == 0)
                 li.addClass('selected');
 
             categoryList.append(li);
+            categoryOptions.append(option);
         });
     };
     displayCategories();
@@ -131,10 +135,10 @@ $(document).ready(function() {
     $('div.category-container').on('click', 'li', function() {
         $this = $(this);
         $this.
-            siblings('li').
-            removeClass('selected').
-            end().
-            addClass('selected');
+        siblings('li').
+        removeClass('selected').
+        end().
+        addClass('selected');
 
         $('h2#current-category span').text($this.text());
 
@@ -198,7 +202,27 @@ $(document).ready(function() {
     // Clear search results
     $('#clear-search').on('click', function() {
         options.dataprocessing.search = false;
+        $('div.category-container ul li').first().trigger('click');
         $('input#search-keyword').val('');
+        options.dataprocessing.filter = {category: 'All'};
+        displayTodos();
+    });
+
+    $('button#advanced-search').on('click', function() {
+        var opt = {};
+        if ($('#search-name').val().length != 0) {
+            opt.name = $('#search-name').val();
+        }
+        if ($('#search-description').val().length != 0) {
+            opt.description = $('#search-description').val();
+        }
+        opt.isactive = ($('#search-isactive').attr('checked') == 'checked') ? true : false;
+        opt.category = $('select#search-category').val();
+        opt.state = ($('#search-state').val() != '') ? $('#search-state').val()  : false;
+        opt.tags = $('#search-tags').val();
+
+        options.dataprocessing.filter = opt;
+        hideAdvancedSearch();
         displayTodos();
     });
 
@@ -215,6 +239,23 @@ $(document).ready(function() {
     // Exit by submitting exit form
     $('#sign-out').on('click', function() {
         $('#signout-form').submit();
+    });
+
+    $('input#deadline').datepicker();
+
+    $( "input#search-date-from, input#search-date-to" ).datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        numberOfMonths: 1,
+        onSelect: function( selectedDate ) {
+            var option = this.id == "search-date-from" ? "minDate" : "maxDate",
+            instance = $( this ).data( "datepicker" ),
+            date = $.datepicker.parseDate(
+                instance.settings.dateFormat ||
+                $.datepicker._defaults.dateFormat,
+                selectedDate, instance.settings );
+            dates.not( this ).datepicker( "option", option, date );
+        }
     });
 
     //=================================================//

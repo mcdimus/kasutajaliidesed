@@ -6,6 +6,7 @@
         <title>Kasutajaliidesed</title>
 
         <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
+        <script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
         <script type="text/javascript" src="js/knockout-2.0.0.debug.js"></script>
         <script type="text/javascript" src="js/jquery.pagination.js"></script>
         <script type="text/javascript" src="js/jquery.json-2.3.js"></script>
@@ -16,6 +17,8 @@
         <script type="text/javascript" src="js/kaslid.colorpicker.js"></script>
 
         <link rel="stylesheet" href="css/style.css"/>
+        <link rel="stylesheet" href="css/smoothness/jquery-ui-1.8.18.custom.css" />
+
     </head>
     <body class="body-dark">
         <div id="overlay"></div>
@@ -108,21 +111,23 @@
 
                 <div class="submenu" id="advanced-search-form">
                     <h3>Advanced search</h3>
-                    <label>Keywords</label>
-                    <input type="text" placeholder="name, description" />
+                    <label>Name contains</label>
+                    <input type="text" id="search-name" placeholder="name keyword" />
+                    <label>Description contains</label>
+                    <input type="text" id="search-description" placeholder="description keyword" />
                     <label>Type</label>
-                    <input type="checkbox">is active?
-                    <input type="checkbox">is urgent?
-                    <input type="checkbox">is important?
+                    <input type="checkbox" id="search-isactive">is active?
+<!--                    <input type="checkbox" id="search-isurgent">is urgent?
+                    <input type="checkbox" id="search-isimportant">is important?-->
                     <label>Category</label>
-                    <select>
+                    <select id="search-category">
                         <option selected="selected" value="">[select one]</option>
                     </select>
                     <label>Date</label>
-                    <div class="search-date">From: <input type="text"></div>
-                    <div class="search-date">To: <input type="text"></div>
+                    <div class="search-date">From: <input type="text" id="search-date-from"></div>
+                    <div class="search-date">To: <input type="text" id="search-date-to"></div>
                     <label>State</label>
-                    <select>
+                    <select id="search-state">
                         <option selected="selected" value="">[select one]</option>
                         <option value="Undone">Undone</option>
                         <option value="In progress">In progress</option>
@@ -131,7 +136,7 @@
                         <option value="Cancelled">Cancelled</option>
                     </select>
                     <label>Tags</label>
-                    <select data-bind="foreach: tags" size="5" multiple>
+                    <select id="search-tags" data-bind="foreach: tags" size="5" multiple>
                         <option data-bind="text: name"></option>
                     </select>
                     <div>
