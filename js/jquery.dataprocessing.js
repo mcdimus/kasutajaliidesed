@@ -88,6 +88,35 @@
                     return (value['category'] == self.options.filter.category);
                 });
             }
+            console.log(self.options.filter['name']);
+            console.log(self.options.filter['description']);
+            console.log(self.options.filter['isactive']);
+            console.log(self.options.filter['state'])
+            if (self.options.filter.isactive != undefined) {
+                self.data = $.grep(self.data, function(value, index) {
+                    var boolName = true;
+                    if (self.options.filter['name'] != undefined)
+                        boolName = (value['name'].indexOf(self.options.filter['name']) != -1);
+
+                    var boolDescr = true;
+                    if (self.options.filter['description'] != undefined)
+                        boolDescr = (value['description'].indexOf(self.options.filter['description']) != -1);
+
+                    var boolActive = true;
+                    if (self.options.filter['isactive']) {
+                        boolActive = (value['isActive'] == true);
+                    } else {
+                        boolActive = (value['isActive'] == false);
+                    }
+
+                    var boolState = true;
+                    if (self.options.filter['state']) {
+                        boolActive = (value['state'] == self.options.filter['state']);
+                    }
+//                    console.log(boolActive);
+                    return boolName && boolDescr && boolActive;
+                });
+            }
         }
     }
 
