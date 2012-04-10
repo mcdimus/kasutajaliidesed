@@ -88,10 +88,7 @@
                     return (value['category'] == self.options.filter.category);
                 });
             }
-            console.log(self.options.filter['name']);
-            console.log(self.options.filter['description']);
-            console.log(self.options.filter['isactive']);
-            console.log(self.options.filter['state'])
+            console.log(self.options.filter['tags'])
             if (self.options.filter.isactive != undefined) {
                 self.data = $.grep(self.data, function(value, index) {
                     var boolName = true;
@@ -113,8 +110,17 @@
                     if (self.options.filter['state']) {
                         boolActive = (value['state'] == self.options.filter['state']);
                     }
+                    var boolTags = true;
+                    if(self.options.filter['tags'] != null) {
+                        $.each(self.options.filter['tags'], function(index, val) {
+                            if (value['tags'].indexOf(val) == -1) {
+                                boolTags = false;
+                            }
+                        });
+                    }
+
 //                    console.log(boolActive);
-                    return boolName && boolDescr && boolActive;
+                    return boolName && boolDescr && boolActive && boolState && boolTags;
                 });
             }
         }
