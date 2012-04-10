@@ -11,7 +11,7 @@ var todosJSON = [
     "category":"University",
     "created":"1333999071096",
     "name":"TODO #1",
-    "deadline":"12:00 13.04.2012",
+    "deadline":"13.04.2012",
     "description":"My first todo. Hell yeah!",
     "isUrgent":true,
     "isImportant":false,
@@ -23,31 +23,31 @@ var todosJSON = [
     "category":"University",
     "created":"1333999071097",
     "name":"TODO #2",
-    "deadline":"12:00 13.04.2012",
+    "deadline":"13.04.2012",
     "description":"My second todo. Hell yeah!",
     "isUrgent":false,
     "isImportant":true,
     "isActive":true,
     "state":"In progress",
-    "tags":"work meeting"
+    "tags":"work birthday"
 },
 {
     "category":"Girlfriend",
     "created":"1333999071098",
     "name":"TODO #3",
-    "deadline":"12:00 13.04.2012",
+    "deadline":"13.04.2012",
     "description":"My third todo. Hell yeah!",
     "isUrgent":true,
     "isImportant":false,
     "isActive":true,
     "state":"Completed",
-    "tags":"work meeting"
+    "tags":"school meeting"
 },
 {
     "category":"Girlfriend",
     "created":"1333999071099",
     "name":"TODO #4",
-    "deadline":"12:00 13.04.2012",
+    "deadline":"13.04.2012",
     "description":"My fourth todo. Hell yeah!",
     "isUrgent":true,
     "isImportant":true,
@@ -59,7 +59,7 @@ var todosJSON = [
     "category":"Girlfriend",
     "created":"1333999071100",
     "name":"TODO #5",
-    "deadline":"12:00 13.04.2012",
+    "deadline":"13.04.2012",
     "description":"My fifth todo. Hell yeah!",
     "isUrgent":true,
     "isImportant":false,
@@ -468,7 +468,7 @@ $(document).ready(function() {
         } else {
             parentTable.addClass('disabled');
             newValueForActive = false;
-            editButton.attr('disabled', 'disabled');    
+            editButton.attr('disabled', 'disabled');
         }
 
         $.each(todosJSON, function(index, value) {
