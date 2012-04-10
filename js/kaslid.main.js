@@ -396,11 +396,8 @@ $(document).ready(function() {
     var todoToEdit;
     $('div#todo-wrapper').on('click', 'button.todo-edit', function() {
         var todoTimestamp = $(this).siblings('input[type="hidden"]').val();
-        // todoToEdit = $.grep(todosJSON, function(value, index) {
-        //     return (value['created'].indexOf(todoTimestamp) != -1)
-        // });
         $.each(todosJSON, function(index) {
-            if (todosJSON[index].created === todoTimestamp) {
+            if (todosJSON[index].created == todoTimestamp) {
                 todoToEdit = todosJSON[index];
             }
         });
