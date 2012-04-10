@@ -124,12 +124,12 @@ $(document).ready(function() {
 
             var li = $('<li></li>').text(value),
             option = $('<option></option>').val(value).text(value);
-            var option = $('<option></option>').attr('value', value).text(value);
             if (index == 0)
                 li.addClass('selected');
 
             categoryList.append(li);
             categoryOptions.append(option);
+            categoryContainer.prepend(option);
         });
     };
     displayCategories();
