@@ -269,12 +269,20 @@ div.tag-container, div.category-container {
     border: 1px solid #E5E5E5;
 }
 
+#current-category {
+    margin: 25px;
+}
+
 div.category-container li {
     cursor: pointer;
 }
 
 div.category-container li:hover, div.category-container li.selected {
     background-color: lightgray;
+}
+
+#deletecategories {
+    margin-left: 8px;
 }
 
 input.tag-checkbox-hidden {
@@ -358,7 +366,7 @@ table.disabled {
     border: 1px solid #FAF7F7;
     border-collapse: collapse;
     background: lightgray;
-    width: 660px;
+    width: 700px;
     margin: 25px;
     padding: 0px 20px;
     color: gray;
@@ -396,6 +404,9 @@ table.todo-instance td.todo-state {
 table.todo-instance td.description {
     border: 1px solid #E5E5E5;
     text-align: justify;
+}
+
+table.todo-instance button.todo-edit {
 }
 
 /* 8. Menu
@@ -595,6 +606,10 @@ div#todo-for-tags-hidden {
     margin-left: 5px;
 }
 
+#editTodo {
+    display: none;
+}
+
 #overlay {
     visibility: hidden;
     position: absolute;
@@ -633,10 +648,6 @@ div#todo-for-tags-hidden {
 #advanced-search-form .search-date {
     display: inline-block;
     margin: 0px 5px;
-}
-
-#search-for-tags span {
-
 }
 
 /* 10. Pagination

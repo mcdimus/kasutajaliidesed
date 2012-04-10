@@ -115,13 +115,15 @@ $(document).ready(function() {
 
     function displayCategories() {
 
-        var categoryList = $('div.category-container ul');
+        var categoryList = $('div.category-container ul'),
+        categoryContainer = $('select#category');
         var categoryOptions = $('select#search-category');
         categoryList.html('')
         categoryOptions.html('');
         $.each(categoryJSON, function(index, value) {
 
-            var li = $('<li></li>').text(value);
+            var li = $('<li></li>').text(value),
+            option = $('<option></option>').val(value).text(value);
             var option = $('<option></option>').attr('value', value).text(value);
             if (index == 0)
                 li.addClass('selected');
@@ -264,11 +266,30 @@ $(document).ready(function() {
 
     // Hides new todo addenum form;
     var $newTodoForm = $('div#new-todo'),
-    $newTodoShow = $('#new-todo-show');
+    $newTodoShow = $('#new-todo-show'),
+    $addTodo = $('#addTodo'),
+    $editTodo = $('#editTodo');
+    function showNewTodoForm() {
+        $newTodoForm.show();
+        hideSettings();
+        hideAdvancedSearch();
+        showOverlay();
+        $newTodoShow.attr('data-show', 'true');
+    }
+
     function hideNewTodoForm() {
         $overlay.css('visibility','hidden');
         $newTodoForm.hide();
         $newTodoShow.attr('data-show', 'false');
+        $addTodo.css('display', 'inline-block');
+        $editTodo.css('display', 'none');
+        $newTodoForm.find('h3').text('New TODO');
+        $newTodoForm.find('input').val('').end()
+        .find('textarea').text('');
+        $('#urgent').removeAttr('checked');
+        $('#important').removeAttr('checked');
+        $('#category').val('All');
+        $('#state').val('Undone');
         clearTags();
     }
 
@@ -291,16 +312,11 @@ $(document).ready(function() {
     // Shows / hides new todo addenum form
     $newTodoShow.on('click', function() {
         if ($newTodoShow.attr('data-show') == 'false') {
-            $newTodoForm.show();
-            hideSettings();
-            hideAdvancedSearch();
-            showOverlay();
-            $newTodoShow.attr('data-show', 'true');
+            showNewTodoForm();
         } else {
             hideNewTodoForm();
         }
     });
-
     $('#cancel-todo').on('click', function() {
         hideNewTodoForm();
     });
@@ -340,12 +356,13 @@ $(document).ready(function() {
     //=================================================//
 
     // Adds new todo
-    $('#addTodo').on('click', function() {
+    $addTodo.on('click', function() {
 
         var todo = {};
         todo.created = $.now();
         todo.isUrgent = $('input#urgent').attr('checked') ? true : false;
         todo.isImportant = $('input#important').attr('checked') ? true : false;
+        todo.category = $('select#category').val();
         todo.name = $('input#name').val();
         todo.deadline = $('input#deadline').val();
         todo.description = $('textarea#description').val();
@@ -376,8 +393,63 @@ $(document).ready(function() {
     //=================================================//
     //-------------- Edit Todo ------------------------//
     //=================================================//
+    var todoToEdit;
+    $('div#todo-wrapper').on('click', 'button.todo-edit', function() {
+        var todoTimestamp = $(this).siblings('input[type="hidden"]').val();
+        // todoToEdit = $.grep(todosJSON, function(value, index) {
+        //     return (value['created'].indexOf(todoTimestamp) != -1)
+        // });
+        $.each(todosJSON, function(index) {
+            if (todosJSON[index].created === todoTimestamp) {
+                todoToEdit = todosJSON[index];
+            }
+        });
+        showNewTodoForm();
+        $newTodoForm.find('h3').text('Edit TODO');
+        $addTodo.css('display', 'none');
+        $editTodo.css('display', 'inline-block');
+        $('#urgent').attr('checked', todoToEdit.isUrgent);
+        $('#important').attr('checked', todoToEdit.isImportant);
+        $('#category').val(todoToEdit.category);
+        $('#name').val(todoToEdit.name);
+        $('#deadline').val(todoToEdit.deadline);
+        $('#description').text(todoToEdit.description);
+        $('#state').val(todoToEdit.state);
+        var $spanTags = $('#todo-for-tags span'),
+        extTags = todoToEdit.tags.split(' ');
+        // TODO: O(2) <--> better ??
+        $.each($spanTags, function() {
+            var $selectedSpanTag = $(this);
+            $.each(extTags, function() {
+                if ($selectedSpanTag.text() == this) {
+                    $selectedSpanTag.attr('data-clicked', 'true')
+                    .addClass($('#menu').attr('class'))
+                    .addClass('clicked')
+                    .clone().attr('id', 'todo-tag-' + $selectedSpanTag.text())
+                    .appendTo($('div#todo-for-tags-hidden'));
+                }
+            });
+        });
+    });
 
-
+    $editTodo.on('click', function() {
+        // TODO: variables caching
+        todoToEdit.isUrgent = $('input#urgent').attr('checked') ? true : false;
+        todoToEdit.isImportant = $('input#important').attr('checked') ? true : false;
+        todoToEdit.category = $('select#category').val();
+        todoToEdit.name = $('input#name').val();
+        todoToEdit.deadline = $('input#deadline').val();
+        todoToEdit.description = $('textarea#description').val();
+        todoToEdit.state = $('select#state').val();
+        todoToEdit.isActive = true;
+        todoToEdit.tags = '';
+        $('div#todo-for-tags-hidden span').each(function() {
+            todoToEdit.tags += $(this).html() + ' ';
+        });
+        hideNewTodoForm();
+        clearTags();
+        displayTodos();
+    });
 
     //=================================================//
     //-------------- Modify Todo ----------------------//
@@ -386,14 +458,17 @@ $(document).ready(function() {
     $(document).on('change','input[name=active]', function() {
         var parentTable = $(this).parents('table');
         var created = parentTable.find('input[name=created]').val();
+        var editButton = parentTable.find('button');
         var newValueForActive;
 
         if (parentTable.hasClass('disabled')) {
             parentTable.removeClass('disabled');
             newValueForActive = true;
+            editButton.removeAttr('disabled');
         } else {
             parentTable.addClass('disabled');
             newValueForActive = false;
+            editButton.attr('disabled', 'disabled');    
         }
 
         $.each(todosJSON, function(index, value) {
