@@ -36,7 +36,6 @@
                 <div class="dark" id="menu">
                     <ul>
                         <li class="menuitem" id="new-todo-show" data-show="false">Add TODO</li>
-                        <li class="menuitem">Projects</li>
                         <li class="menuitem" id="settings-show" data-show="false">Settings</li>
                     </ul>
                     <div id="search-form">
@@ -54,6 +53,8 @@
                     <label>Type:</label>
                     <input id="urgent" type="checkbox" />urgent
                     <input id="important" type="checkbox" />important
+                    <label>Category</label>
+                    <select id="category" class="category-container"></select>
                     <label>Name:</label><input id="name" type="text" />
                     <label>Deadline:</label><input id="deadline" type="text" />
                     <label>Description (optional): </label>
@@ -70,6 +71,7 @@
                     <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
                     <div id="todo-for-tags-hidden"></div>
                     <button class="dark" name="todo-submit" id="addTodo">Submit</button>
+                    <button class="dark" name="todo-edit" id="editTodo">Edit</button>
                     <button class="dark" id="cancel-todo">Cancel</button>
                 </div>
 
