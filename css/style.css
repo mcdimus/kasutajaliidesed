@@ -131,6 +131,10 @@ div#header-wrapper {
     margin: 0px 0px 1.5em;
 }
 
+.signin-box a {
+    color: blue;
+}
+
 label {
     display: block;
     font-weight: 700;
