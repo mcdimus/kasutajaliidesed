@@ -39,9 +39,9 @@ function appViewModel() {
             self.tags.push(new Tag(self.newTagName(), false));
     };
 
+    // DOES NOT WORK!!!
     self.addTagOnEnter = function(event) {
         var keyCode = event.keyCode;
-        console.log(event.keyCode);
         if (keyCode == 13) {
             this.addTag();
             return false;
@@ -64,18 +64,16 @@ function appViewModel() {
 $(document).ready(function() {
 
     // Shows / hides tag checkboxes
-    var $deleteTags = $('#deleteTags');
-    $('#deleteTags').on('click', function() {
+    var $deleteTags = $('button#deletetags');
+    $deleteTags.on('click', function() {
         if ($deleteTags.text() == "Edit") {
             $deleteTags.text('Delete checked');
-            $('div.tag-container input[type="checkbox"]').removeClass('tag-checkbox-hidden');
+            $('div.tag-container input[type="checkbox"]').removeClass('checkbox-hidden');
         } else {
             $deleteTags.text('Edit');
-            $('div.tag-container input[type="checkbox"]').addClass('tag-checkbox-hidden');
+            $('div.tag-container input[type="checkbox"]').addClass('checkbox-hidden');
         }
     });
-
-
 
     ko.applyBindings(new appViewModel());
 
