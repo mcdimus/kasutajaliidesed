@@ -72,7 +72,7 @@ var todosJSON = [
 $(document).ready(function() {
 
     //=================================================//
-    //-------------- Otptions -------------------------//
+    //-------------- Options --------------------------//
     //=================================================//
 
     // init options
@@ -119,14 +119,17 @@ $(document).ready(function() {
         categoryContainer = $('select#category');
         var categoryOptions = $('select#search-category');
         categoryList.html('')
+        categoryContainer.html('');
         categoryOptions.html('');
         $.each(categoryJSON, function(index, value) {
 
-            var li = $('<li></li>').text(value),
-            option = $('<option></option>').val(value).text(value);
+            var span = $('<span>' + value + '</span>');
+                option = $('<option></option>').val(value).text(value),
+                li = $('<li><input type="checkbox" class="checkbox-hidden"/></li')
             if (index == 0)
-                li.addClass('selected');
+                span.addClass('selected');
 
+            li.append(span);    
             categoryList.append(li);
             categoryOptions.append(option);
             categoryContainer.prepend(option);
@@ -134,13 +137,11 @@ $(document).ready(function() {
     };
     displayCategories();
 
-    $('div.category-container').on('click', 'li', function() {
+    var $catsContainer = $('div.category-container');
+    $catsContainer.on('click', 'span', function() {
         $this = $(this);
-        $this.
-        siblings('li').
-        removeClass('selected').
-        end().
-        addClass('selected');
+        $catsContainer.find('span').removeClass('selected');
+        $this.addClass('selected');
 
         $('h2#current-category span').text($this.text());
 
@@ -148,10 +149,22 @@ $(document).ready(function() {
         displayTodos();
     });
 
-    $('button#addcategory').on('click', function() {
-        var newCategoryName = $('input#newcategory').val();
+    $('button.addcategory').on('click', function() {
+        var newCategoryName = $(this).siblings('input.newcategory').val();
         categoryJSON.push(newCategoryName);
         displayCategories();
+    });
+
+    var $deleteCats = $('button#deletecategories');
+    $deleteCats.on('click', function() {
+        if ($deleteCats.text() == "Edit") {
+            $deleteCats.text('Delete checked');
+            $('div.category-container input[type="checkbox"]').removeClass('checkbox-hidden');
+        } else {
+            $catsContainer.find('input[type="checkbox"]:checked').parent('li').remove();
+            $deleteCats.text('Edit');
+            $('div.category-container input[type="checkbox"]').addClass('checkbox-hidden');
+        }
     });
 
     //=================================================//
@@ -362,7 +375,8 @@ $(document).ready(function() {
         todo.created = $.now();
         todo.isUrgent = $('input#urgent').attr('checked') ? true : false;
         todo.isImportant = $('input#important').attr('checked') ? true : false;
-        todo.category = $('select#category').val();
+        var $newCat = $('div#new-todo input[type="text"]');
+        ($newCat.val() != "" ? todo.category = $newCat.val() : todo.category = $('select#category').val());
         todo.name = $('input#name').val();
         todo.deadline = $('input#deadline').val();
         todo.description = $('textarea#description').val();
@@ -453,19 +467,23 @@ $(document).ready(function() {
     //=================================================//
 
     $(document).on('change','input[name=active]', function() {
-        var parentTable = $(this).parents('table');
-        var created = parentTable.find('input[name=created]').val();
-        var editButton = parentTable.find('button');
+        var parentDiv = $(this).parents('div.todo-instance');
+        console.log(parentDiv);
+        var created = parentDiv.find('input[name=created]').val();
+        var editButton = parentDiv.find('button'),
+            spans = parentDiv.find('span.todo-mark');
         var newValueForActive;
 
-        if (parentTable.hasClass('disabled')) {
-            parentTable.removeClass('disabled');
+        if (parentDiv.hasClass('disabled')) {
+            parentDiv.removeClass('disabled');
             newValueForActive = true;
-            editButton.removeAttr('disabled');
+            editButton.removeClass('disabled');
+            spans.removeClass('disabled');
         } else {
-            parentTable.addClass('disabled');
+            parentDiv.addClass('disabled');
             newValueForActive = false;
-            editButton.attr('disabled', 'disabled');
+            editButton.addClass('disabled');
+            spans.addClass('disabled');
         }
 
         $.each(todosJSON, function(index, value) {

@@ -21,13 +21,13 @@
 
     </head>
     <body class="body-dark">
+        <form id="signout-form" action="index.html" method="post">
+            <input type="hidden" name="login" value=""/>
+            <button class="dark" id="sign-out">Sign out</button>
+        </form>
         <div id="overlay"></div>
         <div id="main-wrapper">
             <div id="header-wrapper">
-                <form id="signout-form" action="index.html" method="post">
-                    <input type="hidden" name="login" value=""/>
-                    <button class="dark" id="sign-out">Sign out</button>
-                </form>
                 <div id="logo">
                     <a href="index.html" title="TODO">
                         <img src="img/logo1.png" alt="TODO"/>
@@ -38,14 +38,14 @@
                         <li class="menuitem" id="new-todo-show" data-show="false">Add TODO</li>
                         <li class="menuitem" id="settings-show" data-show="false">Settings</li>
                     </ul>
-                    <div id="search-form">
+                    <span class="dark" id="search-form">
                         <div id="search-field">
                             <input type="text" id="search-keyword" placeholder="todo name" />
-                            <button class="dark" id="search">Search</button>
                             <button id="clear-search"/>
                         </div>
+                        <button class="dark" id="search">Search</button>
                         <button class="dark" id="advanced-search-show" data-show="false">Advanced search</button>
-                    </div>
+                    </span>
                 </div>
 
                 <div class="submenu" id="new-todo">
@@ -54,7 +54,11 @@
                     <input id="urgent" type="checkbox" />urgent
                     <input id="important" type="checkbox" />important
                     <label>Category</label>
-                    <select id="category" class="category-container"></select>
+                    <div id="todo-category-container">
+                        <select id="category" class="category-container"></select>
+                        <span>or type in new one</span>
+                        <input type="text" class="newcategory" name="newcategory" placeholder="New category..." />
+                    </div>
                     <label>Name:</label><input id="name" type="text" />
                     <label>Deadline:</label><input id="deadline" type="text" />
                     <label>Description (optional): </label>
@@ -68,10 +72,10 @@
                         <option value="Cancelled">Cancelled</option>
                     </select>
                     <label>Tags:</label>
-                    <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false"></span></div>
+                    <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false" unselectable="on"></span></div>
                     <div id="todo-for-tags-hidden"></div>
                     <button class="dark" name="todo-submit" id="addTodo">Submit</button>
-                    <button class="dark" name="todo-edit" id="editTodo">Edit</button>
+                    <button class="dark" name="todo-edit" id="editTodo">Save</button>
                     <button class="dark" id="cancel-todo">Cancel</button>
                 </div>
 
@@ -158,21 +162,21 @@
                         <ul>
 
                         </ul>
-                        <input type="text" id="newcategory" name="newcategory" placeholder="New category..." />
-                        <button class="dark" id="addcategory" name="addcategory">Add</button>
+                        <input type="text" class="newcategory" name="newcategory" placeholder="New category..." />
+                        <button class="dark addcategory" name="addcategory">Add</button>
                         <button class="dark" id="deletecategories" name="deletecategories">Edit</button>
-                    </div> <!--end of tag-container -->
+                    </div> <!--end of category-container -->
                     <div class="tag-container" >
                         <h3>Tags</h3>
                         <ul data-bind="foreach: tags">
                             <li>
-                                <input type="checkbox" class="tag-checkbox-hidden" data-bind="checked: isChecked" />
+                                <input type="checkbox" class="checkbox-hidden" data-bind="checked: isChecked"/>
                                 <span data-bind="text: name"></span>
                             </li>
                         </ul>
-                        <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag name..." />
+                        <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag..." />
                         <button class="dark" data-bind="click: addTag" id="addtag" name="addtag">Add</button>
-                        <button class="dark" data-bind="click: deleteTags" id="deleteTags" name="deleteTags">Edit</button>
+                        <button class="dark" data-bind="click: deleteTags" id="deletetags" name="deleteTags">Edit</button>
                     </div> <!--end of tag-container -->
                 </div> <!--end of right-panel -->
 

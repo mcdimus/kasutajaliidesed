@@ -4,9 +4,12 @@
         <meta charset="UTF-8" />
 
         <title>Kasutajaliidesed</title>
-
+        <!-- 
         <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"> </script>
+         -->
+        <script type="text/javascript" src="js/jquery-1.7.2.js"> </script>
         <script type="text/javascript" src="js/gen_validatorv4.js" ></script>
+        <script type="text/javascript" src="js/kaslid.index.js"> </script>
         <link rel="stylesheet" href="css/style.css"/>
     </head>
     <body class="body-dark">
@@ -29,7 +32,6 @@
                     <div class="sign-in">
                         <div class="signin-box">
                             <h2>Sign in</h2>
-                            <!-- <h2>Войти</h2> -->
                             <form id="loginForm" action="main.html" method="post">
 
                                 <div class="email-div">
@@ -50,15 +52,9 @@
                                 </div>
                                 <input type="submit" name="signIn" id="signIn" value="Sign in"/>
                             </form>
-                            <!-- <ul>
-                                <li>
-                                    <a id="link-forgot-passwd" href="#" target="_top"> Забыли пароль? </a>
-                                </li>
-                            </ul> -->
                         </div>
                         <div class="signin-box">
                             <h2>No account?</h2>
-                            <!-- <h2>Нет аккаунта?</h2> -->
                             <form id="gaia_redirform" action="register.html" method="get">
                                 <input type="submit" name="register" id="register" value="Create account"/>
                             </form>
@@ -69,39 +65,28 @@
                     <div class="product-info reader">
 
                     <div class="product-headers">
-                        <h1>Write down and make it done</h1>
-                        <!-- <h1>Пиши и делай</h1> -->
+                        <h1>Write it down and do it</h1>
                     </div>
 
                         <h3>Got a lot of work in your life?
-                            Can't remember the birthday of the your second-cousin uncle brother's wife?</h3>
-                        <!-- <h3>У тебя в этой жизни много дел?
-                            Не можешь запомнить когда день рождение жены брата твоего твоюродного дядюшки?</h3> -->
+                            Can't remember the birthday of your second-cousin uncle brother's wife?</h3>
 
                         <img src="./img/omfg.jpg"  alt="OMFG"/>
 
                         <h2>Organize yourself!</h2>
                         <h3>By using this service you can:</h3>
-                        <!-- <h2>Организуй себя!</h2> -->
-                        <!-- <h3>Используя этот сервис ты сможешь:</h3> -->
                         <ul class="features no-icon">
                             <li>
                                 <h4>Be on alert</h4>
                                 <p>No unexpected event will take you by surprise, because <strong>you will know about it</strong>.</p>
-                                <!-- <h4> Быть на чеку </h4>
-                                <p> Никакое событие не застанет тебя врасплох. <strong>Ты будешь знать о событии</strong>.</p> -->
                             </li>
                             <li>
                                 <h4>Suprise others</h4>
                                 <p>You remember <strong>all</strong> important occasions.</p>
-                                <!-- <h4> Удивить окружающих </h4>
-                                <p> Ты помнишь обо <strong>всех</strong> важных датах.</p> -->
                             </li>
                             <li>
                                 <h4>Become a good lad </h4>
                                 <p>Be a man, <strong>%username%</strong>.</p>
-                                <!-- <h4> Стать мододцом </h4>
-                                <p> Будь мужиком, <strong>*</strong>.</p> -->
                             </li>
                         </ul>
                     </div>
@@ -124,37 +109,7 @@
             </div>
             <!--end footer-wrapper-->
         </div>  <!--end main wrapper-->
-        <script type="text/javascript">
-            var frmvalidator  = new Validator("loginForm");
-            frmvalidator.EnableOnPageErrorDisplay();
-
-            frmvalidator.addValidation("login","req","Please enter your username");
-            frmvalidator.addValidation("passwd","req","Please enter your password");
-
-            (function() {
-                var usersJSON = '[ { "username" : "nail", "password" : "nail" , "email" : "naiL@example.com" }, { "username" : "dmitri", "password" : "dmitri", "email" : "dmitri@example.com" }, { "username" : "aleksei", "password" : "aleksei", "email" : "aleksei@example.com" } ]';
-                var users = $.parseJSON(usersJSON),
-                $loginForm = $('#loginForm');
-                $loginForm.submit( function(obj) {
-                    var $passwdErrPlace = $('div#loginForm_passwd_errorloc'),
-                    username = $('input#login').val(),
-                    password = $('input#passwd').val(),
-                    found = false;
-                    $passwdErrPlace.text('');
-                    $.each(users, function(index, user) {
-                        if (username == user.username) {
-                            if (password == user.password) {
-                                found = true;
-                            }
-                        }
-                    });
-                    if(!found) {
-                        obj.preventDefault();
-                        $passwdErrPlace.text('wrong login and/or password');
-                    }
-                });
-            })();
-        </script>
+            
         <div id="bottomPanel" > Bottom panel here.</div>
 
     </body>
