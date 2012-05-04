@@ -168,11 +168,12 @@
                     </div> <!--end of category-container -->
                     <div class="tag-container" >
                         <h3>Tags</h3>
-                        <ul data-bind="foreach: tags">
-                            <li>
+                        <!--  data-bind="foreach: tags" -->
+                        <ul>
+                            <!-- <li>
                                 <input type="checkbox" class="checkbox-hidden" data-bind="checked: isChecked"/>
                                 <span data-bind="text: name"></span>
-                            </li>
+                            </li> -->
                         </ul>
                         <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag..." />
                         <button class="dark" data-bind="click: addTag" id="addtag" name="addtag">Add</button>
