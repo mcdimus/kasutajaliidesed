@@ -125,7 +125,7 @@ $(document).ready(function() {
 
             var span = $('<span>' + value + '</span>');
                 option = $('<option></option>').val(value).text(value),
-                li = $('<li><input type="checkbox" class="checkbox-hidden"/></li')
+                li = $('<li><input type="checkbox" class="checkbox-hidden"/></li>');
             if (index == 0)
                 span.addClass('selected');
 

@@ -1,6 +1,16 @@
 /*
  * All project code connected to tags.
  */
+// Get tags via AJAX
+$(function() {
+    $.post('php/tags.php', '{ "action" : "get" }',
+        function(answer) {
+            $ul = $('div.tag-container ul');
+            $(answer).each(function(index, element) {
+                $ul.append($('<li><input type="checkbox" class="checkbox-hidden"/><span>' + element + '</span></li>'));
+            });
+    }, 'json');
+});
 
 // Clear selected tags
 function clearTags() {
