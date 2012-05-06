@@ -1,11 +1,11 @@
 <?php
-	
+
 	$parsedJSON = json_decode(file_get_contents("php://input"));
 	$con = mysql_connect("localhost");
 	if (!$con) {
 		die("Could not connect: " . mysql_error());
 	}
-	
+
 	mysql_select_db("test", $con);
 	$query = "";
 	if ($parsedJSON -> action == 'get') {
