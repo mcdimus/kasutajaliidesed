@@ -88,7 +88,7 @@
                     return (value['category'] == self.options.filter.category);
                 });
             }
-            console.log(self.options.filter['tags'])
+            //console.log(self.options.filter['tags'])
             if (self.options.filter.isactive != undefined) {
                 self.data = $.grep(self.data, function(value, index) {
                     var boolName = true;

@@ -283,40 +283,16 @@ function pageselectCallback(page_index, todosJSON,opt, jq){
         if (!todosJSON[i].isActive) {
             disabledClass = "disabled";
         }
-        // newcontent += '<table class="todo-instance '+ disabledClass+'">';
-        // newcontent += '<tr>';
-        // newcontent += '<td rowspan="3" class="todo-active-checkbox">';
-        // newcontent += '<input type="hidden" name="created" value="'+ todosJSON[i].created+'" />';
-        // newcontent += '<input type="checkbox" name="active" value="ON" '+(todosJSON[i].isActive ? 'checked="checked" ': '') +' /><br/>';
-        // newcontent += (todosJSON[i].isActive ? 'active':'completed')+'<br/><button class="todo-edit" ' + (!todosJSON[i].isActive ? 'disabled="disabled" ' : '')+ '>Edit</button></td>';
-        // newcontent += '<td colspan="3" class="todo-name">' + todosJSON[i].name + '</td>';
-        // newcontent += '</tr>';
-        // newcontent += '<tr>';
-        // newcontent += '<td colspan="3" class="todo-tags">['+ todosJSON[i].category + ']: '+todosJSON[i].tags+'</td>';
-        // newcontent += '</tr>';
-        // newcontent += '<tr>';
-        // newcontent += '<td class="todo-date">'+todosJSON[i].deadline+'</td>';
-        // newcontent += '<td class="todo-list">';
-        // newcontent += '<ul>';
-        // newcontent += '<li><input type="checkbox" disabled="disabled" name="urgent" value="ON" '+(todosJSON[i].isUrgent ? 'checked="checked" ': '')+' /> urgent</li>';
-        // newcontent += '<li><input type="checkbox" disabled="disabled" name="important" value="ON" '+(todosJSON[i].isImportant ? 'checked="checked" ': '')+' /> important</li>';
-        // newcontent += '</ul>';
-        // newcontent += '</td>';
-        // newcontent += '<td class="todo-state">'+todosJSON[i].state+'</td>';
-        // newcontent += '</tr>';
-        // newcontent += '<tr>';
-        // newcontent += '<td colspan="4" class="todo-description">'+todosJSON[i].description+'</td>';
-        // newcontent += '</tr>';
-        // newcontent += '</table>';
 
         newcontent += '<div class="todo-instance ' + disabledClass +'">';
         newcontent += '<div class="activePedit"><input type="hidden" name="created" value="' + todosJSON[i].created + '" /><br/>';
-        newcontent += '<span class="span-bold">' + (todosJSON[i].isActive ? 'active':'completed') + '</span><input type="checkbox" name="active" value="ON" ' + (todosJSON[i].isActive ? 'checked="checked" ' : '') +' />';
-        newcontent += '<button class="todo-edit" ' + (!todosJSON[i].isActive ? 'disabled="disabled" ' : '') + '>Edit</button></div>';
+        newcontent += '<span class="span-bold">' + (todosJSON[i].isActive == '1'  ? 'active':'completed') + '</span><input type="checkbox" name="active" value="ON" ' + (todosJSON[i].isActive ? 'checked="checked" ' : '') +' />';
+        newcontent += '<button class="todo-edit" ' + (!todosJSON[i].isActive ? 'style="display:none;" ' : '') + '>Edit</button></div>';
         newcontent += '<h3>' + todosJSON[i].name + '</h3>';
-        newcontent += (todosJSON[i].isUrgent ? '<span class="todo-mark urgent" unselectable="on">urgent</span>' : '');
-        newcontent += (todosJSON[i].isImportant ? '<span class="todo-mark important" unselectable="on">important</span>' : '') + '<br/>';
-        newcontent += '<span class="span-bold">' + todosJSON[i].category + ': </span>' + todosJSON[i].tags + '<br/>';
+        newcontent += (todosJSON[i].isUrgent== '1' ? '<span class="todo-mark urgent" unselectable="on">urgent</span>' : '');
+        newcontent += (todosJSON[i].isImportant== '1' ? '<span class="todo-mark important" unselectable="on">important</span>' : '') + '<br/>';
+        newcontent += '<span class="span-bold">Category: </span>' + todosJSON[i].category + '<br/>';
+         newcontent += '<span class="span-bold">Tags: </span>' + todosJSON[i].tags + '<br/>';
         newcontent += '<span class="span-bold">Deadline: </span>' + todosJSON[i].deadline + '<br/>';
         newcontent += '<span class="span-bold">State: </span>' + todosJSON[i].state + '<br/>';
         newcontent += todosJSON[i].description + '</div>';

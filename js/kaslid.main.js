@@ -1,73 +1,69 @@
-var categoryJSON = [
-"All",
-"University",
-"Relations",
-"Work",
-"Girlfriend"
-];
 
-var todosJSON = [
-{
-    "category":"University",
-    "created":"1333999071096",
-    "name":"TODO #1",
-    "deadline":"13.04.2012",
-    "description":"My first todo. Hell yeah!",
-    "isUrgent":true,
-    "isImportant":false,
-    "isActive":true,
-    "state":"Pending",
-    "tags":"work meeting"
-},
-{
-    "category":"University",
-    "created":"1333999071097",
-    "name":"TODO #2",
-    "deadline":"13.04.2012",
-    "description":"My second todo. Hell yeah!",
-    "isUrgent":false,
-    "isImportant":true,
-    "isActive":true,
-    "state":"In progress",
-    "tags":"work birthday"
-},
-{
-    "category":"Girlfriend",
-    "created":"1333999071098",
-    "name":"TODO #3",
-    "deadline":"13.04.2012",
-    "description":"My third todo. Hell yeah!",
-    "isUrgent":true,
-    "isImportant":false,
-    "isActive":true,
-    "state":"Completed",
-    "tags":"school meeting"
-},
-{
-    "category":"Girlfriend",
-    "created":"1333999071099",
-    "name":"TODO #4",
-    "deadline":"13.04.2012",
-    "description":"My fourth todo. Hell yeah!",
-    "isUrgent":true,
-    "isImportant":true,
-    "isActive":true,
-    "state":"Pending",
-    "tags":"work meeting"
-},
-{
-    "category":"Girlfriend",
-    "created":"1333999071100",
-    "name":"TODO #5",
-    "deadline":"13.04.2012",
-    "description":"My fifth todo. Hell yeah!",
-    "isUrgent":true,
-    "isImportant":false,
-    "isActive":true,
-    "state":"Pending",
-    "tags":"work meeting"
-}
-];
+//var todosJSON = [
+//{
+//    "category":"University",
+//    "created":"1333999071096",
+//    "name":"TODO #1",
+//    "deadline":"13.04.2012",
+//    "description":"My first todo. Hell yeah!",
+//    "isUrgent":true,
+//    "isImportant":false,
+//    "isActive":true,
+//    "state":"Pending",
+//    "tags":"work meeting"
+//},
+//{
+//    "category":"University",
+//    "created":"1333999071097",
+//    "name":"TODO #2",
+//    "deadline":"13.04.2012",
+//    "description":"My second todo. Hell yeah!",
+//    "isUrgent":false,
+//    "isImportant":true,
+//    "isActive":true,
+//    "state":"In progress",
+//    "tags":"work birthday"
+//},
+//{
+//    "category":"Girlfriend",
+//    "created":"1333999071098",
+//    "name":"TODO #3",
+//    "deadline":"13.04.2012",
+//    "description":"My third todo. Hell yeah!",
+//    "isUrgent":true,
+//    "isImportant":false,
+//    "isActive":true,
+//    "state":"Completed",
+//    "tags":"school meeting"
+//},
+//{
+//    "category":"Girlfriend",
+//    "created":"1333999071099",
+//    "name":"TODO #4",
+//    "deadline":"13.04.2012",
+//    "description":"My fourth todo. Hell yeah!",
+//    "isUrgent":true,
+//    "isImportant":true,
+//    "isActive":true,
+//    "state":"Pending",
+//    "tags":"work meeting"
+//},
+//{
+//    "category":"Girlfriend",
+//    "created":"1333999071100",
+//    "name":"TODO #5",
+//    "deadline":"13.04.2012",
+//    "description":"My fifth todo. Hell yeah!",
+//    "isUrgent":true,
+//    "isImportant":false,
+//    "isActive":true,
+//    "state":"Pending",
+//    "tags":"work meeting"
+//}
+//];
+
+// global PoS
+var todosJSON;
 
 $(document).ready(function() {
 
@@ -113,6 +109,19 @@ $(document).ready(function() {
     //-------------- Categories -----------------------//
     //=================================================//
 
+    var categoryJSON = ["All"];
+
+    $(function() {
+        $.post('php/cats.php', '{ "action" : "get" }',
+            function(answer) {
+                $(answer).each(function(index, element) {
+                    categoryJSON.push(element);
+
+                });
+                displayCategories();
+            }, 'json');
+    });
+
     function displayCategories() {
 
         var categoryList = $('div.category-container ul'),
@@ -124,18 +133,18 @@ $(document).ready(function() {
         $.each(categoryJSON, function(index, value) {
 
             var span = $('<span>' + value + '</span>');
-                option = $('<option></option>').val(value).text(value),
-                li = $('<li><input type="checkbox" class="checkbox-hidden"/></li>');
+            option = $('<option></option>').val(value).text(value),
+            li = $('<li><input type="checkbox" class="checkbox-hidden"/></li>');
             if (index == 0)
                 span.addClass('selected');
 
-            li.append(span);    
+            li.append(span);
             categoryList.append(li);
             categoryOptions.append(option);
             categoryContainer.prepend(option);
         });
     };
-    displayCategories();
+    //displayCategories();
 
     var $catsContainer = $('div.category-container');
     $catsContainer.on('click', 'span', function() {
@@ -149,9 +158,23 @@ $(document).ready(function() {
         displayTodos();
     });
 
+    function ajax_addCategory(newCategoryName) {
+        $.post('php/cats.php', '{ "action" : "add", "new_cat": "'+newCategoryName+'" }',
+            function(answer) {
+                categoryJSON = ['All'];
+                $(answer).each(function(index, element) {
+                    categoryJSON.push(element);
+                });
+                displayCategories();
+            }, 'json');
+    }
+
     $('button.addcategory').on('click', function() {
         var newCategoryName = $(this).siblings('input.newcategory').val();
         categoryJSON.push(newCategoryName);
+
+        ajax_addCategory(newCategoryName);
+
         displayCategories();
     });
 
@@ -161,7 +184,24 @@ $(document).ready(function() {
             $deleteCats.text('Delete checked');
             $('div.category-container input[type="checkbox"]').removeClass('checkbox-hidden');
         } else {
-            $catsContainer.find('input[type="checkbox"]:checked').parent('li').remove();
+            $parentLi = $catsContainer.find('input[type="checkbox"]:checked').parent('li');
+            var toBeDeleted = "[";
+            $.each($parentLi, function(index, element) {
+                //toBeDeleted.push($(element).children('span').html());
+                toBeDeleted += "\"" + $(element).children('span').html() + "\",";
+            });
+            toBeDeleted = toBeDeleted.slice(0, -1);
+            toBeDeleted += "]";
+
+            $.post('php/cats.php', '{ "action" : "delete", "toBeDeleted": '+ toBeDeleted +' }',
+                function(answer) {
+                    categoryJSON = ['All'];
+                    $(answer).each(function(index, element) {
+                        categoryJSON.push(element);
+                    });
+                    displayCategories();
+                }, 'json');
+
             $deleteCats.text('Edit');
             $('div.category-container input[type="checkbox"]').addClass('checkbox-hidden');
         }
@@ -219,7 +259,9 @@ $(document).ready(function() {
         options.dataprocessing.search = false;
         $('div.category-container ul li').first().trigger('click');
         $('input#search-keyword').val('');
-        options.dataprocessing.filter = {category: 'All'};
+        options.dataprocessing.filter = {
+            category: 'All'
+        };
         displayTodos();
     });
 
@@ -375,8 +417,7 @@ $(document).ready(function() {
         todo.created = $.now();
         todo.isUrgent = $('input#urgent').attr('checked') ? true : false;
         todo.isImportant = $('input#important').attr('checked') ? true : false;
-        var $newCat = $('div#new-todo input[type="text"]');
-        ($newCat.val() != "" ? todo.category = $newCat.val() : todo.category = $('select#category').val());
+        //var $newCat = $('div#new-todo input[type="text"]');
         todo.name = $('input#name').val();
         todo.deadline = $('input#deadline').val();
         todo.description = $('textarea#description').val();
@@ -386,10 +427,24 @@ $(document).ready(function() {
         $('div#todo-for-tags-hidden span').each(function() {
             todo.tags += $(this).html() + ' ';
         });
+        newCategoryName = $('input.newcategory').val();
+        if (newCategoryName != '') {
+            ajax_addCategory(newCategoryName);
+            todo.category = newCategoryName;
+        } else {
+            todo.category = $('select#category').val()
+        }
+
+        newTodo = $.toJSON(todo);
+        //console.log("newTodo: " + newTodo);
+        //todosJSON.unshift(todo); //adds new items to the beginning of an array
+        $.post('php/todos.php', '{ "action" : "add", "todo": '+newTodo+' }',
+            function(answer) {
+                console.log("newTodo: " + newTodo);
+                displayTodos();
+            }, 'json');
         hideNewTodoForm();
         clearTags();
-        todosJSON.unshift(todo); //adds new items to the beginning of an array
-        displayTodos();
     });
 
     //=================================================//
@@ -397,10 +452,15 @@ $(document).ready(function() {
     //=================================================//
 
     function displayTodos() {
-        console.log(options.dataprocessing);
-        processedTodosJSON = $.processData(todosJSON, options.dataprocessing);
-        // Create pagination element with options from var
-        $("div.for-pagination").pagination(processedTodosJSON, options.pagination);
+        $.post('php/todos.php', '{ "action" : "get" }',
+            function(answer) {
+                todosJSON = answer;
+                // console.log(answer);
+                processedTodosJSON = $.processData(todosJSON, options.dataprocessing);
+                // Create pagination element with options from var
+                $("div.for-pagination").pagination(processedTodosJSON, options.pagination);
+            }, 'json');
+
     }
     displayTodos();
 
@@ -447,7 +507,14 @@ $(document).ready(function() {
         // TODO: variables caching
         todoToEdit.isUrgent = $('input#urgent').attr('checked') ? true : false;
         todoToEdit.isImportant = $('input#important').attr('checked') ? true : false;
-        todoToEdit.category = $('select#category').val();
+        //todoToEdit.category = $('select#category').val();
+        newCategoryName = $('input.newcategory').val();
+        if (newCategoryName != '') {
+            ajax_addCategory(newCategoryName);
+            todoToEdit.category = newCategoryName;
+        } else {
+            todoToEdit.category = $('select#category').val()
+        }
         todoToEdit.name = $('input#name').val();
         todoToEdit.deadline = $('input#deadline').val();
         todoToEdit.description = $('textarea#description').val();
@@ -467,23 +534,27 @@ $(document).ready(function() {
     //=================================================//
 
     $(document).on('change','input[name=active]', function() {
+        var activeLabel = $(this).siblings('span.span-bold');
         var parentDiv = $(this).parents('div.todo-instance');
-        console.log(parentDiv);
+
         var created = parentDiv.find('input[name=created]').val();
         var editButton = parentDiv.find('button'),
-            spans = parentDiv.find('span.todo-mark');
+        spans = parentDiv.find('span.todo-mark');
+
         var newValueForActive;
 
         if (parentDiv.hasClass('disabled')) {
             parentDiv.removeClass('disabled');
             newValueForActive = true;
-            editButton.removeClass('disabled');
+            editButton.css('display', 'block');
             spans.removeClass('disabled');
+            activeLabel.html('active');
         } else {
             parentDiv.addClass('disabled');
             newValueForActive = false;
-            editButton.addClass('disabled');
+            editButton.css('display', 'none');
             spans.addClass('disabled');
+            activeLabel.html('completed');
         }
 
         $.each(todosJSON, function(index, value) {

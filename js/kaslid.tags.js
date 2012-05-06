@@ -70,7 +70,7 @@ function appViewModel() {
         });
     };
 }
-    
+
 $(document).ready(function() {
 
     // Shows / hides tag checkboxes
