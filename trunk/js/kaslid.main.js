@@ -470,6 +470,7 @@ $(document).ready(function() {
     var todoToEdit;
     $('div#todo-wrapper').on('click', 'button.todo-edit', function() {
         var todoTimestamp = $(this).siblings('input[type="hidden"]').val();
+
         $.each(todosJSON, function(index) {
             if (todosJSON[index].created == todoTimestamp) {
                 todoToEdit = todosJSON[index];
@@ -524,9 +525,17 @@ $(document).ready(function() {
         $('div#todo-for-tags-hidden span').each(function() {
             todoToEdit.tags += $(this).html() + ' ';
         });
+
+        todo = $.toJSON(todoToEdit);
+        console.log(todo);
+        $.post('php/todos.php', '{ "action" : "update", "todo" : '+ todo +' }',
+            function(answer) {
+                displayTodos();
+            }, 'json');
+
         hideNewTodoForm();
         clearTags();
-        displayTodos();
+
     });
 
     //=================================================//

@@ -40,7 +40,23 @@ if ($parsedJSON->action == 'get') {
 
     //getTodos();
 } else if ($parsedJSON->action == 'delete') {
-    $query = "DELETE FROM t094011_cats WHERE";
+    //$query = "DELETE FROM t094011_todos WHERE";
+} else if ($parsedJSON->action == 'update') {
+    $todo = $parsedJSON->todo;
+    $query =
+            "UPDATE t094011_todos
+                SET
+                category='" . $todo->category . "',
+                name='" . $todo->name . "',
+                deadline='" . $todo->deadline . "',
+                description='" . $todo->description . "',
+                isUrgent='" . $todo->isUrgent . "',
+                isImportant='" . $todo->isImportant . "',
+                isActive='" . $todo->isActive . "',
+                state='" . $todo->state . "',
+                tags='" . $todo->tags . "'
+            WHERE created='" . $todo->created . "'";
+    mysql_query($query);
 }
 
 function getTodos() {
