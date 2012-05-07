@@ -60,7 +60,7 @@ if ($parsedJSON->action == 'get') {
 }
 
 function getTodos() {
-    $query = "SELECT * FROM t094011_todos";
+    $query = "SELECT * FROM t094011_todos ORDER BY created DESC";
 
     $todos = array();
 

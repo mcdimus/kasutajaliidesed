@@ -204,6 +204,7 @@ $(document).ready(function() {
     $('#clear-search').on('click', function() {
         options.dataprocessing.search = false;
         $('div.category-container ul li:first-child').find('span').trigger('click');
+        $('div.tag-container ul li:first-child').find('span').trigger('click');
         $('input#search-keyword').val('');
         options.dataprocessing.filter = {
             category: 'All',
@@ -221,7 +222,7 @@ $(document).ready(function() {
         if ($('#search-description').val().length != 0) {
             opt.description = $('#search-description').val();
         }
-       // opt.isactive = ($showActiveBtn.hasClass('selected') ? '1' : '0');
+        // opt.isactive = ($showActiveBtn.hasClass('selected') ? '1' : '0');
         opt.category = $('select#search-category').val();
         opt.state = ($('#search-state').val() != '') ? $('#search-state').val()  : false;
         opt.tags = $('#search-tags').val();
