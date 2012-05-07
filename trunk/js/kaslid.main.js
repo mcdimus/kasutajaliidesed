@@ -17,6 +17,7 @@ $(document).ready(function() {
             sort: false,
             search: false,
             filter: {
+                showActive: '1',
                 category: 'All'
             }
         }
@@ -53,7 +54,7 @@ $(document).ready(function() {
                 categoryJSON.push(element);
             });
             displayCategories();
-    }, 'json');
+        }, 'json');
 
     function displayCategories() {
 
@@ -208,7 +209,7 @@ $(document).ready(function() {
         if ($('#search-description').val().length != 0) {
             opt.description = $('#search-description').val();
         }
-        opt.isactive = ($('#search-isactive').attr('checked') == 'checked') ? true : false;
+        opt.isactive = ($('#search-isactive').attr('checked') == 'checked') ? '1' : '0';
         opt.category = $('select#search-category').val();
         opt.state = ($('#search-state').val() != '') ? $('#search-state').val()  : false;
         opt.tags = $('#search-tags').val();
@@ -298,8 +299,8 @@ $(document).ready(function() {
                 $inputTags.val($inputTags.val() + " " + $clickedSpan.text() + " ");
             }
         } else {
-            var index = $inputTags.val().indexOf($clickedSpan.text()), 
-                value = $inputTags.val();
+            var index = $inputTags.val().indexOf($clickedSpan.text()),
+            value = $inputTags.val();
             $inputTags.val(value.substr(0, index) + value.substr(index + $clickedSpan.text().length + 1));
             $clickedSpan.attr('data-clicked', 'false').removeClass();
         }
@@ -500,9 +501,31 @@ $(document).ready(function() {
                 todo = $.toJSON(value);
                 $.post('php/todos.php', '{ "action" : "update", "todo" : '+ todo +' }',
                     function(answer) {
-                        //displayTodos();
+                        displayTodos();
                     }, 'json');
             }
         });
     });
+
+    //=================================================//
+    //----------- Show Active or Completed ------------//
+    //=================================================//
+
+    $showActiveBtn = $('#active-todos');
+    $showCompletedBtn = $('#completed-todos');
+
+    $showActiveBtn.on('click', function() {
+        filterByActive('1');
+    });
+
+    $showCompletedBtn.on('click', function() {
+        filterByActive('0');
+    });
+
+    function filterByActive(value) {
+        $showActiveBtn.toggleClass('selected');
+        $showCompletedBtn.toggleClass('selected');
+        options.dataprocessing.filter.showActive = value;
+        displayTodos();
+    }
 });
