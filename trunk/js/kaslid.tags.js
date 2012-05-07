@@ -3,6 +3,13 @@
  */
 var tagsArr = [];
 
+// sends new tags via AJAX
+function ajax_addTags(tags) {
+    $.post('php/tags.php', '{ "action" : "add", "tags" : "' + tags + '" }',
+        function(answer) {
+    });
+}
+
 $(function() {
     // Get tags via AJAX
     $.post('php/tags.php', '{ "action" : "get" }',
@@ -14,15 +21,41 @@ $(function() {
             displayTags();
     }, 'json');
 
+    // add a tag
+    var $addTag = $('#addtag');
+    $addTag.on('click', function() {
+        var newTag = $('#newtag').val();
+        ajax_addTags(newTag);
+        tagsArr.push(newTag);
+        displayTags();
+    });
+
     // Shows / hides tag checkboxes
-    var $deleteTags = $('button#deletetags');
+    var $deleteTags = $('button#deletetags'),
+        $tagsContainer = $('div.tag-container');
     $deleteTags.on('click', function() {
         if ($deleteTags.text() == "Edit") {
             $deleteTags.text('Delete checked');
-            $('div.tag-container input[type="checkbox"]').removeClass('checkbox-hidden');
+            $tagsContainer.find('input[type="checkbox"]').removeClass('checkbox-hidden');
         } else {
+            $tagsSpans = $tagsContainer.find('input[type="checkbox"]:checked').siblings('span');
+            var toBeDeleted = '[';
+            $.each($tagsSpans, function(index, element) {
+                toBeDeleted += '"' + $(element).html() + '", ';
+                tagsArr.pop(element);
+            });
+            toBeDeleted = toBeDeleted.slice(0, -2);
+            toBeDeleted += ']';
+
+            $.post('php/tags.php', '{ "action" : "delete", "tags" : ' + toBeDeleted + ' }',
+                function(answer) {
+                    
+            });
+
+            displayTags();
+
             $deleteTags.text('Edit');
-            $('div.tag-container input[type="checkbox"]').addClass('checkbox-hidden');
+            $tagsContainer.find('input[type="checkbox"]').addClass('checkbox-hidden');
         }
     });
 });
@@ -32,7 +65,7 @@ function clearTags() {
     $('div#todo-for-tags span').attr('data-clicked', 'false').removeClass();
 }
 
-// sends new tags via AJAX
+// selects new tags from all new todo tags
 function sendNewTags(tags) {
     $.each(tagsArr, function(index, element) {
         var index = tags.indexOf(element);
@@ -48,12 +81,9 @@ function sendNewTags(tags) {
     $.each(tags.split(" "), function(index, element) {
         tagsArr.push(element);
     });
-
-    $.post('php/tags.php', '{ "action" : "add", "tags" : "' + tags + '" }',
-        function(answer) {
-            $('div#phpanswer').text(answer);
-    });
     
+    ajax_addTags(tags);
+
     displayTags();
 }
 

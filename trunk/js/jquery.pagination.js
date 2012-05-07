@@ -286,11 +286,11 @@ function pageselectCallback(page_index, todosJSON,opt, jq){
 
         newcontent += '<div class="todo-instance ' + disabledClass +'">';
         newcontent += '<div class="activePedit"><input type="hidden" name="created" value="' + todosJSON[i].created + '" /><br/>';
-        newcontent += '<span class="span-bold">' + (todosJSON[i].isActive == '1'  ? 'active':'completed') + '</span><input type="checkbox" name="active" value="ON" ' + (todosJSON[i].isActive == '1' ? 'checked="checked" ' : '') +' />';
-        newcontent += '<button class="todo-edit" ' + (todosJSON[i].isActive != '1' ? 'style="display:none;" ' : '') + '>Edit</button></div>';
+        newcontent += '<span class="span-bold">' + (todosJSON[i].isActive == '1'  ? 'active' :'completed') + '</span><input type="checkbox" name="active" value="ON" ' + (todosJSON[i].isActive == '1' ? 'checked="checked" ' : '') +' />';
+        newcontent += '<button class="todo-edit ' + (todosJSON[i].isActive == '1' ? '' : 'disabled') + '">Edit</button></div>';
         newcontent += '<h3>' + todosJSON[i].name + '</h3>';
-        newcontent += (todosJSON[i].isUrgent== '1' ? '<span class="todo-mark urgent" unselectable="on">urgent</span>' : '');
-        newcontent += (todosJSON[i].isImportant== '1' ? '<span class="todo-mark important" unselectable="on">important</span>' : '') + '<br/>';
+        newcontent += (todosJSON[i].isUrgent== '1' ? '<span class="todo-mark urgent '  + (todosJSON[i].isActive == '1' ? '' : 'disabled') +  '" unselectable="on">urgent</span>' : '');
+        newcontent += (todosJSON[i].isImportant== '1' ? '<span class="todo-mark important '  + (todosJSON[i].isActive == '1' ? '' : 'disabled') +  '" unselectable="on">important</span>' : '') + '<br/>';
         newcontent += '<span class="span-bold">Category: </span>' + todosJSON[i].category + '<br/>';
          newcontent += '<span class="span-bold">Tags: </span>' + todosJSON[i].tags + '<br/>';
         newcontent += '<span class="span-bold">Deadline: </span>' + todosJSON[i].deadline + '<br/>';

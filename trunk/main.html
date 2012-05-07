@@ -7,7 +7,6 @@
 
         <script type="text/javascript" src="js/jquery-1.7.2.js"></script>
         <script type="text/javascript" src="js/jquery-ui-1.8.18.custom.min.js"></script>
-        <script type="text/javascript" src="js/knockout-2.0.0.debug.js"></script>
         <script type="text/javascript" src="js/jquery.pagination.js"></script>
         <script type="text/javascript" src="js/jquery.json-2.3.js"></script>
         <script type="text/javascript" src="js/jquery.dataprocessing.js"></script>
@@ -158,7 +157,6 @@
             <!--end header-wrapper-->
 
             <div id="content-wrapper">
-                <div id="phpanswer"></div>
                 <div class="right-panel">
                     <div class="category-container" >
                         <h3>Category</h3>
@@ -172,16 +170,15 @@
                         <h3>Tags</h3>
                         <ul>
                         </ul>
-                        <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag..." />
-                        <button class="dark" data-bind="click: addTag" id="addtag" name="addtag">Add</button>
-                        <button class="dark" data-bind="click: deleteTags" id="deletetags" name="deleteTags">Edit</button>
+                        <input type="text" id="newtag" name="newtag" placeholder="New tag..." />
+                        <button class="dark" id="addtag" name="addtag">Add</button>
+                        <button class="dark" id="deletetags" name="deleteTags">Edit</button>
                     </div> <!--end of tag-container -->
                 </div> <!--end of right-panel -->
 
                 <div class="main">
                     <h2 id="current-category">Category: <span>All</span></h2>
                     <div class="for-pagination"></div>
-
                     <div>
                     </div>
                     <div id="todo-wrapper"></div>

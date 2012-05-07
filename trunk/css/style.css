@@ -394,7 +394,7 @@ div.todo-instance h3 {
     margin-bottom: 10px;
 }
 
-div.todo-instance span.urgent, div.todo-instance span.important {
+span.todo-mark {
     -webkit-user-select: none;
     -moz-user-select: none;
     user-select: none;
