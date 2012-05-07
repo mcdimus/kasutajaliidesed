@@ -25,9 +25,11 @@ $(function() {
     var $addTag = $('#addtag');
     $addTag.on('click', function() {
         var newTag = $('#newtag').val();
-        ajax_addTags(newTag);
-        tagsArr.push(newTag);
-        displayTags();
+        if (newTag.match('/\S/g')) {
+            ajax_addTags(newTag);
+            tagsArr.push(newTag);
+            displayTags();
+        }
     });
 
     // Shows / hides tag checkboxes
@@ -78,13 +80,13 @@ function sendNewTags(tags) {
         tags = tags.slice(0, -1);
     }
 
-    $.each(tags.split(" "), function(index, element) {
-        tagsArr.push(element);
-    });
-
-    ajax_addTags(tags);
-
-    displayTags();
+    if (tags.match('/\S/g')) {
+        $.each(tags.split(" "), function(index, element) {
+            tagsArr.push(element);
+        });
+        ajax_addTags(tags);
+        displayTags();
+    }
 }
 
 function displayTags() {
