@@ -88,8 +88,13 @@
                     return (value['category'] == self.options.filter.category);
                 });
             }
+            if (self.options.filter.tag != 'All') {
+                self.data = $.grep(self.data, function(value, index) {
+                    return (value['tags'].indexOf(self.options.filter['tag']) != -1);
+                });
+            }
             //console.log(self.options.filter['tags'])
-            if (self.options.filter.isactive != undefined) {
+//            if (self.options.filter.isactive != undefined) {
                 self.data = $.grep(self.data, function(value, index) {
                     var boolName = true;
                     if (self.options.filter['name'] != undefined)
@@ -99,12 +104,12 @@
                     if (self.options.filter['description'] != undefined)
                         boolDescr = (value['description'].indexOf(self.options.filter['description']) != -1);
 
-                    var boolActive = true;
-                    if (self.options.filter['isactive']) {
-                        boolActive = (value['isActive'] == '1');
-                    } else {
-                        boolActive = (value['isActive'] == '0');
-                    }
+//                    var boolActive = true;
+//                    if (self.options.filter['isactive'] == '1') {
+//                        boolActive = (value['isActive'] == '1');
+//                    } else {
+//                        boolActive = (value['isActive'] == '0');
+//                    }
 
                     var boolState = true;
                     if (self.options.filter['state']) {
@@ -120,9 +125,11 @@
                     }
 
                     //                    console.log(boolActive);
-                    return boolName && boolDescr && boolActive && boolState && boolTags;
+                    return boolName && boolDescr
+//                        && boolActive
+                        && boolState && boolTags;
                 });
-            }
+//            }
 
             if (self.options.filter.showActive) {
                 self.data = $.grep(self.data, function(value, index) {

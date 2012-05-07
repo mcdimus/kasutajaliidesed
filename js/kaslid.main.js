@@ -18,7 +18,8 @@ $(document).ready(function() {
             search: false,
             filter: {
                 showActive: '1',
-                category: 'All'
+                category: 'All',
+                tag: 'All'
             }
         }
     };
@@ -74,7 +75,7 @@ $(document).ready(function() {
 
             li.append(span);
             categoryList.append(li);
-            categoryContainer.prepend(option);
+            categoryContainer.append(option);
         });
     };
 
@@ -139,7 +140,15 @@ $(document).ready(function() {
     //------------------ Tags -------------------------//
     //=================================================//
 
+    var $tagsContainer = $('div.tag-container');
+    $tagsContainer.on('click', 'span', function() {
+        $this = $(this);
+        $tagsContainer.find('span').removeClass('selected');
+        $this.addClass('selected');
 
+        options.dataprocessing.filter.tag = $this.text();
+        displayTodos();
+    });
 
     //=================================================//
     //-------------- Search feature -------------------//
@@ -197,7 +206,8 @@ $(document).ready(function() {
         $('div.category-container ul li:first-child').find('span').trigger('click');
         $('input#search-keyword').val('');
         options.dataprocessing.filter = {
-            category: 'All'
+            category: 'All',
+            tag: 'All'
         };
         options.dataprocessing.filter.showActive = ($showActiveBtn.hasClass('selected') ? '1' : '0');
         displayTodos();
@@ -211,12 +221,14 @@ $(document).ready(function() {
         if ($('#search-description').val().length != 0) {
             opt.description = $('#search-description').val();
         }
-        opt.isactive = ($showActiveBtn.hasClass('selected') ? '1' : '0');
+       // opt.isactive = ($showActiveBtn.hasClass('selected') ? '1' : '0');
         opt.category = $('select#search-category').val();
         opt.state = ($('#search-state').val() != '') ? $('#search-state').val()  : false;
         opt.tags = $('#search-tags').val();
 
-        options.dataprocessing.filter = opt;
+        //options.dataprocessing.filter = opt;
+        options.dataprocessing.filter = $.extend({}, options.dataprocessing.filter, opt);
+        //console.log(options.dataprocessing.filter);
         hideAdvancedSearch();
         displayTodos();
     });
@@ -425,8 +437,8 @@ $(document).ready(function() {
         $newTodoForm.find('h3').text('Edit TODO');
         $addTodo.css('display', 'none');
         $editTodo.css('display', 'inline-block');
-        $('#urgent').attr('checked', todoToEdit.isUrgent);
-        $('#important').attr('checked', todoToEdit.isImportant);
+        $('#urgent').attr('checked', todoToEdit.isUrgent == '1');
+        $('#important').attr('checked', todoToEdit.isImportant == '1');
         $('#category').val(todoToEdit.category);
         $('#name').val(todoToEdit.name);
         $('#deadline').val(todoToEdit.deadline);
@@ -515,15 +527,23 @@ $(document).ready(function() {
 
     $showActiveBtn.on('click', function() {
         filterByActive('1');
+
+        if (!$showActiveBtn.hasClass('selected')) {
+            $showActiveBtn.addClass('selected');
+            $showCompletedBtn.removeClass('selected');
+        }
     });
 
     $showCompletedBtn.on('click', function() {
         filterByActive('0');
+
+        if (!$showCompletedBtn.hasClass('selected')) {
+            $showCompletedBtn.addClass('selected');
+            $showActiveBtn.removeClass('selected');
+        }
     });
 
     function filterByActive(value) {
-        $showActiveBtn.toggleClass('selected');
-        $showCompletedBtn.toggleClass('selected');
         options.dataprocessing.filter.showActive = value;
         displayTodos();
     }

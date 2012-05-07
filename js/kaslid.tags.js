@@ -7,7 +7,7 @@ var tagsArr = [];
 function ajax_addTags(tags) {
     $.post('php/tags.php', '{ "action" : "add", "tags" : "' + tags + '" }',
         function(answer) {
-    });
+        });
 }
 
 $(function() {
@@ -19,7 +19,7 @@ $(function() {
                 tagsArr.push(element);
             });
             displayTags();
-    }, 'json');
+        }, 'json');
 
     // add a tag
     var $addTag = $('#addtag');
@@ -32,7 +32,7 @@ $(function() {
 
     // Shows / hides tag checkboxes
     var $deleteTags = $('button#deletetags'),
-        $tagsContainer = $('div.tag-container');
+    $tagsContainer = $('div.tag-container');
     $deleteTags.on('click', function() {
         if ($deleteTags.text() == "Edit") {
             $deleteTags.text('Delete checked');
@@ -49,8 +49,8 @@ $(function() {
 
             $.post('php/tags.php', '{ "action" : "delete", "tags" : ' + toBeDeleted + ' }',
                 function(answer) {
-                    
-            });
+
+                });
 
             displayTags();
 
@@ -81,7 +81,7 @@ function sendNewTags(tags) {
     $.each(tags.split(" "), function(index, element) {
         tagsArr.push(element);
     });
-    
+
     ajax_addTags(tags);
 
     displayTags();
@@ -89,14 +89,19 @@ function sendNewTags(tags) {
 
 function displayTags() {
     $ul = $('div.tag-container ul'),
-        $todoForTags = $('#todo-for-tags'),
-        $searchTags = $('#search-tags');
+
+    $todoForTags = $('#todo-for-tags'),
+    $searchTags = $('#search-tags');
+
     $ul.html('');
     $todoForTags.html('');
     $searchTags.html('');
     $.each(tagsArr, function(index, element) {
-        $ul.append($('<li><input type="checkbox" class="checkbox-hidden"/><span>' + element + '</span></li>'));
+
+        var a = index == 0 ? 'class="selected"':'';
+        $ul.append($('<li><input type="checkbox" class="checkbox-hidden"/><span '+a+'>' + element + '</span></li>'));
         $todoForTags.append('<span data-bind="text: name" data-clicked="false" unselectable="on">' + element + '</span>');
         $searchTags.append('<option>' + element + '</option>')
+
     });
 }
