@@ -280,14 +280,14 @@ function pageselectCallback(page_index, todosJSON,opt, jq){
     for(var i=page_index*items_per_page;i<max_elem;i++)
     {
         disabledClass = '';
-        if (!todosJSON[i].isActive) {
+        if (todosJSON[i].isActive != '1') {
             disabledClass = "disabled";
         }
 
         newcontent += '<div class="todo-instance ' + disabledClass +'">';
         newcontent += '<div class="activePedit"><input type="hidden" name="created" value="' + todosJSON[i].created + '" /><br/>';
-        newcontent += '<span class="span-bold">' + (todosJSON[i].isActive == '1'  ? 'active':'completed') + '</span><input type="checkbox" name="active" value="ON" ' + (todosJSON[i].isActive ? 'checked="checked" ' : '') +' />';
-        newcontent += '<button class="todo-edit" ' + (!todosJSON[i].isActive ? 'style="display:none;" ' : '') + '>Edit</button></div>';
+        newcontent += '<span class="span-bold">' + (todosJSON[i].isActive == '1'  ? 'active':'completed') + '</span><input type="checkbox" name="active" value="ON" ' + (todosJSON[i].isActive == '1' ? 'checked="checked" ' : '') +' />';
+        newcontent += '<button class="todo-edit" ' + (todosJSON[i].isActive != '1' ? 'style="display:none;" ' : '') + '>Edit</button></div>';
         newcontent += '<h3>' + todosJSON[i].name + '</h3>';
         newcontent += (todosJSON[i].isUrgent== '1' ? '<span class="todo-mark urgent" unselectable="on">urgent</span>' : '');
         newcontent += (todosJSON[i].isImportant== '1' ? '<span class="todo-mark important" unselectable="on">important</span>' : '') + '<br/>';
