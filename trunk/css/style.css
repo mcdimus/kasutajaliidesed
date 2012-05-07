@@ -332,6 +332,11 @@ div#bottomPanel {
     /*behavior: url(ie-css3.htc);*/
 }
 
+div.tip {
+    font-style: italic;
+    font-size: 11px;
+}
+
 /* 5. Header
 ----------------------------------------------------------------------------------------------------*/
 div#logo {
@@ -553,8 +558,8 @@ li.menuitem:hover {
     display: none;
 }
 
-#new-todo > * {
-    margin-top: 10px;
+#new-todo label {
+    margin-top: 0.5em;
 }
 
 #new-todo h3 {
@@ -602,8 +607,9 @@ div#todo-for-tags-hidden {
     border-radius: 7px;
 }
 
-#todo-for-tags span.clicked {
-    color: #FFFFFF;
+input#todo-tags {
+    width: 100%;
+    margin-top: 0.3em;
 }
 
 div#todo-category-container * {
@@ -708,6 +714,7 @@ div#todo-category-container * {
 }
 
 #todo-for-tags span.cyan {
+    color: #FFFFFF;
     border: 1px solid #2f8893;
 }
 
@@ -731,6 +738,7 @@ button.cyan:hover {
 }
 
 #todo-for-tags span.dark {
+    color: #FFFFFF;
     border: 1px solid #272727;
 }
 
@@ -754,6 +762,7 @@ button.dark:hover {
 }
 
 #todo-for-tags span.google-blue {
+    color: #FFFFFF;
     border: 1px solid #3079ED;
 }
 
@@ -776,10 +785,6 @@ button.google-blue:hover {
     border: 1px solid #d6d6d6;
 }
 
-#todo-for-tags span.gray {
-    color: #000000;
-}
-
 button.gray:hover {
     background: rgb(242,242,242);
     background: -webkit-gradient(linear, left top, left bottom, from(rgb(242,242,242)), to(rgb(242,242,242)));
@@ -800,6 +805,7 @@ button.gray:hover {
 }
 
 #todo-for-tags span.magenta {
+    color: #FFFFFF;
     border: 1px solid #841144;
 }
 
@@ -823,6 +829,7 @@ button.magenta:hover {
 }
 
 #todo-for-tags span.orange {
+    color: #FFFFFF;
     border: 1px solid #c04f11;
 }
 
@@ -846,6 +853,7 @@ button.orange:hover {
 }
 
 #todo-for-tags span.yellow {
+    color: #FFFFFF;
     border: 1px solid #c08c1f;
 }
 
