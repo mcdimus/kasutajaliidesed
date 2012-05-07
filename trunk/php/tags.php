@@ -10,7 +10,7 @@
 	$query = "";
 	if ($parsedJSON -> action == 'get') {
 		$query = "SELECT * FROM t094011_tags";
-		$answer = '[';
+		$answer = '["All", ';
 		$result = mysql_query($query);
 		while($row = mysql_fetch_array($result)) {
 			$answer .= '"' . $row['tag_name'] . '", ';
