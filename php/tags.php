@@ -24,7 +24,16 @@
 			mysql_query($query);
 		}
 	} else if ($parsedJSON -> action == 'delete') {
+		$query = "DELETE FROM t094011_tags WHERE";
+	    if (is_array($parsedJSON -> tags)) {
+	        foreach ($parsedJSON -> tags as $value) {
+	            $query .= " tag_name='$value' OR";
+	        }
 
+	        $query = substr($query, 0, strlen($query) - 3);
+
+	        mysql_query($query);
+	    }
 	}
 	mysql_close($con);
 ?>
