@@ -293,8 +293,8 @@ div.right-panel span.selected {
 }
 
 div.right-panel span:hover {
-    background-color: #AAAAAA;
-    background-color: rgba(0,0,0,.20);
+    border: 2px solid #AAAAAA;
+    padding-left: 3px;
 }
 
 #deletetags, #deletecategories {
@@ -653,6 +653,12 @@ div#todo-category-container * {
 #advanced-search-form .search-date {
     display: inline-block;
     margin: 0px 5px;
+}
+
+#advanced-search-form input {
+    clear: none;
+    padding: 0;
+    height: 1.9em;
 }
 
 /* 10. Pagination

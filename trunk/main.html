@@ -120,23 +120,19 @@
                 <div class="submenu" id="advanced-search-form">
                     <h3>Advanced search</h3>
                     <label>Name contains</label>
-                    <input type="text" id="search-name" placeholder="name keyword" />
+                    <input type="text" id="search-name" />
                     <label>Description contains</label>
-                    <input type="text" id="search-description" placeholder="description keyword" />
-                    <label>Type</label>
-                    <input type="checkbox" checked="checked" id="search-isactive">is active?
+                    <input type="text" id="search-description" />
 <!--                    <input type="checkbox" id="search-isurgent">is urgent?
                     <input type="checkbox" id="search-isimportant">is important?-->
                     <label>Category</label>
-                    <select id="search-category">
-                        <option selected="selected" value="">[select one]</option>
-                    </select>
+                    <select id="search-category" class="category-container"></select>
 <!--                    <label>Date</label>
                     <div class="search-date">From: <input type="text" id="search-date-from"></div>
                     <div class="search-date">To: <input type="text" id="search-date-to"></div>-->
                     <label>State</label>
                     <select id="search-state">
-                        <option selected="selected" value="">[select one]</option>
+                        <option selected="selected" value=""></option>
                         <option value="Undone">Undone</option>
                         <option value="In progress">In progress</option>
                         <option value="Pending">Pending</option>
@@ -144,8 +140,8 @@
                         <option value="Cancelled">Cancelled</option>
                     </select>
                     <label>Tags</label>
-                    <select id="search-tags" data-bind="foreach: tags" size="5" multiple>
-                        <option data-bind="text: name"></option>
+                    <select id="search-tags" size="5" multiple>
+
                     </select>
                     <div>
                         <button class="dark" name="advanced-search" id="advanced-search">Search</button>

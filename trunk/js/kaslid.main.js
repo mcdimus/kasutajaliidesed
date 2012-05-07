@@ -59,26 +59,24 @@ $(document).ready(function() {
     function displayCategories() {
 
         var categoryList = $('div.category-container ul'),
-        categoryContainer = $('select#category');
-        var categoryOptions = $('select#search-category');
+        categoryContainer = $('select.category-container');
         categoryList.html('')
         categoryContainer.html('');
-        categoryOptions.html('');
         $.each(categoryJSON, function(index, value) {
 
             var span = $('<span>' + value + '</span>');
             option = $('<option></option>').val(value).text(value),
             li = $('<li><input type="checkbox" class="checkbox-hidden"/></li>');
-            if (index == 0)
+            if (index == 0) {
                 span.addClass('selected');
+                li = $('<li>');
+            }
 
             li.append(span);
             categoryList.append(li);
-            categoryOptions.append(option);
             categoryContainer.prepend(option);
         });
     };
-    //displayCategories();
 
     var $catsContainer = $('div.category-container');
     $catsContainer.on('click', 'span', function() {
@@ -190,14 +188,18 @@ $(document).ready(function() {
         }
     });
 
+    $showActiveBtn = $('#active-todos');
+    $showCompletedBtn = $('#completed-todos');
+
     // Clear search results
     $('#clear-search').on('click', function() {
         options.dataprocessing.search = false;
-        $('div.category-container ul li').first().trigger('click');
+        $('div.category-container ul li:first-child').find('span').trigger('click');
         $('input#search-keyword').val('');
         options.dataprocessing.filter = {
             category: 'All'
         };
+        options.dataprocessing.filter.showActive = ($showActiveBtn.hasClass('selected') ? '1' : '0');
         displayTodos();
     });
 
@@ -209,7 +211,7 @@ $(document).ready(function() {
         if ($('#search-description').val().length != 0) {
             opt.description = $('#search-description').val();
         }
-        opt.isactive = ($('#search-isactive').attr('checked') == 'checked') ? '1' : '0';
+        opt.isactive = ($showActiveBtn.hasClass('selected') ? '1' : '0');
         opt.category = $('select#search-category').val();
         opt.state = ($('#search-state').val() != '') ? $('#search-state').val()  : false;
         opt.tags = $('#search-tags').val();
@@ -510,9 +512,6 @@ $(document).ready(function() {
     //=================================================//
     //----------- Show Active or Completed ------------//
     //=================================================//
-
-    $showActiveBtn = $('#active-todos');
-    $showCompletedBtn = $('#completed-todos');
 
     $showActiveBtn.on('click', function() {
         filterByActive('1');
