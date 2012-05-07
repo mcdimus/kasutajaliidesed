@@ -77,7 +77,7 @@
             var criteria = self.options.searchCriteria;
 
             self.data = $.grep(self.data, function(value, index) {
-                return (value[field].indexOf(criteria) != -1)
+                return (value[field].toLowerCase().indexOf(criteria.toLowerCase()) != -1)
             });
         },
         filter: function() {
@@ -98,11 +98,11 @@
                 self.data = $.grep(self.data, function(value, index) {
                     var boolName = true;
                     if (self.options.filter['name'] != undefined)
-                        boolName = (value['name'].indexOf(self.options.filter['name']) != -1);
+                        boolName = (value['name'].toLowerCase().indexOf(self.options.filter['name'].toLowerCase()) != -1);
 
                     var boolDescr = true;
                     if (self.options.filter['description'] != undefined)
-                        boolDescr = (value['description'].indexOf(self.options.filter['description']) != -1);
+                        boolDescr = (value['description'].toLowerCase().indexOf(self.options.filter['description'].toLowerCase()) != -1);
 
 //                    var boolActive = true;
 //                    if (self.options.filter['isactive'] == '1') {
