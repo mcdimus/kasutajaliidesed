@@ -5,8 +5,9 @@
 
         <title>Kasutajaliidesed</title>
 
-        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"> </script>
-        <script type="text/javascript" src="js/gen_validatorv4.js" ></script>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.js"></script>
+        <script type="text/javascript" src="js/gen_validatorv4.js"></script>
+        <script type="text/javascript" src="js/kaslid.register.js"></script>
         <link rel="stylesheet" href="css/style.css"/>
     </head>
     <body class="body-dark">
@@ -29,7 +30,7 @@
                         <form id="regform" action="main.html" autocomplete="on" method="post">
                             <h3>Registration</h3>
                             <label for="username">Your username</label>
-                            <input id="username" name="username" type="text" placeholder="mysuperusername690" />
+                            <input id="username" name="username" required="required" type="text" placeholder="mysuperusername690" />
                             <div id="regform_username_errorloc" class="error_strings"></div>
                             
                             <label for="email"> Your email</label>
@@ -38,7 +39,7 @@
                             
                             <label for="password">Your password</label>
                             <input id="password" name="password" required="required" type="password" placeholder="eg. X8df!90EO"/>
-                            <div></div>
+                            <div id="regform_password_errorloc" class="error_strings"></div>
                             
                             <label for="password_confirm">Please confirm your password</label>
                             <input id="password_confirm" name="password_confirm" required="required" type="password" placeholder="eg. X8df!90EO"/>
@@ -46,23 +47,8 @@
                             
                             <input type="submit" value="Sign up"/>
                         </form>
-                        <script language="JavaScript" type="text/javascript">
-                            //You should create the validator only after the definition of the HTML form
-                            var frmvalidator  = new Validator("regform");
-                            frmvalidator.EnableOnPageErrorDisplay();
-
-                            frmvalidator.addValidation("username","req","Please enter your username");
-                            frmvalidator.addValidation("username","maxlen=20",	"Max length for username is 20");
-
-                            frmvalidator.addValidation("email","maxlen=50","Max length for email is 50");
-                            frmvalidator.addValidation("email","req","Please enter your email");
-                            frmvalidator.addValidation("email","email","Please enter your email correctly");
-
-                            frmvalidator.addValidation("password_confirm","eqelmnt=password","The confirmed password is not same as password");
-                            
-                        </script>
                         <p>
-                            <a href="index.html" >Уже есть аккаунт?</a>
+                            <a href="index.html" >Got an account?</a>
                         </p>
                     </div>
                 </div>
