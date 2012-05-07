@@ -292,7 +292,7 @@ function pageselectCallback(page_index, todosJSON,opt, jq){
         newcontent += (todosJSON[i].isUrgent== '1' ? '<span class="todo-mark urgent '  + (todosJSON[i].isActive == '1' ? '' : 'disabled') +  '" unselectable="on">urgent</span>' : '');
         newcontent += (todosJSON[i].isImportant== '1' ? '<span class="todo-mark important '  + (todosJSON[i].isActive == '1' ? '' : 'disabled') +  '" unselectable="on">important</span>' : '') + '<br/>';
         newcontent += '<span class="span-bold">Category: </span>' + todosJSON[i].category + '<br/>';
-         newcontent += '<span class="span-bold">Tags: </span>' + todosJSON[i].tags + '<br/>';
+        newcontent += '<span class="span-bold">Tags: </span>' + todosJSON[i].tags + '<br/>';
         newcontent += '<span class="span-bold">Deadline: </span>' + todosJSON[i].deadline + '<br/>';
         newcontent += '<span class="span-bold">State: </span>' + todosJSON[i].state + '<br/>';
         newcontent += todosJSON[i].description + '</div>';

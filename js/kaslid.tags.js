@@ -89,11 +89,14 @@ function sendNewTags(tags) {
 
 function displayTags() {
     $ul = $('div.tag-container ul'),
-        $todoForTags = $('#todo-for-tags');
+        $todoForTags = $('#todo-for-tags'),
+        $searchTags = $('#search-tags');
     $ul.html('');
     $todoForTags.html('');
+    $searchTags.html('');
     $.each(tagsArr, function(index, element) {
         $ul.append($('<li><input type="checkbox" class="checkbox-hidden"/><span>' + element + '</span></li>'));
-        $todoForTags.append('<span data-bind="text: name" data-clicked="false" unselectable="on">' + element + '</span>');  
+        $todoForTags.append('<span data-bind="text: name" data-clicked="false" unselectable="on">' + element + '</span>');
+        $searchTags.append('<option>' + element + '</option>')
     });
 }
