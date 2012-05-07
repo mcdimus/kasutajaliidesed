@@ -100,11 +100,11 @@ $(document).ready(function() {
 
     $('button.addcategory').on('click', function() {
         var newCategoryName = $(this).siblings('input.newcategory').val();
-        categoryJSON.push(newCategoryName);
-
-        ajax_addCategory(newCategoryName);
-
-        displayCategories();
+        if (newCategoryName.match('/\S/g')) {
+            categoryJSON.push(newCategoryName);
+            ajax_addCategory(newCategoryName);
+            displayCategories();
+        }
     });
 
     var $deleteCats = $('button#deletecategories');
