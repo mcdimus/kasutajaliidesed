@@ -101,9 +101,9 @@
 
                     var boolActive = true;
                     if (self.options.filter['isactive']) {
-                        boolActive = (value['isActive'] == true);
+                        boolActive = (value['isActive'] == '1');
                     } else {
-                        boolActive = (value['isActive'] == false);
+                        boolActive = (value['isActive'] == '0');
                     }
 
                     var boolState = true;
@@ -119,8 +119,14 @@
                         });
                     }
 
-//                    console.log(boolActive);
+                    //                    console.log(boolActive);
                     return boolName && boolDescr && boolActive && boolState && boolTags;
+                });
+            }
+
+            if (self.options.filter.showActive) {
+                self.data = $.grep(self.data, function(value, index) {
+                    return (value['isActive'] == self.options.filter.showActive);
                 });
             }
         }

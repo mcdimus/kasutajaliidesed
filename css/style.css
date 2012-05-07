@@ -471,7 +471,7 @@ li.menuitem {
     cursor: pointer;
 }
 
-li.menuitem:hover {
+li.menuitem:hover, li.selected {
     background-color: #D3D3D3;
     background-color: rgba(0,0,0,.20);
     border-radius: 10px;
