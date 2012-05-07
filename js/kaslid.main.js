@@ -527,7 +527,7 @@ $(document).ready(function() {
         });
 
         todo = $.toJSON(todoToEdit);
-        console.log(todo);
+        //console.log(todo);
         $.post('php/todos.php', '{ "action" : "update", "todo" : '+ todo +' }',
             function(answer) {
                 displayTodos();
@@ -569,6 +569,11 @@ $(document).ready(function() {
         $.each(todosJSON, function(index, value) {
             if (value.created == created) {
                 value.isActive = newValueForActive;
+                todo = $.toJSON(value);
+                $.post('php/todos.php', '{ "action" : "update", "todo" : '+ todo +' }',
+                    function(answer) {
+                        //displayTodos();
+                    }, 'json');
             }
         });
     });
