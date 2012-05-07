@@ -74,8 +74,9 @@
                         <option value="Cancelled">Cancelled</option>
                     </select>
                     <label>Tags:</label>
-                    <div id="todo-for-tags" data-bind="foreach: tags"><span data-bind="text: name" data-clicked="false" unselectable="on"></span></div>
-                    <div id="todo-for-tags-hidden"></div>
+                    <div id="todo-for-tags"></div>
+                    <input id="todo-tags" type="text" name="tags"/>
+                    <div class="tip">* You can type new tags here using the whitespace as the delimiter</div>
                     <button class="dark" name="todo-submit" id="addTodo">Submit</button>
                     <button class="dark" name="todo-edit" id="editTodo">Save</button>
                     <button class="dark" id="cancel-todo">Cancel</button>
@@ -157,12 +158,11 @@
             <!--end header-wrapper-->
 
             <div id="content-wrapper">
-
+                <div id="phpanswer"></div>
                 <div class="right-panel">
                     <div class="category-container" >
                         <h3>Category</h3>
                         <ul>
-
                         </ul>
                         <input type="text" class="newcategory" name="newcategory" placeholder="New category..." />
                         <button class="dark addcategory" name="addcategory">Add</button>
@@ -170,12 +170,7 @@
                     </div> <!--end of category-container -->
                     <div class="tag-container" >
                         <h3>Tags</h3>
-                        <!--  data-bind="foreach: tags" -->
                         <ul>
-                            <!-- <li>
-                                <input type="checkbox" class="checkbox-hidden" data-bind="checked: isChecked"/>
-                                <span data-bind="text: name"></span>
-                            </li> -->
                         </ul>
                         <input type="text" data-bind="value: newTagName" id="newtag" name="newtag" placeholder="New tag..." />
                         <button class="dark" data-bind="click: addTag" id="addtag" name="addtag">Add</button>

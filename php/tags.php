@@ -18,7 +18,11 @@
 		$answer = substr($answer, 0, strlen($answer) - 2);
 		echo $answer . ']';
 	} else if ($parsedJSON -> action == 'add') {
-
+		$newTags = explode(" ", $parsedJSON -> tags);
+		foreach($newTags as $tag) {
+			$query = "INSERT INTO t094011_tags (tag_name) VALUES ('" . $tag . "');";
+			mysql_query($query);
+		}
 	} else if ($parsedJSON -> action == 'delete') {
 
 	}

@@ -1,67 +1,3 @@
-
-//var todosJSON = [
-//{
-//    "category":"University",
-//    "created":"1333999071096",
-//    "name":"TODO #1",
-//    "deadline":"13.04.2012",
-//    "description":"My first todo. Hell yeah!",
-//    "isUrgent":true,
-//    "isImportant":false,
-//    "isActive":true,
-//    "state":"Pending",
-//    "tags":"work meeting"
-//},
-//{
-//    "category":"University",
-//    "created":"1333999071097",
-//    "name":"TODO #2",
-//    "deadline":"13.04.2012",
-//    "description":"My second todo. Hell yeah!",
-//    "isUrgent":false,
-//    "isImportant":true,
-//    "isActive":true,
-//    "state":"In progress",
-//    "tags":"work birthday"
-//},
-//{
-//    "category":"Girlfriend",
-//    "created":"1333999071098",
-//    "name":"TODO #3",
-//    "deadline":"13.04.2012",
-//    "description":"My third todo. Hell yeah!",
-//    "isUrgent":true,
-//    "isImportant":false,
-//    "isActive":true,
-//    "state":"Completed",
-//    "tags":"school meeting"
-//},
-//{
-//    "category":"Girlfriend",
-//    "created":"1333999071099",
-//    "name":"TODO #4",
-//    "deadline":"13.04.2012",
-//    "description":"My fourth todo. Hell yeah!",
-//    "isUrgent":true,
-//    "isImportant":true,
-//    "isActive":true,
-//    "state":"Pending",
-//    "tags":"work meeting"
-//},
-//{
-//    "category":"Girlfriend",
-//    "created":"1333999071100",
-//    "name":"TODO #5",
-//    "deadline":"13.04.2012",
-//    "description":"My fifth todo. Hell yeah!",
-//    "isUrgent":true,
-//    "isImportant":false,
-//    "isActive":true,
-//    "state":"Pending",
-//    "tags":"work meeting"
-//}
-//];
-
 // global PoS
 var todosJSON;
 
@@ -111,16 +47,13 @@ $(document).ready(function() {
 
     var categoryJSON = ["All"];
 
-    $(function() {
-        $.post('php/cats.php', '{ "action" : "get" }',
-            function(answer) {
-                $(answer).each(function(index, element) {
-                    categoryJSON.push(element);
-
-                });
-                displayCategories();
-            }, 'json');
-    });
+    $.post('php/cats.php', '{ "action" : "get" }',
+        function(answer) {
+            $(answer).each(function(index, element) {
+                categoryJSON.push(element);
+            });
+            displayCategories();
+    }, 'json');
 
     function displayCategories() {
 
@@ -159,13 +92,9 @@ $(document).ready(function() {
     });
 
     function ajax_addCategory(newCategoryName) {
-        $.post('php/cats.php', '{ "action" : "add", "new_cat": "'+newCategoryName+'" }',
+        $.post('php/cats.php', '{ "action" : "add", "new_cat": "' + newCategoryName + '" }',
             function(answer) {
-                categoryJSON = ['All'];
-                $(answer).each(function(index, element) {
-                    categoryJSON.push(element);
-                });
-                displayCategories();
+
             }, 'json');
     }
 
@@ -206,6 +135,12 @@ $(document).ready(function() {
             $('div.category-container input[type="checkbox"]').addClass('checkbox-hidden');
         }
     });
+
+    //=================================================//
+    //------------------ Tags -------------------------//
+    //=================================================//
+
+
 
     //=================================================//
     //-------------- Search feature -------------------//
@@ -324,12 +259,14 @@ $(document).ready(function() {
     $newTodoShow = $('#new-todo-show'),
     $addTodo = $('#addTodo'),
     $editTodo = $('#editTodo');
+    $todoForTags = $('#todo-for-tags');
     function showNewTodoForm() {
         $newTodoForm.show();
         hideSettings();
         hideAdvancedSearch();
         showOverlay();
         $newTodoShow.attr('data-show', 'true');
+        $todoForTags.show();
     }
 
     function hideNewTodoForm() {
@@ -349,18 +286,22 @@ $(document).ready(function() {
     }
 
     // Adds / removes tags to new todo
+    var $inputTags = $('input#todo-tags');
     $('div#todo-for-tags').on('click', 'span', function() {
-        $clickedSpan = $(this);
+        var $clickedSpan = $(this);
         if($clickedSpan.attr('data-clicked') == 'false') {
             $clickedSpan.attr('data-clicked', 'true')
-            .addClass($('#menu').attr('class'))
-            .addClass('clicked')
-            .clone().attr('id', 'todo-tag-' + $clickedSpan.text())
-            .appendTo($('div#todo-for-tags-hidden'));
+            .addClass($('#menu').attr('class'));
+            if ($inputTags.val().charAt($inputTags.val().length - 1) == " " || $inputTags.val().length == 0) {
+                $inputTags.val($inputTags.val() + $clickedSpan.text() + " ");
+            } else {
+                $inputTags.val($inputTags.val() + " " + $clickedSpan.text() + " ");
+            }
         } else {
-            $clickedSpan.attr('data-clicked', 'false')
-            .removeClass();
-            $('span#todo-tag-' + $clickedSpan.text()).remove();
+            var index = $inputTags.val().indexOf($clickedSpan.text()), 
+                value = $inputTags.val();
+            $inputTags.val(value.substr(0, index) + value.substr(index + $clickedSpan.text().length + 1));
+            $clickedSpan.attr('data-clicked', 'false').removeClass();
         }
     });
 
@@ -423,10 +364,12 @@ $(document).ready(function() {
         todo.description = $('textarea#description').val();
         todo.state = $('select#state').val();
         todo.isActive = true;
-        todo.tags = '';
-        $('div#todo-for-tags-hidden span').each(function() {
-            todo.tags += $(this).html() + ' ';
-        });
+        if ($inputTags.val().charAt($inputTags.val().length - 1) == " ") {
+            todo.tags = $inputTags.val().slice(0, -1);
+        } else {
+            todo.tags = $inputTags.val();
+        }
+        sendNewTags(todo.tags);
         newCategoryName = $('input.newcategory').val();
         if (newCategoryName != '') {
             ajax_addCategory(newCategoryName);
@@ -436,11 +379,9 @@ $(document).ready(function() {
         }
 
         newTodo = $.toJSON(todo);
-        //console.log("newTodo: " + newTodo);
-        //todosJSON.unshift(todo); //adds new items to the beginning of an array
-        $.post('php/todos.php', '{ "action" : "add", "todo": '+newTodo+' }',
+        $.post('php/todos.php', '{ "action" : "add", "todo": ' + newTodo + ' }',
             function(answer) {
-                console.log("newTodo: " + newTodo);
+                // console.log("newTodo: " + newTodo);
                 displayTodos();
             }, 'json');
         hideNewTodoForm();
@@ -477,6 +418,7 @@ $(document).ready(function() {
             }
         });
         showNewTodoForm();
+        $todoForTags.hide();
         $newTodoForm.find('h3').text('Edit TODO');
         $addTodo.css('display', 'none');
         $editTodo.css('display', 'inline-block');
@@ -487,28 +429,13 @@ $(document).ready(function() {
         $('#deadline').val(todoToEdit.deadline);
         $('#description').text(todoToEdit.description);
         $('#state').val(todoToEdit.state);
-        var $spanTags = $('#todo-for-tags span'),
-        extTags = todoToEdit.tags.split(' ');
-        // TODO: O(2) <--> better ??
-        $.each($spanTags, function() {
-            var $selectedSpanTag = $(this);
-            $.each(extTags, function() {
-                if ($selectedSpanTag.text() == this) {
-                    $selectedSpanTag.attr('data-clicked', 'true')
-                    .addClass($('#menu').attr('class'))
-                    .addClass('clicked')
-                    .clone().attr('id', 'todo-tag-' + $selectedSpanTag.text())
-                    .appendTo($('div#todo-for-tags-hidden'));
-                }
-            });
-        });
+        $('#todo-tags').val(todoToEdit.tags);
     });
 
     $editTodo.on('click', function() {
         // TODO: variables caching
         todoToEdit.isUrgent = $('input#urgent').attr('checked') ? true : false;
         todoToEdit.isImportant = $('input#important').attr('checked') ? true : false;
-        //todoToEdit.category = $('select#category').val();
         newCategoryName = $('input.newcategory').val();
         if (newCategoryName != '') {
             ajax_addCategory(newCategoryName);
@@ -521,14 +448,15 @@ $(document).ready(function() {
         todoToEdit.description = $('textarea#description').val();
         todoToEdit.state = $('select#state').val();
         todoToEdit.isActive = true;
-        todoToEdit.tags = '';
-        $('div#todo-for-tags-hidden span').each(function() {
-            todoToEdit.tags += $(this).html() + ' ';
-        });
-
+        if ($inputTags.val().charAt($inputTags.val().length - 1) == " ") {
+            todo.tags = $inputTags.val().slice(0, -1);
+        } else {
+            todo.tags = $inputTags.val();
+        }
+        sendNewTags(todoToEdit.tags);
         todo = $.toJSON(todoToEdit);
-        //console.log(todo);
-        $.post('php/todos.php', '{ "action" : "update", "todo" : '+ todo +' }',
+        // console.log(todo);
+        $.post('php/todos.php', '{ "action" : "update", "todo" : ' + todo + ' }',
             function(answer) {
                 displayTodos();
             }, 'json');
