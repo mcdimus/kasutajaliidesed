@@ -94,13 +94,14 @@ $(document).ready(function() {
     function ajax_addCategory(newCategoryName) {
         $.post('php/cats.php', '{ "action" : "add", "new_cat": "' + newCategoryName + '" }',
             function(answer) {
-
+                displayCategories();
             }, 'json');
     }
 
     $('button.addcategory').on('click', function() {
-        var newCategoryName = $(this).siblings('input.newcategory').val();
-        if (newCategoryName.match('/\S/g')) {
+        var newCategoryName = $(this).siblings('input.newcategory').val(),
+            pattern = /\S/g;
+        if (pattern.test(newCategoryName)) {
             categoryJSON.push(newCategoryName);
             ajax_addCategory(newCategoryName);
             displayCategories();
@@ -388,10 +389,11 @@ $(document).ready(function() {
         sendNewTags(todo.tags);
         newCategoryName = $('input.newcategory').val();
         if (newCategoryName != '') {
+            categoryJSON.push(newCategoryName);
             ajax_addCategory(newCategoryName);
             todo.category = newCategoryName;
         } else {
-            todo.category = $('select#category').val()
+            todo.category = $('select#category').val();
         }
 
         newTodo = $.toJSON(todo);
@@ -465,12 +467,12 @@ $(document).ready(function() {
         todoToEdit.state = $('select#state').val();
         todoToEdit.isActive = true;
         if ($inputTags.val().charAt($inputTags.val().length - 1) == " ") {
-            todo.tags = $inputTags.val().slice(0, -1);
+            todoToEdit.tags = $inputTags.val().slice(0, -1);
         } else {
-            todo.tags = $inputTags.val();
+            todoToEdit.tags = $inputTags.val();
         }
         sendNewTags(todoToEdit.tags);
-        todo = $.toJSON(todoToEdit);
+        var todo = $.toJSON(todoToEdit);
         // console.log(todo);
         $.post('php/todos.php', '{ "action" : "update", "todo" : ' + todo + ' }',
             function(answer) {

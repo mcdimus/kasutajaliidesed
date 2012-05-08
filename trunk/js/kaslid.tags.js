@@ -3,10 +3,30 @@
  */
 var tagsArr = [];
 
+function displayTags() {
+    $ul = $('div.tag-container ul'),
+
+    $todoForTags = $('#todo-for-tags'),
+    $searchTags = $('#search-tags');
+
+    $ul.html('');
+    $todoForTags.html('');
+    $searchTags.html('');
+    $.each(tagsArr, function(index, element) {
+
+        var a = index == 0 ? 'class="selected"':'';
+        $ul.append($('<li><input type="checkbox" class="checkbox-hidden"/><span '+a+'>' + element + '</span></li>'));
+        $todoForTags.append('<span data-bind="text: name" data-clicked="false" unselectable="on">' + element + '</span>');
+        $searchTags.append('<option>' + element + '</option>')
+
+    });
+}
+
 // sends new tags via AJAX
 function ajax_addTags(tags) {
     $.post('php/tags.php', '{ "action" : "add", "tags" : "' + tags + '" }',
         function(answer) {
+            
         });
 }
 
@@ -24,8 +44,9 @@ $(function() {
     // add a tag
     var $addTag = $('#addtag');
     $addTag.on('click', function() {
-        var newTag = $('#newtag').val();
-        if (newTag.match('/\S/g')) {
+        var newTag = $('#newtag').val(),
+            pattern = /\S/g;
+        if (pattern.test(newTag)) {
             ajax_addTags(newTag);
             tagsArr.push(newTag);
             displayTags();
@@ -51,10 +72,8 @@ $(function() {
 
             $.post('php/tags.php', '{ "action" : "delete", "tags" : ' + toBeDeleted + ' }',
                 function(answer) {
-
+                    // displayTags();
                 });
-
-            displayTags();
 
             $deleteTags.text('Edit');
             $tagsContainer.find('input[type="checkbox"]').addClass('checkbox-hidden');
@@ -87,23 +106,4 @@ function sendNewTags(tags) {
         ajax_addTags(tags);
         displayTags();
     }
-}
-
-function displayTags() {
-    $ul = $('div.tag-container ul'),
-
-    $todoForTags = $('#todo-for-tags'),
-    $searchTags = $('#search-tags');
-
-    $ul.html('');
-    $todoForTags.html('');
-    $searchTags.html('');
-    $.each(tagsArr, function(index, element) {
-
-        var a = index == 0 ? 'class="selected"':'';
-        $ul.append($('<li><input type="checkbox" class="checkbox-hidden"/><span '+a+'>' + element + '</span></li>'));
-        $todoForTags.append('<span data-bind="text: name" data-clicked="false" unselectable="on">' + element + '</span>');
-        $searchTags.append('<option>' + element + '</option>')
-
-    });
 }
