@@ -1,0 +1,1 @@
+Ülesandeks on ülesannete nimekirja (todo-list vms) rakenduse kirjutamine.
